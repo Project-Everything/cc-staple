@@ -6,6 +6,9 @@ plugins {
 group = 'com.spektrsoyuz'
 version = '1.0.0'
 
+def commitHash = 'git rev-parse --short HEAD'.execute().text.trim()
+version = "${version}-${commitHash}"
+
 repositories {
     mavenCentral()
     maven {
@@ -64,7 +67,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-            artifactId = 'plottools'
+            artifactId = 'stapleplugin'
         }
     }
 }
