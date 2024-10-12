@@ -1,5 +1,6 @@
 package com.spektrsoyuz.staple;
 
+import com.spektrsoyuz.staple.command.BroadcastCommand;
 import com.spektrsoyuz.staple.command.EnderChestCommand;
 import com.spektrsoyuz.staple.command.GamemodeCommand;
 import io.papermc.paper.command.brigadier.Commands;
@@ -38,6 +39,7 @@ public final class StaplePlugin extends JavaPlugin {
 
             commands.register("enderchest", "View your ender chest", List.of("chest", "ec"), new EnderChestCommand());
             commands.register("gamemode", "Switch your gamemode", List.of("gm"), new GamemodeCommand());
+            commands.register("broadcast", "Broadcast a message", new BroadcastCommand());
         });
     }
 
