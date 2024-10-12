@@ -83,6 +83,7 @@ public final class StaplePlugin extends JavaPlugin {
             commands.register("gms", "Set your gamemode to survival", new GMSCommand());
             commands.register("gmsp", "Set your gamemode to spectator", new GMSPCommand());
             commands.register("help", "View the help message", new HelpCommand());
+            commands.register("item", "Give yourself an item", List.of("i"), new ItemCommand());
             commands.register("rules", "View the rules message", new RulesCommand());
             commands.register("teleport", "Teleport to a player", List.of("tp"), new TeleportCommand());
             commands.register("teleporthere", "Teleport a player to your location", List.of("tphere"), new TeleportHereCommand());
