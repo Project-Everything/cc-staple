@@ -25,8 +25,10 @@ public final class PlayerManager extends CacheManager<StaplePlayer> {
             if (staplePlayerQuery.hasResults()) {
                 StaplePlayer existing = staplePlayerQuery.getFirst();
                 instance.setTpDisabled(existing.isTpDisabled());
+                instance.setVanished(existing.isVanished());
             } else {
                 instance.setTpDisabled(false);
+                instance.setVanished(false);
 
                 plugin.getStorage().addPlayer(instance);
             }

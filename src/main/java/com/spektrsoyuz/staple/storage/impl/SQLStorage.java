@@ -20,7 +20,7 @@ public abstract class SQLStorage extends Storage {
     protected void createTables() {
         try (Connection connection = createConnection()) {
             try (Statement statement = connection.createStatement()) {
-                statement.addBatch("CREATE TABLE IF NOT EXISTS " + Table.STAPLE_PLAYERS + " (id VARCHAR(36) PRIMARY KEY, tp_disabled BOOLEAN);");
+                statement.addBatch("CREATE TABLE IF NOT EXISTS " + Table.STAPLE_PLAYERS + " (id VARCHAR(36) PRIMARY KEY, tp_disabled BOOLEAN, vanished BOOLEAN);");
                 statement.executeBatch();
             }
         } catch (SQLException e) {
@@ -38,11 +38,12 @@ public abstract class SQLStorage extends Storage {
     public CompletableFuture<Void> addPlayer(StaplePlayer staplePlayer) {
         return CompletableFuture.runAsync(() -> {
             try (Connection connection = createConnection()) {
-                String sql = "INSERT INTO " + Table.STAPLE_PLAYERS + " (id, tp_disabled) VALUES (?, ?)";
+                String sql = "INSERT INTO " + Table.STAPLE_PLAYERS + " (id, tp_disabled, vanished) VALUES (?, ?, ?)";
 
                 try (PreparedStatement statement = connection.prepareStatement(sql)) {
                     statement.setString(1, staplePlayer.getPlayerId().toString());
                     statement.setBoolean(2, staplePlayer.isTpDisabled());
+                    statement.setBoolean(3, staplePlayer.isVanished());
                     statement.executeUpdate();
                 }
             } catch (SQLException e) {
@@ -61,11 +62,12 @@ public abstract class SQLStorage extends Storage {
     public CompletableFuture<Void> savePlayer(StaplePlayer staplePlayer) {
         return CompletableFuture.runAsync(() -> {
             try (Connection connection = createConnection()) {
-                String sql = "UPDATE " + Table.STAPLE_PLAYERS + " SET tp_disabled = ? WHERE id = ?";
+                String sql = "UPDATE " + Table.STAPLE_PLAYERS + " SET tp_disabled = ?, vanished = ? WHERE id = ?";
 
                 try (PreparedStatement statement = connection.prepareStatement(sql)) {
                     statement.setBoolean(1, staplePlayer.isTpDisabled());
                     statement.setString(2, staplePlayer.getPlayerId().toString());
+                    statement.setBoolean(3, staplePlayer.isVanished());
                     statement.executeUpdate();
                 }
             } catch (SQLException e) {
@@ -93,8 +95,9 @@ public abstract class SQLStorage extends Storage {
                     try (ResultSet resultSet = statement.executeQuery()) {
                         while (resultSet.next()) {
                             boolean isTpDisabled = resultSet.getBoolean("tp_disabled");
+                            boolean isVanished = resultSet.getBoolean("vanished");
 
-                            StaplePlayer staplePlayer = new StaplePlayer(playerId, isTpDisabled);
+                            StaplePlayer staplePlayer = new StaplePlayer(playerId, isTpDisabled, isVanished);
                             query.addResult(staplePlayer);
                         }
                     }
