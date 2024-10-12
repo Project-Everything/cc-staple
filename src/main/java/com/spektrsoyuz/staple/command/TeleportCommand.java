@@ -43,12 +43,8 @@ public final class TeleportCommand implements BasicCommand {
 
         // Check if player specified a second target
         if (args.length == 1) {
-            if (player.getUniqueId().equals(targetPlayer.getUniqueId())) {
-                player.sendMessage(Component.text("You cannot teleport to yourself!").color(StapleColor.RED));
-            } else {
-                player.teleport(targetPlayer);
-                player.sendMessage(Component.text("Teleported to " + targetPlayer.getName()).color(StapleColor.GOLD));
-            }
+            player.teleport(targetPlayer);
+            player.sendMessage(Component.text("Teleported to " + targetPlayer.getName()).color(StapleColor.GOLD));
         } else {
             Collection<Player> targetLocations = Bukkit.matchPlayer(args[1]);
 
@@ -59,12 +55,8 @@ public final class TeleportCommand implements BasicCommand {
             }
 
             Player targetLocation = targetLocations.iterator().next();
-            if (targetPlayer.getUniqueId().equals(targetLocation.getUniqueId())) {
-                player.sendMessage(Component.text("You cannot teleport a player to themselves!").color(StapleColor.RED));
-            } else {
-                targetPlayer.teleport(targetLocation);
-                player.sendMessage(Component.text("Teleported " + targetPlayer.getName() + " to " + targetLocation.getName()).color(StapleColor.GOLD));
-            }
+            targetPlayer.teleport(targetLocation);
+            player.sendMessage(Component.text("Teleported " + targetPlayer.getName() + " to " + targetLocation.getName()).color(StapleColor.GOLD));
         }
     }
 
