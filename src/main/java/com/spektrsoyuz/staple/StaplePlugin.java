@@ -42,6 +42,7 @@ public final class StaplePlugin extends JavaPlugin {
             commands.register("gmc", "Set your gamemode to creative", new GMCCommand());
             commands.register("gms", "Set your gamemode to survival", new GMSCommand());
             commands.register("gmsp", "Set your gamemode to spectator", new GMSPCommand());
+            commands.register("teleport", "Teleport to a player", List.of("tp"), new TeleportCommand());
         });
     }
 
