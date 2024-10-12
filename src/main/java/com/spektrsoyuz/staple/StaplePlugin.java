@@ -85,6 +85,7 @@ public final class StaplePlugin extends JavaPlugin {
             commands.register("help", "View the help message", new HelpCommand());
             commands.register("item", "Give yourself an item", List.of("i"), new ItemCommand());
             commands.register("jump", "Jump to a location", new JumpCommand());
+            commands.register("ping", "Pong!", new PingCommand());
             commands.register("playertime", "Set the player time", List.of("ptime"), new PlayerTimeCommand());
             commands.register("respawn", "Set your health to 0", new RespawnCommand());
             commands.register("rules", "View the rules message", new RulesCommand());
