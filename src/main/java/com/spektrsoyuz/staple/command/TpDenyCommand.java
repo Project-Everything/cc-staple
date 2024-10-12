@@ -47,7 +47,7 @@ public final class TpDenyCommand implements BasicCommand {
         }
 
         Player targetPlayer = targets.iterator().next();
-        plugin.getTpaManager().denyRequest(player, targetPlayer);
+        plugin.getTpaManager().denyRequest(targetPlayer, player);
     }
 
     @Override

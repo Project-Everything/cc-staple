@@ -92,7 +92,7 @@ public abstract class SQLStorage extends Storage {
                     statement.setString(1, playerId.toString());
                     try (ResultSet resultSet = statement.executeQuery()) {
                         while (resultSet.next()) {
-                            boolean isTpDisabled = resultSet.getBoolean("tp_toggled");
+                            boolean isTpDisabled = resultSet.getBoolean("tp_disabled");
 
                             StaplePlayer staplePlayer = new StaplePlayer(playerId, isTpDisabled);
                             query.addResult(staplePlayer);

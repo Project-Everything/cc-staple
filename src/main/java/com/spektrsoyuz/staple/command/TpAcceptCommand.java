@@ -47,7 +47,7 @@ public final class TpAcceptCommand implements BasicCommand {
         }
 
         Player targetPlayer = targets.iterator().next();
-        plugin.getTpaManager().acceptRequest(player, targetPlayer);
+        plugin.getTpaManager().acceptRequest(targetPlayer, player);
     }
 
     @Override

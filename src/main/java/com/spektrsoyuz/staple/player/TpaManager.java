@@ -76,14 +76,14 @@ public final class TpaManager {
 
         // Accept request and teleport player to destination
         if (destinationPlayer.equals(sourcePlayer)) {
-            sourcePlayer.sendMessage(Component.text(targetPlayer.getName() + " accepted your request.").color(StapleColor.GOLD));
-            targetPlayer.sendMessage(Component.text("Teleporting to " + destinationPlayer.getName() + ".").color(StapleColor.GOLD));
+            targetPlayer.sendMessage(Component.text(targetPlayer.getName() + " accepted your request.").color(StapleColor.GOLD));
+            sourcePlayer.sendMessage(Component.text("Teleporting to " + destinationPlayer.getName() + ".").color(StapleColor.GOLD));
             targetPlayer.teleport(destinationPlayer);
             tpaRequests.remove(sourcePlayer.getUniqueId());
         } else if (destinationPlayer.equals(targetPlayer)) {
             targetPlayer.sendMessage(Component.text(sourcePlayer.getName() + " accepted your request.").color(StapleColor.GOLD));
             sourcePlayer.sendMessage(Component.text("Teleporting to " + destinationPlayer.getName() + ".").color(StapleColor.GOLD));
-            sourcePlayer.teleport(destinationPlayer);
+            targetPlayer.teleport(destinationPlayer);
             tpaRequests.remove(sourcePlayer.getUniqueId());
         } else {
             sourcePlayer.sendMessage(Component.text("Command execution failed. Please notify an admin of this error.").color(StapleColor.RED));
@@ -98,8 +98,8 @@ public final class TpaManager {
             return;
         }
 
-        targetPlayer.sendMessage(Component.text(sourcePlayer.getName() + " denied your request.").color(StapleColor.GOLD));
-        sourcePlayer.sendMessage(Component.text("Request denied.").color(StapleColor.GOLD));
+        sourcePlayer.sendMessage(Component.text(sourcePlayer.getName() + " denied your request.").color(StapleColor.GOLD));
+        targetPlayer.sendMessage(Component.text("Request denied.").color(StapleColor.GOLD));
         tpaRequests.remove(sourcePlayer.getUniqueId());
     }
 
