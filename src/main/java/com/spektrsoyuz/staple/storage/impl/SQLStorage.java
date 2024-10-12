@@ -66,8 +66,8 @@ public abstract class SQLStorage extends Storage {
 
                 try (PreparedStatement statement = connection.prepareStatement(sql)) {
                     statement.setBoolean(1, staplePlayer.isTpDisabled());
-                    statement.setString(2, staplePlayer.getPlayerId().toString());
-                    statement.setBoolean(3, staplePlayer.isVanished());
+                    statement.setBoolean(2, staplePlayer.isVanished());
+                    statement.setString(3, staplePlayer.getPlayerId().toString());
                     statement.executeUpdate();
                 }
             } catch (SQLException e) {
