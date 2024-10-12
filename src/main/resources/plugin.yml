@@ -1,0 +1,6 @@
+name: StaplePlugin
+version: '1.0.0'
+main: com.spektrsoyuz.staple.StaplePlugin
+description: A plugin for general purpose commands
+authors: [ SpektrSoyuz ]
+api-version: '1.21'
