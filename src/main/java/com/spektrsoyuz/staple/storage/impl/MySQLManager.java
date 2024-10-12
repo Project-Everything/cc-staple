@@ -1,4 +1,4 @@
-package com.spektrsoyuz.staple.player.impl;
+package com.spektrsoyuz.staple.storage.impl;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

@@ -1,7 +1,10 @@
 package com.spektrsoyuz.staple;
 
 import com.spektrsoyuz.staple.command.*;
-import com.spektrsoyuz.staple.player.impl.MySQLManager;
+import com.spektrsoyuz.staple.listener.PlayerJoinListener;
+import com.spektrsoyuz.staple.listener.PlayerQuitListener;
+import com.spektrsoyuz.staple.player.PlayerManager;
+import com.spektrsoyuz.staple.storage.impl.MySQLManager;
 import com.spektrsoyuz.staple.storage.Storage;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
@@ -17,8 +20,8 @@ import java.util.List;
 public final class StaplePlugin extends JavaPlugin {
 
     private static StaplePlugin instance;
-
     private Storage storage;
+    private PlayerManager playerManager;
 
     public static StaplePlugin getInstance() {
         return instance;
@@ -26,6 +29,10 @@ public final class StaplePlugin extends JavaPlugin {
 
     public Storage getStorage() {
         return storage;
+    }
+
+    public PlayerManager getPlayerManager() {
+        return playerManager;
     }
 
     @Override
@@ -81,15 +88,18 @@ public final class StaplePlugin extends JavaPlugin {
     }
 
     private void registerListeners() {
-
+        new PlayerJoinListener();
+        new PlayerQuitListener();
     }
 
     private void registerManagers() {
-
+        playerManager = new PlayerManager();
     }
 
     @Override
     public void onDisable() {
+        playerManager.saveAll();
+
         instance = null;
     }
 }

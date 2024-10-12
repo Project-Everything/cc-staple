@@ -1,4 +1,4 @@
-package com.spektrsoyuz.staple.player.query;
+package com.spektrsoyuz.staple.storage.query;
 
 import com.spektrsoyuz.staple.player.StaplePlayer;
 

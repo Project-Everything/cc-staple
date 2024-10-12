@@ -1,8 +1,8 @@
-package com.spektrsoyuz.staple.player.impl;
+package com.spektrsoyuz.staple.storage.impl;
 
 import com.spektrsoyuz.staple.StaplePlugin;
 import com.spektrsoyuz.staple.player.StaplePlayer;
-import com.spektrsoyuz.staple.player.query.StaplePlayerQuery;
+import com.spektrsoyuz.staple.storage.query.StaplePlayerQuery;
 import com.spektrsoyuz.staple.storage.Storage;
 
 import java.sql.*;
