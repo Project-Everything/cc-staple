@@ -4,6 +4,7 @@ import com.spektrsoyuz.staple.command.*;
 import com.spektrsoyuz.staple.listener.PlayerJoinListener;
 import com.spektrsoyuz.staple.listener.PlayerQuitListener;
 import com.spektrsoyuz.staple.player.PlayerManager;
+import com.spektrsoyuz.staple.player.TpaManager;
 import com.spektrsoyuz.staple.storage.impl.MySQLManager;
 import com.spektrsoyuz.staple.storage.Storage;
 import io.papermc.paper.command.brigadier.Commands;
@@ -22,6 +23,7 @@ public final class StaplePlugin extends JavaPlugin {
     private static StaplePlugin instance;
     private Storage storage;
     private PlayerManager playerManager;
+    private TpaManager tpaManager;
 
     public static StaplePlugin getInstance() {
         return instance;
@@ -33,6 +35,10 @@ public final class StaplePlugin extends JavaPlugin {
 
     public PlayerManager getPlayerManager() {
         return playerManager;
+    }
+
+    public TpaManager getTpaManager() {
+        return tpaManager;
     }
 
     @Override
@@ -80,6 +86,11 @@ public final class StaplePlugin extends JavaPlugin {
             commands.register("rules", "View the rules message", new RulesCommand());
             commands.register("teleport", "Teleport to a player", List.of("tp"), new TeleportCommand());
             commands.register("teleporthere", "Teleport a player to your location", List.of("tphere"), new TeleportHereCommand());
+            commands.register("tpaccept", "Accept a teleport request", new TpAcceptCommand());
+            commands.register("tpa", "Send a teleport request", new TpaCommand());
+            commands.register("tpahere", "Send a teleport request to your location", new TpaHereCommand());
+            commands.register("tpcancel", "Cancel a teleport request", new TpCancelCommand());
+            commands.register("tpdeny", "Deny a teleport request", new TpDenyCommand());
             commands.register("tptoggle", "Toggle receiving tp requests", new TpToggleCommand());
         });
     }
@@ -95,6 +106,7 @@ public final class StaplePlugin extends JavaPlugin {
 
     private void registerManagers() {
         playerManager = new PlayerManager();
+        tpaManager = new TpaManager();
     }
 
     @Override
