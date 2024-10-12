@@ -57,6 +57,6 @@ public final class TeleportHereCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "staple.teleporthere";
+        return "staple.teleport";
     }
 }
