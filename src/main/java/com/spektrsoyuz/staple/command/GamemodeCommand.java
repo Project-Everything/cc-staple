@@ -67,11 +67,6 @@ public final class GamemodeCommand implements BasicCommand {
     }
 
     @Override
-    public boolean canUse(@NotNull CommandSender sender) {
-        return BasicCommand.super.canUse(sender);
-    }
-
-    @Override
     public @NotNull String permission() {
         return "staple.gamemode";
     }
