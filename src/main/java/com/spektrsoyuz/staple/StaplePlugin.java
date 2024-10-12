@@ -15,7 +15,7 @@ public final class StaplePlugin extends JavaPlugin {
 
     private static StaplePlugin instance;
 
-    public StaplePlugin getInstance() {
+    public static StaplePlugin getInstance() {
         return instance;
     }
 
@@ -42,6 +42,8 @@ public final class StaplePlugin extends JavaPlugin {
             commands.register("gmc", "Set your gamemode to creative", new GMCCommand());
             commands.register("gms", "Set your gamemode to survival", new GMSCommand());
             commands.register("gmsp", "Set your gamemode to spectator", new GMSPCommand());
+            commands.register("help", "View the help message", new HelpCommand());
+            commands.register("rules", "View the rules message", new RulesCommand());
             commands.register("teleport", "Teleport to a player", List.of("tp"), new TeleportCommand());
             commands.register("teleporthere", "Teleport a player to your location", List.of("tphere"), new TeleportHereCommand());
         });

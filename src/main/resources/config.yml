@@ -1,0 +1,17 @@
+# StaplePlugin Configuration
+motd: Welcome to the server!
+help-message: Placeholder Text
+rules-message: Placeholder Text
+
+# Spawn
+spawn-x: 0
+spawn-y: 0
+spawn-z: 0
+
+# MySQL Configuration
+mysql:
+  host: hostname
+  port: 3360
+  database: database
+  username: username
+  password: password
