@@ -1,12 +1,15 @@
 package com.spektrsoyuz.staple;
 
 import com.spektrsoyuz.staple.command.*;
+import com.spektrsoyuz.staple.player.impl.MySQLManager;
+import com.spektrsoyuz.staple.storage.Storage;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -15,14 +18,38 @@ public final class StaplePlugin extends JavaPlugin {
 
     private static StaplePlugin instance;
 
+    private Storage storage;
+
     public static StaplePlugin getInstance() {
         return instance;
+    }
+
+    public Storage getStorage() {
+        return storage;
     }
 
     @Override
     public void onEnable() {
         instance = this;
         saveDefaultConfig();
+
+        // Read MySQL login credentials from config.yml
+        String mysqlHost = getConfig().getString("mysql.host");
+        int mysqlPort = getConfig().getInt("mysql.port");
+        String mysqlDatabase = getConfig().getString("mysql.database");
+        String mysqlUsername = getConfig().getString("mysql.username");
+        String mysqlPassword = getConfig().getString("mysql.password");
+
+        // Instantiate MySQLManager using HikariCP
+        try {
+            storage = new MySQLManager(mysqlHost, mysqlPort, mysqlDatabase, mysqlUsername, mysqlPassword);
+            getLogger().info("MySQL Database loaded.");
+        } catch (SQLException e) {
+            getLogger().severe("SQL Exception while initializing SQL Manager: " + e.getMessage());
+            getLogger().severe("MySQL Database did not load, disabling plugin.");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
 
         registerCommands();
         registerHooks();
