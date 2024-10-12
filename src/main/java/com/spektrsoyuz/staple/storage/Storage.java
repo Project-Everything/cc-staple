@@ -6,6 +6,8 @@ import com.spektrsoyuz.staple.storage.query.StaplePlayerQuery;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
+@SuppressWarnings({"unused"})
+
 public abstract class Storage {
 
     public abstract CompletableFuture<Void> addPlayer(StaplePlayer staplePlayer);
