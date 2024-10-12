@@ -49,3 +49,22 @@ processResources {
         expand props
     }
 }
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/Project-Everything/StaplePlugin")
+            credentials {
+                username = "CreativeCentral-mc"
+                password = "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"
+            }
+        }
+    }
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId = 'plottools'
+        }
+    }
+}
