@@ -89,6 +89,7 @@ public final class StaplePlugin extends JavaPlugin {
             commands.register("respawn", "Set your health to 0", new RespawnCommand());
             commands.register("rules", "View the rules message", new RulesCommand());
             commands.register("spawn", "Teleport to spawn", new SpawnCommand());
+            commands.register("speed", "Set your player speed", new SpeedCommand());
             commands.register("teleport", "Teleport to a player", List.of("tp"), new TeleportCommand());
             commands.register("teleporthere", "Teleport a player to your location", List.of("tphere"), new TeleportHereCommand());
             commands.register("top", "Teleport to the highest block above you", new TopCommand());
