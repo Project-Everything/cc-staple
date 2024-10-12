@@ -2,6 +2,12 @@
 motd: Welcome to the server!
 help-message: Placeholder Text
 rules-message: Placeholder Text
+vote-message: "<gold><st>                                                             </st></gold>
+                \n                           <b><gold>Vote</gold></b>
+                \n
+                \n         <gold>Vote for the server at:</gold>
+                \n         <yellow><click:open_url:'url'>https://creative-central.net/vote</click></yellow>
+                \n<gold><st>                                                             </st></gold>"
 
 # Spawn
 spawn-x: 0

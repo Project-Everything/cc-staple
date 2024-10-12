@@ -95,6 +95,7 @@ public final class StaplePlugin extends JavaPlugin {
             commands.register("tpcancel", "Cancel a teleport request", new TpCancelCommand());
             commands.register("tpdeny", "Deny a teleport request", new TpDenyCommand());
             commands.register("tptoggle", "Toggle receiving tp requests", new TpToggleCommand());
+            commands.register("vote", "View the vote message", new VoteCommand());
         });
     }
 
