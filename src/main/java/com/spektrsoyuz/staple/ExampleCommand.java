@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 
-@SuppressWarnings({"UnstableApiUsage", "Unused"})
+@SuppressWarnings({"UnstableApiUsage"})
 
 public final class ExampleCommand implements BasicCommand {
 

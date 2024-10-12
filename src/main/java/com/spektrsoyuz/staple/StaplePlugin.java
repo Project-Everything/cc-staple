@@ -80,6 +80,7 @@ public final class StaplePlugin extends JavaPlugin {
             commands.register("rules", "View the rules message", new RulesCommand());
             commands.register("teleport", "Teleport to a player", List.of("tp"), new TeleportCommand());
             commands.register("teleporthere", "Teleport a player to your location", List.of("tphere"), new TeleportHereCommand());
+            commands.register("tptoggle", "Toggle receiving tp requests", new TpToggleCommand());
         });
     }
 
