@@ -32,9 +32,9 @@ public final class SpawnCommand implements BasicCommand {
         }
 
         Location location = new Location(Bukkit.getWorld("plotworld"),
-                plugin.getConfig().getDouble("spawn_x"),
-                plugin.getConfig().getDouble("spawn_y"),
-                plugin.getConfig().getDouble("spawn_z"));
+                plugin.getConfig().getDouble("spawn-x"),
+                plugin.getConfig().getDouble("spawn-y"),
+                plugin.getConfig().getDouble("spawn-z"));
         // Teleport player to spawn
         player.teleport(location);
         player.sendMessage(Component.text("You've been teleported to spawn.").color(StapleColor.GOLD));
