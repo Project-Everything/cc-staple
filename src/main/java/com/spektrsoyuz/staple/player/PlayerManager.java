@@ -29,10 +29,8 @@ public final class PlayerManager extends CacheManager<StaplePlayer> {
             } else {
                 instance.setTpDisabled(false);
                 instance.setVanished(false);
-
                 plugin.getStorage().addPlayer(instance);
             }
-
             callback.accept(instance);
         });
     }

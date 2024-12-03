@@ -1,13 +1,11 @@
 plugins {
     id 'java'
     id 'maven-publish'
+    id 'com.gradleup.shadow' version '9.0.0-beta2'
 }
 
 group = 'com.spektrsoyuz'
-version = '1.0.0'
-
-def commitHash = 'git rev-parse --short HEAD'.execute().text.trim()
-version = "${version}-${commitHash}"
+version = '1.0.1'
 
 repositories {
     mavenCentral()
@@ -41,6 +39,15 @@ tasks.withType(JavaCompile).configureEach {
 
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
         options.release.set(targetJavaVersion)
+    }
+}
+
+tasks {
+    shadowJar {
+        archiveClassifier.set('')
+    }
+    build {
+        dependsOn shadowJar
     }
 }
 

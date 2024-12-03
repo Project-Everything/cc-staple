@@ -1,5 +1,6 @@
 package com.spektrsoyuz.staple.storage.impl;
 
+import com.spektrsoyuz.staple.StaplePlugin;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -10,14 +11,19 @@ public final class MySQLManager extends SQLStorage {
 
     private final HikariDataSource dataSource;
 
-    public MySQLManager(String host, int port, String database, String username, String password) throws SQLException {
+    public MySQLManager(String url, String username, String password) throws SQLException, ClassNotFoundException {
+        final StaplePlugin plugin = StaplePlugin.getInstance();
+
         HikariConfig config = new HikariConfig();
-        String jdbcUrl = "jdbc:mysql://" + host + ":" + port + "/" + database + "?useSSL=false";
-        config.setJdbcUrl(jdbcUrl);
+        config.setJdbcUrl(url);
         config.setUsername(username);
         config.setPassword(password);
         config.setMaximumPoolSize(10);
-        config.setPoolName("amethyst-pool");
+        config.setPoolName("stapleplugin-pool");
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        plugin.getLogger().info("jdbc url: " + url);
+        plugin.getLogger().info("jdbc username: " + username);
+        plugin.getLogger().info("jdbc password: " + password);
 
         dataSource = new HikariDataSource(config);
         createTables();

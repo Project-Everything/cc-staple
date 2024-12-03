@@ -19,10 +19,9 @@ public abstract class SQLStorage extends Storage {
 
     protected void createTables() {
         try (Connection connection = createConnection()) {
-            try (Statement statement = connection.createStatement()) {
-                statement.addBatch("CREATE TABLE IF NOT EXISTS " + Table.STAPLE_PLAYERS + " (id VARCHAR(36) PRIMARY KEY, tp_disabled BOOLEAN, vanished BOOLEAN);");
-                statement.executeBatch();
-            }
+            Statement statement = connection.createStatement();
+            statement.addBatch("CREATE TABLE IF NOT EXISTS " + Table.STAPLE_PLAYERS + " (id VARCHAR(36) PRIMARY KEY, tp_disabled BOOLEAN, vanished BOOLEAN);");
+            statement.executeBatch();
         } catch (SQLException e) {
             plugin.getLogger().severe("SQL Exception while creating tables: " + e.getMessage());
         }
@@ -39,13 +38,11 @@ public abstract class SQLStorage extends Storage {
         return CompletableFuture.runAsync(() -> {
             try (Connection connection = createConnection()) {
                 String sql = "INSERT INTO " + Table.STAPLE_PLAYERS + " (id, tp_disabled, vanished) VALUES (?, ?, ?)";
-
-                try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                    statement.setString(1, staplePlayer.getPlayerId().toString());
-                    statement.setBoolean(2, staplePlayer.isTpDisabled());
-                    statement.setBoolean(3, staplePlayer.isVanished());
-                    statement.executeUpdate();
-                }
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setString(1, staplePlayer.getPlayerId().toString());
+                statement.setBoolean(2, staplePlayer.isTpDisabled());
+                statement.setBoolean(3, staplePlayer.isVanished());
+                statement.executeUpdate();
             } catch (SQLException e) {
                 plugin.getLogger().severe("SQL Exception while adding player: " + e.getMessage());
             }
@@ -63,13 +60,11 @@ public abstract class SQLStorage extends Storage {
         return CompletableFuture.runAsync(() -> {
             try (Connection connection = createConnection()) {
                 String sql = "UPDATE " + Table.STAPLE_PLAYERS + " SET tp_disabled = ?, vanished = ? WHERE id = ?";
-
-                try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                    statement.setBoolean(1, staplePlayer.isTpDisabled());
-                    statement.setBoolean(2, staplePlayer.isVanished());
-                    statement.setString(3, staplePlayer.getPlayerId().toString());
-                    statement.executeUpdate();
-                }
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setBoolean(1, staplePlayer.isTpDisabled());
+                statement.setBoolean(2, staplePlayer.isVanished());
+                statement.setString(3, staplePlayer.getPlayerId().toString());
+                statement.executeUpdate();
             } catch (SQLException e) {
                 plugin.getLogger().severe("SQL Exception while saving player: " + e.getMessage());
             }
@@ -86,21 +81,18 @@ public abstract class SQLStorage extends Storage {
     public CompletableFuture<StaplePlayerQuery> queryPlayer(UUID playerId) {
         return CompletableFuture.supplyAsync(() -> {
             StaplePlayerQuery query = new StaplePlayerQuery();
-
             try (Connection connection = createConnection()) {
                 String sql = "SELECT * FROM " + Table.STAPLE_PLAYERS + " WHERE id = ?";
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setString(1, playerId.toString());
+                ResultSet resultSet = statement.executeQuery();
 
-                try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                    statement.setString(1, playerId.toString());
-                    try (ResultSet resultSet = statement.executeQuery()) {
-                        while (resultSet.next()) {
-                            boolean isTpDisabled = resultSet.getBoolean("tp_disabled");
-                            boolean isVanished = resultSet.getBoolean("vanished");
+                while (resultSet.next()) {
+                    boolean isTpDisabled = resultSet.getBoolean("tp_disabled");
+                    boolean isVanished = resultSet.getBoolean("vanished");
 
-                            StaplePlayer staplePlayer = new StaplePlayer(playerId, isTpDisabled, isVanished);
-                            query.addResult(staplePlayer);
-                        }
-                    }
+                    StaplePlayer staplePlayer = new StaplePlayer(playerId, isTpDisabled, isVanished);
+                    query.addResult(staplePlayer);
                 }
             } catch (SQLException e) {
                 plugin.getLogger().severe("SQL Exception while querying player: " + e.getMessage());

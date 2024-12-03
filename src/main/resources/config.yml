@@ -20,14 +20,12 @@ vote-message: "<gold><st>                                                       
                 \n<gold><st>                                                             </st></gold>"
 
 # Spawn
-spawn-x: -261.5
-spawn-y: 101
-spawn-z: -261.5
+spawn-x: 0
+spawn-y: 0
+spawn-z: 0
 
 # MySQL Configuration
 mysql:
-  host: hostname
-  port: 3360
-  database: database
+  url: hostname
   username: username
   password: password

@@ -42,28 +42,30 @@ public final class StaplePlugin extends JavaPlugin {
     }
 
     @Override
-    public void onEnable() {
+    public void onLoad() {
         instance = this;
         saveDefaultConfig();
+    }
 
-        // Read MySQL login credentials from config.yml
-        String mysqlHost = getConfig().getString("mysql.host");
-        int mysqlPort = getConfig().getInt("mysql.port");
-        String mysqlDatabase = getConfig().getString("mysql.database");
+    @Override
+    public void onEnable() {
+        // Load database
+        String mysqlUrl = getConfig().getString("mysql.url");
         String mysqlUsername = getConfig().getString("mysql.username");
         String mysqlPassword = getConfig().getString("mysql.password");
 
-        // Instantiate MySQLManager using HikariCP
+        // Connect to database using HikariCP
         try {
-            storage = new MySQLManager(mysqlHost, mysqlPort, mysqlDatabase, mysqlUsername, mysqlPassword);
+            storage = new MySQLManager(mysqlUrl, mysqlUsername, mysqlPassword);
             getLogger().info("MySQL Database loaded.");
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             getLogger().severe("SQL Exception while initializing SQL Manager: " + e.getMessage());
             getLogger().severe("MySQL Database did not load, disabling plugin.");
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
 
+        // Setup methods
         registerCommands();
         registerHooks();
         registerListeners();
