@@ -31,7 +31,9 @@ public final class SpawnCommand implements BasicCommand {
             return;
         }
 
-        Location location = new Location(Bukkit.getWorld("plotworld"),
+        String worldName = player.getWorld().getName();
+
+        Location location = new Location(Bukkit.getWorld(worldName),
                 plugin.getConfig().getDouble("spawn-x"),
                 plugin.getConfig().getDouble("spawn-y"),
                 plugin.getConfig().getDouble("spawn-z"));
