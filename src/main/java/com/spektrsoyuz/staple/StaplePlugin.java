@@ -111,6 +111,7 @@ public final class StaplePlugin extends JavaPlugin {
             commands.register("playertime", "Set the player time", List.of("ptime"), new PlayerTimeCommand());
             commands.register("respawn", "Set your health to 0", new RespawnCommand());
             commands.register("rules", "View the rules message", new RulesCommand());
+            commands.register("setspawn", "Set the server spawn", new SetSpawnCommand());
             commands.register("spawn", "Teleport to spawn", new SpawnCommand());
             commands.register("speed", "Set your player speed", new SpeedCommand());
             commands.register("teleport", "Teleport to a player", List.of("tp"), new TeleportCommand());

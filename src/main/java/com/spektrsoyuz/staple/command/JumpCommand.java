@@ -42,6 +42,6 @@ public final class JumpCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "staple.jump";
+        return "cc.command.jump";
     }
 }

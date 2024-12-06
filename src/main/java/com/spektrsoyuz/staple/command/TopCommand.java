@@ -34,6 +34,6 @@ public final class TopCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "staple.top";
+        return "cc.command.top";
     }
 }

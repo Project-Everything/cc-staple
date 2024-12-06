@@ -37,6 +37,6 @@ public final class VoteCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "staple.vote";
+        return "cc.command.vote";
     }
 }

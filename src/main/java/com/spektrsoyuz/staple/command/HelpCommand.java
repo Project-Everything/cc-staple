@@ -37,6 +37,6 @@ public final class HelpCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "staple.help";
+        return "cc.command.help";
     }
 }

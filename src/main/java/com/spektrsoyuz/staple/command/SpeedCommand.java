@@ -53,7 +53,7 @@ public final class SpeedCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "staple.speed";
+        return "cc.command.speed";
     }
 
     private void setFlySpeed(Player player, double speed) {

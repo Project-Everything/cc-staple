@@ -29,6 +29,6 @@ public final class EnderChestCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "staple.enderchest";
+        return "cc.command.enderchest";
     }
 }

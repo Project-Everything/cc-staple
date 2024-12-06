@@ -28,6 +28,6 @@ public final class RespawnCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "staple.respawn";
+        return "cc.command.respawn";
     }
 }

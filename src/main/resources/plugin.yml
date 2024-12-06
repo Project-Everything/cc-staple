@@ -52,6 +52,8 @@ permissions:
     description: 'Respawn'
   cc.command.rules:
     description: 'View the rules page'
+  cc.command.setspawn:
+    description: 'Set the server spawn'
   cc.command.spawn:
     description: 'Teleport to spawn'
   cc.command.speed:
@@ -62,6 +64,8 @@ permissions:
     description: 'Teleport to the top block'
   cc.command.tpa:
     description: 'Send and receive teleport requests'
+  cc.command.tptoggle:
+    description: 'Toggle tpa requests'
   cc.command.vanish:
     description: 'Vanish your player'
   cc.command.vote:

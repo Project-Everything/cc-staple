@@ -34,6 +34,6 @@ public final class BroadcastCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "staple.broadcast";
+        return "cc.command.broadcast";
     }
 }

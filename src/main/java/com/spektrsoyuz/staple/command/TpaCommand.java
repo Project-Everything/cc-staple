@@ -61,6 +61,6 @@ public final class TpaCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "staple.tpa";
+        return "cc.command.tpa";
     }
 }

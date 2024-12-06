@@ -20,6 +20,6 @@ public final class PingCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "staple.ping";
+        return "cc.command.ping";
     }
 }

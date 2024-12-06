@@ -60,6 +60,6 @@ public final class VanishCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "staple.vanish";
+        return "cc.command.vanish";
     }
 }

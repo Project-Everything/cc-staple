@@ -55,6 +55,6 @@ public final class ItemCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "staple.item";
+        return "cc.command.item";
     }
 }

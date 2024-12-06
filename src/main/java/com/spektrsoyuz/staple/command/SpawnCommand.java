@@ -43,6 +43,6 @@ public final class SpawnCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "staple.spawn";
+        return "cc.command.spawn";
     }
 }

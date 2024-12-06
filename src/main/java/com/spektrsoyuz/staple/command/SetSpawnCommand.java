@@ -1,22 +1,22 @@
 package com.spektrsoyuz.staple.command;
 
 import com.spektrsoyuz.staple.StaplePlugin;
-import com.spektrsoyuz.staple.player.StaplePlayer;
 import com.spektrsoyuz.staple.util.StapleColor;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings({"UnstableApiUsage"})
 
-public final class TpToggleCommand implements BasicCommand {
+public final class SetSpawnCommand implements BasicCommand {
 
     private final StaplePlugin plugin;
 
-    public TpToggleCommand() {
+    public SetSpawnCommand() {
         this.plugin = StaplePlugin.getInstance();
     }
 
@@ -30,26 +30,24 @@ public final class TpToggleCommand implements BasicCommand {
             return;
         }
 
-        // Get StaplePlayer instance from cache
-        StaplePlayer staplePlayer = plugin.getPlayerManager().get(player.getUniqueId());
-        if (staplePlayer == null) {
-            player.sendMessage(Component.text("Command execution failed. Please notify an admin of this error.").color(StapleColor.RED));
+        if (!(player.hasPermission(permission()))) {
+            player.sendMessage(Component.text("You do not have permission to use this command!").color(StapleColor.RED));
             return;
         }
 
-        // Set tp disable
-        boolean isTpDisabled = staplePlayer.isTpDisabled();
-        if (isTpDisabled) {
-            staplePlayer.setTpDisabled(false);
-            player.sendMessage(Component.text("Enabled receiving tp requests").color(StapleColor.GOLD));
-        } else {
-            staplePlayer.setTpDisabled(true);
-            player.sendMessage(Component.text("Disabled receiving tp requests").color(StapleColor.GOLD));
-        }
+        Location location = player.getLocation();
+        player.sendMessage(Component.text()
+                .append(Component.text("Server Spawn has been set to: ").color(StapleColor.GOLD))
+                .append(Component.text(location.getX() + " " + location.getY() + " " + location.getZ()).color(StapleColor.YELLOW))
+                .build());
+        this.plugin.getConfig().set("spawn-x", location.getX());
+        this.plugin.getConfig().set("spawn-y", location.getY());
+        this.plugin.getConfig().set("spawn-z", location.getZ());
+        this.plugin.saveConfig();
     }
 
     @Override
     public @NotNull String permission() {
-        return "cc.command.tptoggle";
+        return "cc.command.setspawn";
     }
 }

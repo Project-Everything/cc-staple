@@ -29,6 +29,6 @@ public final class GMSPCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "staple.gamemode";
+        return "cc.command.gamemode";
     }
 }

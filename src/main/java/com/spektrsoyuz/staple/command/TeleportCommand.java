@@ -71,6 +71,6 @@ public final class TeleportCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "staple.teleport";
+        return "cc.command.teleport";
     }
 }

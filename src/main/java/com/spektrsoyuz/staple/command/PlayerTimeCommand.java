@@ -66,6 +66,6 @@ public final class PlayerTimeCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "staple.playertime";
+        return "cc.command.playertime";
     }
 }
