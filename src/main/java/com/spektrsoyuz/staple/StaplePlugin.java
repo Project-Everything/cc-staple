@@ -12,6 +12,7 @@ import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -25,21 +26,8 @@ public final class StaplePlugin extends JavaPlugin {
     private PlayerManager playerManager;
     private TpaManager tpaManager;
 
-    public static StaplePlugin getInstance() {
-        return instance;
-    }
+    private boolean isHubServer;
 
-    public Storage getStorage() {
-        return storage;
-    }
-
-    public PlayerManager getPlayerManager() {
-        return playerManager;
-    }
-
-    public TpaManager getTpaManager() {
-        return tpaManager;
-    }
 
     @Override
     public void onLoad() {
@@ -49,6 +37,14 @@ public final class StaplePlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        // Load config
+        try {
+            this.isHubServer = getConfig().getBoolean("is-hub-server");
+        } catch (NullPointerException e) {
+            getLogger().severe("Configuration is invalid!");
+            getLogger().severe("Exception: " + e.getMessage());
+        }
+
         // Load database
         String mysqlUrl = getConfig().getString("mysql.url");
         String mysqlUsername = getConfig().getString("mysql.username");
@@ -56,7 +52,7 @@ public final class StaplePlugin extends JavaPlugin {
 
         // Connect to database using HikariCP
         try {
-            storage = new MySQLManager(mysqlUrl, mysqlUsername, mysqlPassword);
+            this.storage = new MySQLManager(mysqlUrl, mysqlUsername, mysqlPassword);
             getLogger().info("MySQL Database loaded.");
         } catch (ClassNotFoundException | SQLException e) {
             getLogger().severe("SQL Exception while initializing SQL Manager: " + e.getMessage());
@@ -70,6 +66,30 @@ public final class StaplePlugin extends JavaPlugin {
         registerHooks();
         registerListeners();
         registerManagers();
+    }
+
+    @NotNull
+    public static StaplePlugin getInstance() {
+        return instance;
+    }
+
+    @NotNull
+    public Storage getStorage() {
+        return storage;
+    }
+
+    @NotNull
+    public PlayerManager getPlayerManager() {
+        return playerManager;
+    }
+
+    @NotNull
+    public TpaManager getTpaManager() {
+        return tpaManager;
+    }
+
+    public boolean isHubServer() {
+        return isHubServer;
     }
 
     private void registerCommands() {

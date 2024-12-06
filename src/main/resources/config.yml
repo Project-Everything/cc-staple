@@ -20,6 +20,7 @@ vote-message: "<gold><st>                                                       
                 \n<gold><st>                                                             </st></gold>"
 
 # Spawn
+is-hub-server: false
 spawn-x: 0
 spawn-y: 0
 spawn-z: 0

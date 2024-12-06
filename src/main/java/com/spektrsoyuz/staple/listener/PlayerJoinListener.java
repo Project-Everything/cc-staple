@@ -2,6 +2,8 @@ package com.spektrsoyuz.staple.listener;
 
 import com.spektrsoyuz.staple.StaplePlugin;
 import com.spektrsoyuz.staple.player.StaplePlayer;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -45,7 +47,16 @@ public final class PlayerJoinListener implements Listener {
                     }
                 }
             }
-
         });
+
+        if (plugin.isHubServer()) {
+            String worldName = player.getWorld().getName();
+            Location location = new Location(Bukkit.getWorld(worldName),
+                    plugin.getConfig().getDouble("spawn-x"),
+                    plugin.getConfig().getDouble("spawn-y"),
+                    plugin.getConfig().getDouble("spawn-z"));
+            // Teleport player to spawn
+            player.teleport(location);
+        }
     }
 }
