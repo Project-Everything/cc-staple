@@ -28,7 +28,6 @@ public final class StaplePlugin extends JavaPlugin {
 
     private boolean isHubServer;
 
-
     @Override
     public void onLoad() {
         instance = this;
@@ -123,7 +122,6 @@ public final class StaplePlugin extends JavaPlugin {
             commands.register("tpcancel", "Cancel a teleport request", new TpCancelCommand());
             commands.register("tpdeny", "Deny a teleport request", new TpDenyCommand());
             commands.register("tptoggle", "Toggle receiving tp requests", new TpToggleCommand());
-            commands.register("vanish", "Toggle player vanish", new VanishCommand());
             commands.register("vote", "View the vote message", new VoteCommand());
         });
     }

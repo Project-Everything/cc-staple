@@ -1,5 +1,6 @@
 # StaplePlugin Configuration
 motd: Welcome to the server!
+display-join-msg: true
 help-message: "<gold><st>                                                             </st></gold>
                 \n                           <b><gold>Help</gold></b>
                 \n
@@ -27,6 +28,6 @@ spawn-z: 0
 
 # MySQL Configuration
 mysql:
-  url: hostname
+  url: url
   username: username
   password: password
