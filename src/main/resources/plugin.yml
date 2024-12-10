@@ -1,7 +1,7 @@
-name: StaplePlugin
+name: cc-staple
 version: '1.0.1'
-main: com.spektrsoyuz.staple.StaplePlugin
-description: A plugin for general purpose commands
+main: net.cc.staple.StaplePlugin
+description: A general purpose plugin for Creative Central
 authors: [ SpektrSoyuz ]
 api-version: '1.21'
 permissions:
