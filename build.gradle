@@ -74,7 +74,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
-            artifactId = 'cc-staple'
+            artifactId = 'staple'
         }
     }
 }
