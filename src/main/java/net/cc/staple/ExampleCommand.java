@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
 
 @SuppressWarnings({"UnstableApiUsage"})
 
@@ -18,7 +19,7 @@ public final class ExampleCommand implements BasicCommand {
 
     @Override
     public @NotNull Collection<String> suggest(@NotNull CommandSourceStack stack, @NotNull String[] args) {
-        return BasicCommand.super.suggest(stack, args);
+        return Collections.emptyList();
     }
 
     @Override
@@ -28,6 +29,6 @@ public final class ExampleCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "staple.example";
+        return "cc.command.example";
     }
 }

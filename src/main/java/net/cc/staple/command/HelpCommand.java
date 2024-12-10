@@ -1,10 +1,10 @@
 package net.cc.staple.command;
 
 import net.cc.staple.StaplePlugin;
-import net.cc.staple.util.StapleColor;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
@@ -31,7 +31,7 @@ public final class HelpCommand implements BasicCommand {
             Component component = miniMessage.deserialize(text);
             sender.sendMessage(component);
         } else {
-            sender.sendMessage(Component.text("Command execution failed. Please notify an admin of this error.").color(StapleColor.RED));
+            sender.sendMessage(Component.text("Command execution failed. Please notify an admin of this error.").color(NamedTextColor.RED));
         }
     }
 

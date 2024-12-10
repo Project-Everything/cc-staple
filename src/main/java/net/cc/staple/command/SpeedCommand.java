@@ -1,9 +1,9 @@
 package net.cc.staple.command;
 
-import net.cc.staple.util.StapleColor;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -18,13 +18,13 @@ public final class SpeedCommand implements BasicCommand {
 
         // Check if sender is not player
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(Component.text("The console cannot use this command.").color(StapleColor.RED));
+            sender.sendMessage(Component.text("The console cannot use this command.").color(NamedTextColor.RED));
             return;
         }
 
         // Check if player entered no arguments
         if (args.length == 0) {
-            player.sendMessage(Component.text("Usage: /speed <value>").color(StapleColor.GRAY));
+            player.sendMessage(Component.text("Usage: /speed <value>").color(NamedTextColor.GRAY));
             return;
         }
 
@@ -32,7 +32,7 @@ public final class SpeedCommand implements BasicCommand {
         try {
             speed = Double.parseDouble(args[0]);
         } catch (Exception ignored) {
-            player.sendMessage(Component.text("Value must be a number").color(StapleColor.RED));
+            player.sendMessage(Component.text("Value must be a number").color(NamedTextColor.RED));
             return;
         }
 
@@ -60,13 +60,13 @@ public final class SpeedCommand implements BasicCommand {
         double a = speed / 10;
         float value = (float) a;
         player.setFlySpeed(value);
-        player.sendMessage(Component.text("Changed flight speed to " + speed).color(StapleColor.GOLD));
+        player.sendMessage(Component.text("Changed flight speed to " + speed).color(NamedTextColor.GOLD));
     }
 
     private void setWalkSpeed(Player player, double speed) {
         double a = speed / 10;
         float value = (float) a;
         player.setWalkSpeed(value);
-        player.sendMessage(Component.text("Changed walk speed to " + speed).color(StapleColor.GOLD));
+        player.sendMessage(Component.text("Changed walk speed to " + speed).color(NamedTextColor.GOLD));
     }
 }

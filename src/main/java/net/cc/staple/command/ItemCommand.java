@@ -1,9 +1,9 @@
 package net.cc.staple.command;
 
-import net.cc.staple.util.StapleColor;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -23,25 +23,25 @@ public final class ItemCommand implements BasicCommand {
 
         // Check if sender is not player
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(Component.text("The console cannot use this command.").color(StapleColor.RED));
+            sender.sendMessage(Component.text("The console cannot use this command.").color(NamedTextColor.RED));
             return;
         }
 
         // Check if player entered no arguments
         if (args.length == 0) {
-            player.sendMessage(Component.text("Usage: /item <name>").color(StapleColor.GRAY));
+            player.sendMessage(Component.text("Usage: /item <name>").color(NamedTextColor.GRAY));
             return;
         }
 
         // Attempt to find specified material (item)
         Material material = Material.matchMaterial(args[0]);
         if (material == null) {
-            player.sendMessage(Component.text("Invalid item name.").color((StapleColor.RED)));
+            player.sendMessage(Component.text("Invalid item name.").color((NamedTextColor.RED)));
             return;
         }
 
         player.getInventory().addItem(new ItemStack(material, 1));
-        player.sendMessage(Component.text("Received 1x " + args[0].replace("_", " ")).color(StapleColor.GOLD));
+        player.sendMessage(Component.text("Received 1x " + args[0].replace("_", " ")).color(NamedTextColor.GOLD));
     }
 
     @Override

@@ -1,10 +1,10 @@
 package net.cc.staple.command;
 
 import net.cc.staple.StaplePlugin;
-import net.cc.staple.util.StapleColor;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -27,7 +27,7 @@ public final class SpawnCommand implements BasicCommand {
 
         // Check if sender is not player
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(Component.text("The console cannot use this command.").color(StapleColor.RED));
+            sender.sendMessage(Component.text("The console cannot use this command.").color(NamedTextColor.RED));
             return;
         }
 
@@ -38,7 +38,7 @@ public final class SpawnCommand implements BasicCommand {
                 plugin.getConfig().getDouble("spawn-z"));
         // Teleport player to spawn
         player.teleport(location);
-        player.sendMessage(Component.text("You've been teleported to spawn.").color(StapleColor.GOLD));
+        player.sendMessage(Component.text("You've been teleported to spawn.").color(NamedTextColor.GOLD));
     }
 
     @Override

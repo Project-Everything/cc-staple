@@ -1,9 +1,9 @@
 package net.cc.staple.command;
 
-import net.cc.staple.util.StapleColor;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -22,20 +22,20 @@ public final class TeleportHereCommand implements BasicCommand {
 
         // Check if sender is not player
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(Component.text("The console cannot use this command.").color(StapleColor.RED));
+            sender.sendMessage(Component.text("The console cannot use this command.").color(NamedTextColor.RED));
             return;
         }
 
         // Check if player entered no arguments
         if (args.length == 0) {
-            player.sendMessage(Component.text("Usage: /teleporthere <player>").color(StapleColor.GRAY));
+            player.sendMessage(Component.text("Usage: /teleporthere <player>").color(NamedTextColor.GRAY));
             return;
         }
 
         // Attempt to find target player
         Collection<Player> targets = Bukkit.matchPlayer(args[0]);
         if (targets.isEmpty()) {
-            player.sendMessage(Component.text("Player not found").color(StapleColor.RED));
+            player.sendMessage(Component.text("Player not found").color(NamedTextColor.RED));
             return;
         }
 
@@ -43,7 +43,7 @@ public final class TeleportHereCommand implements BasicCommand {
 
         // Teleport target to player
         targetPlayer.teleport(player);
-        player.sendMessage(Component.text("Teleported " + targetPlayer.getName() + " to your location").color(StapleColor.GOLD));
+        player.sendMessage(Component.text("Teleported " + targetPlayer.getName() + " to your location").color(NamedTextColor.GOLD));
     }
 
     @Override

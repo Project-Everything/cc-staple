@@ -1,10 +1,10 @@
 package net.cc.staple.command;
 
-import net.cc.staple.util.StapleColor;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
@@ -19,14 +19,14 @@ public final class BroadcastCommand implements BasicCommand {
 
         // Check if player entered no arguments
         if (args.length == 0) {
-            sender.sendMessage(Component.text("Usage: /broadcast <message>").color(StapleColor.GRAY));
+            sender.sendMessage(Component.text("Usage: /broadcast <message>").color(NamedTextColor.GRAY));
             return;
         }
 
         // Broadcast message
         final TextComponent message = Component.text()
-                .append(Component.text("[Broadcast] ").color(StapleColor.DARK_PURPLE))
-                .append(Component.text(String.join(" ", args)).color(StapleColor.LIGHT_PURPLE))
+                .append(Component.text("[Broadcast] ").color(NamedTextColor.DARK_PURPLE))
+                .append(Component.text(String.join(" ", args)).color(NamedTextColor.LIGHT_PURPLE))
                 .build();
 
         Bukkit.broadcast(message);

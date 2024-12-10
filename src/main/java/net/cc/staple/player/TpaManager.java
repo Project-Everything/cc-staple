@@ -1,8 +1,8 @@
 package net.cc.staple.player;
 
 import net.cc.staple.StaplePlugin;
-import net.cc.staple.util.StapleColor;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -24,14 +24,14 @@ public final class TpaManager {
     public void sendRequest(Player sourcePlayer, Player targetPlayer, Player destinationPlayer) {
         // Check if source player = target player
         if (sourcePlayer.equals(targetPlayer)) {
-            sourcePlayer.sendMessage(Component.text("You cannot send a request to yourself!").color(StapleColor.RED));
+            sourcePlayer.sendMessage(Component.text("You cannot send a request to yourself!").color(NamedTextColor.RED));
             return;
         }
 
         // Check if there is an outstanding request from the source player
         for (TpaRequest request : getRequests()) {
             if (sourcePlayer.equals(request.sourcePlayer())) {
-                sourcePlayer.sendMessage(Component.text("You have already sent a request to " + request.targetPlayer().getName() + ".").color(StapleColor.RED));
+                sourcePlayer.sendMessage(Component.text("You have already sent a request to " + request.targetPlayer().getName() + ".").color(NamedTextColor.RED));
                 return;
             }
         }
@@ -39,25 +39,25 @@ public final class TpaManager {
         // Get StaplePlayer instance from cache
         StaplePlayer staplePlayer = plugin.getPlayerManager().get(targetPlayer.getUniqueId());
         if (staplePlayer == null) {
-            sourcePlayer.sendMessage(Component.text("Command execution failed. Please notify an admin of this error.").color(StapleColor.RED));
+            sourcePlayer.sendMessage(Component.text("Command execution failed. Please notify an admin of this error.").color(NamedTextColor.RED));
             return;
         }
 
         // Check if target player has tp disabled
         boolean isTpDisabled = staplePlayer.isTpDisabled();
         if (isTpDisabled) {
-            sourcePlayer.sendMessage(Component.text(targetPlayer.getName() + " has teleportation disabled!").color(StapleColor.RED));
+            sourcePlayer.sendMessage(Component.text(targetPlayer.getName() + " has teleportation disabled!").color(NamedTextColor.RED));
             return;
         }
 
         // Send request message to target player
-        sourcePlayer.sendMessage(Component.text("Teleport request sent to " + targetPlayer.getName() + ".").color(StapleColor.GOLD));
+        sourcePlayer.sendMessage(Component.text("Teleport request sent to " + targetPlayer.getName() + ".").color(NamedTextColor.GOLD));
         if (destinationPlayer.equals(sourcePlayer)) {
-            targetPlayer.sendMessage(Component.text().append(Component.text("You received a request to teleport to " + sourcePlayer.getName() + ".").color(StapleColor.GOLD)).append(Component.text("\nType /tpaccept to accept or /tpdeny to deny").color(StapleColor.GOLD)).build());
+            targetPlayer.sendMessage(Component.text().append(Component.text("You received a request to teleport to " + sourcePlayer.getName() + ".").color(NamedTextColor.GOLD)).append(Component.text("\nType /tpaccept to accept or /tpdeny to deny").color(NamedTextColor.GOLD)).build());
         } else if (destinationPlayer.equals(targetPlayer)) {
-            targetPlayer.sendMessage(Component.text().append(Component.text("You received a teleport request from " + sourcePlayer.getName() + ".").color(StapleColor.GOLD)).append(Component.text("\nType /tpaccept to accept or /tpdeny to deny").color(StapleColor.GOLD)).build());
+            targetPlayer.sendMessage(Component.text().append(Component.text("You received a teleport request from " + sourcePlayer.getName() + ".").color(NamedTextColor.GOLD)).append(Component.text("\nType /tpaccept to accept or /tpdeny to deny").color(NamedTextColor.GOLD)).build());
         } else {
-            sourcePlayer.sendMessage(Component.text("Command execution failed. Please notify an admin of this error.").color(StapleColor.RED));
+            sourcePlayer.sendMessage(Component.text("Command execution failed. Please notify an admin of this error.").color(NamedTextColor.RED));
             return;
         }
 
@@ -68,7 +68,7 @@ public final class TpaManager {
         TpaRequest tpaRequest = tpaRequests.get(sourcePlayer.getUniqueId());
 
         if (tpaRequest == null) {
-            targetPlayer.sendMessage(Component.text("You do not have request from " + sourcePlayer.getName()).color(StapleColor.RED));
+            targetPlayer.sendMessage(Component.text("You do not have request from " + sourcePlayer.getName()).color(NamedTextColor.RED));
             return;
         }
 
@@ -76,17 +76,17 @@ public final class TpaManager {
 
         // Accept request and teleport player to destination
         if (destinationPlayer.equals(sourcePlayer)) {
-            sourcePlayer.sendMessage(Component.text(targetPlayer.getName() + " accepted your request.").color(StapleColor.GOLD));
-            targetPlayer.sendMessage(Component.text("Request accepted. Teleporting to " + destinationPlayer.getName() + ".").color(StapleColor.GOLD));
+            sourcePlayer.sendMessage(Component.text(targetPlayer.getName() + " accepted your request.").color(NamedTextColor.GOLD));
+            targetPlayer.sendMessage(Component.text("Request accepted. Teleporting to " + destinationPlayer.getName() + ".").color(NamedTextColor.GOLD));
             targetPlayer.teleport(destinationPlayer);
             tpaRequests.remove(sourcePlayer.getUniqueId());
         } else if (destinationPlayer.equals(targetPlayer)) {
-            targetPlayer.sendMessage(Component.text("Request accepted.").color(StapleColor.GOLD));
-            sourcePlayer.sendMessage(Component.text("Teleporting to " + destinationPlayer.getName() + ".").color(StapleColor.GOLD));
+            targetPlayer.sendMessage(Component.text("Request accepted.").color(NamedTextColor.GOLD));
+            sourcePlayer.sendMessage(Component.text("Teleporting to " + destinationPlayer.getName() + ".").color(NamedTextColor.GOLD));
             sourcePlayer.teleport(destinationPlayer);
             tpaRequests.remove(sourcePlayer.getUniqueId());
         } else {
-            sourcePlayer.sendMessage(Component.text("Command execution failed. Please notify an admin of this error.").color(StapleColor.RED));
+            sourcePlayer.sendMessage(Component.text("Command execution failed. Please notify an admin of this error.").color(NamedTextColor.RED));
         }
     }
 
@@ -94,12 +94,12 @@ public final class TpaManager {
         TpaRequest tpaRequest = tpaRequests.get(sourcePlayer.getUniqueId());
 
         if (tpaRequest == null) {
-            targetPlayer.sendMessage(Component.text("You do not have request from " + sourcePlayer.getName()).color(StapleColor.RED));
+            targetPlayer.sendMessage(Component.text("You do not have request from " + sourcePlayer.getName()).color(NamedTextColor.RED));
             return;
         }
 
-        sourcePlayer.sendMessage(Component.text(sourcePlayer.getName() + " denied your request.").color(StapleColor.GOLD));
-        targetPlayer.sendMessage(Component.text("Request denied.").color(StapleColor.GOLD));
+        sourcePlayer.sendMessage(Component.text(sourcePlayer.getName() + " denied your request.").color(NamedTextColor.GOLD));
+        targetPlayer.sendMessage(Component.text("Request denied.").color(NamedTextColor.GOLD));
         tpaRequests.remove(sourcePlayer.getUniqueId());
     }
 
@@ -107,12 +107,12 @@ public final class TpaManager {
         TpaRequest tpaRequest = tpaRequests.get(sourcePlayer.getUniqueId());
 
         if (tpaRequest == null) {
-            sourcePlayer.sendMessage(Component.text("You have not sent a request to " + targetPlayer.getName()).color(StapleColor.RED));
+            sourcePlayer.sendMessage(Component.text("You have not sent a request to " + targetPlayer.getName()).color(NamedTextColor.RED));
             return;
         }
 
-        sourcePlayer.sendMessage(Component.text("Request cancelled.").color(StapleColor.GOLD));
-        targetPlayer.sendMessage(Component.text(sourcePlayer.getName() + " has cancelled their teleport request.").color(StapleColor.GOLD));
+        sourcePlayer.sendMessage(Component.text("Request cancelled.").color(NamedTextColor.GOLD));
+        targetPlayer.sendMessage(Component.text(sourcePlayer.getName() + " has cancelled their teleport request.").color(NamedTextColor.GOLD));
         tpaRequests.remove(sourcePlayer.getUniqueId());
     }
 }

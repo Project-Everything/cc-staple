@@ -1,9 +1,9 @@
 package net.cc.staple.command;
 
-import net.cc.staple.util.StapleColor;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -19,7 +19,7 @@ public final class TopCommand implements BasicCommand {
 
         // Check if sender is not player
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(Component.text("The console cannot use this command.").color(StapleColor.RED));
+            sender.sendMessage(Component.text("The console cannot use this command.").color(NamedTextColor.RED));
             return;
         }
 
@@ -29,7 +29,7 @@ public final class TopCommand implements BasicCommand {
 
         // Teleport player to the highest block
         player.teleport(location);
-        player.sendMessage(Component.text("You've been teleported up!").color(StapleColor.GOLD));
+        player.sendMessage(Component.text("You've been teleported up!").color(NamedTextColor.GOLD));
     }
 
     @Override

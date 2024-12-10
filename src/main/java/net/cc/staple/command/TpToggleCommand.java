@@ -2,10 +2,10 @@ package net.cc.staple.command;
 
 import net.cc.staple.StaplePlugin;
 import net.cc.staple.player.StaplePlayer;
-import net.cc.staple.util.StapleColor;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -26,14 +26,14 @@ public final class TpToggleCommand implements BasicCommand {
 
         // Check if sender is not player
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(Component.text("The console cannot use this command.").color(StapleColor.RED));
+            sender.sendMessage(Component.text("The console cannot use this command.").color(NamedTextColor.RED));
             return;
         }
 
         // Get StaplePlayer instance from cache
         StaplePlayer staplePlayer = plugin.getPlayerManager().get(player.getUniqueId());
         if (staplePlayer == null) {
-            player.sendMessage(Component.text("Command execution failed. Please notify an admin of this error.").color(StapleColor.RED));
+            player.sendMessage(Component.text("Command execution failed. Please notify an admin of this error.").color(NamedTextColor.RED));
             return;
         }
 
@@ -41,10 +41,10 @@ public final class TpToggleCommand implements BasicCommand {
         boolean isTpDisabled = staplePlayer.isTpDisabled();
         if (isTpDisabled) {
             staplePlayer.setTpDisabled(false);
-            player.sendMessage(Component.text("Enabled receiving tp requests").color(StapleColor.GOLD));
+            player.sendMessage(Component.text("Enabled receiving tp requests").color(NamedTextColor.GOLD));
         } else {
             staplePlayer.setTpDisabled(true);
-            player.sendMessage(Component.text("Disabled receiving tp requests").color(StapleColor.GOLD));
+            player.sendMessage(Component.text("Disabled receiving tp requests").color(NamedTextColor.GOLD));
         }
     }
 

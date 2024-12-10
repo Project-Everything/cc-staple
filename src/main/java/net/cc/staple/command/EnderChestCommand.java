@@ -1,9 +1,9 @@
 package net.cc.staple.command;
 
-import net.cc.staple.util.StapleColor;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -18,13 +18,13 @@ public final class EnderChestCommand implements BasicCommand {
 
         // Check if sender is not player
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(Component.text("The console cannot use this command.").color(StapleColor.RED));
+            sender.sendMessage(Component.text("The console cannot use this command.").color(NamedTextColor.RED));
             return;
         }
 
         // Open ender chest
         player.openInventory(player.getEnderChest());
-        player.sendMessage(Component.text("Opened your ender chest.").color(StapleColor.GOLD));
+        player.sendMessage(Component.text("Opened your ender chest.").color(NamedTextColor.GOLD));
     }
 
     @Override
