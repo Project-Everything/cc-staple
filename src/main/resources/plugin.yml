@@ -5,33 +5,6 @@ description: A general purpose plugin for Creative Central
 authors: [ SpektrSoyuz ]
 api-version: '1.21'
 permissions:
-  cc.command.*:
-    description: 'Access all CC commands'
-    children:
-      - cc.command.broadcast
-      - cc.command.enderchest
-      - cc.command.gamemode
-      - cc.command.help
-      - cc.command.item
-      - cc.command.jump
-      - cc.command.ping
-      - cc.command.playertime
-      - cc.command.respawn
-      - cc.command.rules
-      - cc.command.spawn
-      - cc.command.speed
-      - cc.command.teleport
-      - cc.command.top
-      - cc.command.tpa
-      - cc.command.vanish
-      - cc.command.vote
-  cc.command.basic:
-    description: 'Access to basic CC commands'
-    children:
-      - cc.command.help
-      - cc.command.ping
-      - cc.command.rules
-      - cc.command.vote
   cc.command.broadcast:
     description: 'Broadcast a message to the entire server'
   cc.command.enderchest:
@@ -66,7 +39,5 @@ permissions:
     description: 'Send and receive teleport requests'
   cc.command.tptoggle:
     description: 'Toggle tpa requests'
-  cc.command.vanish:
-    description: 'Vanish your player'
   cc.command.vote:
     description: 'View the vote page'

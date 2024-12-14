@@ -1,33 +1,16 @@
-# StaplePlugin Configuration
-motd: Welcome to the server!
-display-join-msg: true
-help-message: "<gold><st>                                                             </st></gold>
-                \n                           <b><gold>Help</gold></b>
-                \n
-                \n         <gold>View info on how to play at:</gold>
-                \n         <yellow><click:open_url:'url'>https://creative-central.net/help</click></yellow>
-                \n<gold><st>                                                             </st></gold>"
-rules-message: "<gold><st>                                                             </st></gold>
-                \n                           <b><gold>Rules</gold></b>
-                \n
-                \n         <gold>View the server rules at:</gold>
-                \n         <yellow><click:open_url:'url'>https://creative-central.net/rules</click></yellow>
-                \n<gold><st>                                                             </st></gold>"
-vote-message: "<gold><st>                                                             </st></gold>
-                \n                           <b><gold>Vote</gold></b>
-                \n
-                \n         <gold>Vote for the server at:</gold>
-                \n         <yellow><click:open_url:'url'>https://creative-central.net/vote</click></yellow>
-                \n<gold><st>                                                             </st></gold>"
+# storage
+mysql:
+  url: url
+  username: username
+  password: password
 
-# Spawn
+# spawn settings
 is-hub-server: false
 spawn-x: 0
 spawn-y: 0
 spawn-z: 0
 
-# MySQL Configuration
-mysql:
-  url: url
-  username: username
-  password: password
+# command messages
+help-message: <aqua>View our server help guide at:</aqua>\n<yellow><click:open_url:'https://creative-central.net/help'>creative-central.net/help</click></yellow>
+rules-message: <aqua>View our server rules at:</aqua>\n<yellow><click:open_url:'https://creative-central.net/rules'>creative-central.net/rules</click></yellow>
+vote-message: <aqua>Vote for our server at:</aqua>\n<yellow><click:open_url:'https://creative-central.net/vote'>creative-central.net/vote</click></yellow>

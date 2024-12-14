@@ -1,7 +1,6 @@
 package net.cc.staple.listener;
 
 import net.cc.staple.StaplePlugin;
-import net.cc.staple.player.StaplePlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -29,25 +28,7 @@ public final class PlayerJoinListener implements Listener {
         plugin.getLogger().info("Player " + player.getName() + " joined. Loading into cache.");
 
         // Retrieve StaplePlayer instance from storage, load into cache
-        plugin.getPlayerManager().getAndLoad(playerId, staplePlayer -> {
-
-            // Check if player is vanished
-            boolean isVanished = staplePlayer.isVanished();
-            for (Player onlinePlayer : plugin.getServer().getOnlinePlayers()) {
-                // Hide player from online player
-                if (isVanished) {
-                    onlinePlayer.hidePlayer(plugin, player);
-                }
-
-                // Hide online player from player
-                StaplePlayer onlineStaplePlayer = plugin.getPlayerManager().get(onlinePlayer.getUniqueId());
-                if (onlineStaplePlayer != null) {
-                    if (onlineStaplePlayer.isVanished()) {
-                        player.hidePlayer(plugin, onlinePlayer);
-                    }
-                }
-            }
-        });
+        plugin.getPlayerManager().load(playerId);
 
         if (plugin.isHubServer()) {
             String worldName = player.getWorld().getName();

@@ -50,7 +50,7 @@ public abstract class SQLStorage extends Storage {
     }
 
     /**
-     * addPlayer - saves a player to the database
+     * savePlayer - saves a player to the database
      *
      * @param staplePlayer instance of StaplePlayer
      * @return CompletableFuture
