@@ -1,16 +1,11 @@
-# storage
 mysql:
   url: url
   username: username
   password: password
-
-# spawn settings
 is-hub-server: false
 spawn-x: 0
-spawn-y: 0
+spawn-y: 64
 spawn-z: 0
-
-# command messages
 help-message: "<aqua>View our server help guide at:</aqua>\n<yellow><click:open_url:'https://creative-central.net/help'>creative-central.net/help</click></yellow>"
 rules-message: "<aqua>View our server rules at:</aqua>\n<yellow><click:open_url:'https://creative-central.net/rules'>creative-central.net/rules</click></yellow>"
 vote-message: "<aqua>Vote for our server at:</aqua>\n<yellow><click:open_url:'https://creative-central.net/vote'>creative-central.net/vote</click></yellow>"
