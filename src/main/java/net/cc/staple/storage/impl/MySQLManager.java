@@ -19,7 +19,7 @@ public final class MySQLManager extends SQLStorage {
         config.setUsername(username);
         config.setPassword(password);
         config.setMaximumPoolSize(10);
-        config.setPoolName("stapleplugin-pool");
+        config.setPoolName("cc-staple-pool");
         Class.forName("com.mysql.cj.jdbc.Driver");
         plugin.getLogger().info("jdbc url: " + url);
         plugin.getLogger().info("jdbc username: " + username);
