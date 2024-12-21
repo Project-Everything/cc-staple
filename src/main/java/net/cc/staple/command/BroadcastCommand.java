@@ -2,6 +2,7 @@ package net.cc.staple.command;
 
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
+import net.cc.staple.util.StapleUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -34,6 +35,6 @@ public final class BroadcastCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "cc.command.broadcast";
+        return StapleUtil.PERMISSION_COMMAND_BROADCAST;
     }
 }

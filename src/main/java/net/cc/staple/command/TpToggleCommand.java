@@ -4,6 +4,7 @@ import net.cc.staple.StaplePlugin;
 import net.cc.staple.player.StaplePlayer;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
+import net.cc.staple.util.StapleUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
@@ -50,6 +51,6 @@ public final class TpToggleCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "cc.command.tptoggle";
+        return StapleUtil.PERMISSION_COMMAND_TPTOGGLE;
     }
 }

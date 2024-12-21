@@ -3,6 +3,7 @@ package net.cc.staple.command;
 import net.cc.staple.StaplePlugin;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
+import net.cc.staple.util.StapleUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -23,7 +24,7 @@ public final class HelpCommand implements BasicCommand {
     public void execute(@NotNull CommandSourceStack stack, @NotNull String[] args) {
         CommandSender sender = stack.getSender();
 
-        final String text = plugin.getConfig().getString("help-message");
+        final String text = plugin.getConfig().getString("messages.help");
 
         // Deserialize text into component
         if (text != null) {
@@ -37,6 +38,6 @@ public final class HelpCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "cc.command.help";
+        return StapleUtil.PERMISSION_COMMAND_HELP;
     }
 }

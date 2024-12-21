@@ -3,6 +3,7 @@ package net.cc.staple.command;
 import net.cc.staple.StaplePlugin;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
+import net.cc.staple.util.StapleUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
@@ -48,6 +49,6 @@ public final class SetSpawnCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "cc.command.setspawn";
+        return StapleUtil.PERMISSION_COMMAND_SETSPAWN;
     }
 }

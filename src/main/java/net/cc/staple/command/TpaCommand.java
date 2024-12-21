@@ -3,6 +3,7 @@ package net.cc.staple.command;
 import net.cc.staple.StaplePlugin;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
+import net.cc.staple.util.StapleUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
@@ -61,6 +62,6 @@ public final class TpaCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "cc.command.tpa";
+        return StapleUtil.PERMISSION_COMMAND_TPA;
     }
 }

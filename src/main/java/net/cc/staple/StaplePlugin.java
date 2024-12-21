@@ -111,7 +111,6 @@ public final class StaplePlugin extends JavaPlugin {
             commands.register("respawn", "Set your health to 0", new RespawnCommand());
             commands.register("rules", "View the rules message", new RulesCommand());
             commands.register("setspawn", "Set the server spawn", new SetSpawnCommand());
-            commands.register("spawn", "Teleport to spawn", new SpawnCommand());
             commands.register("speed", "Set your player speed", new SpeedCommand());
             commands.register("teleport", "Teleport to a player", List.of("tp"), new TeleportCommand());
             commands.register("teleporthere", "Teleport a player to your location", List.of("tphere"), new TeleportHereCommand());
@@ -123,6 +122,12 @@ public final class StaplePlugin extends JavaPlugin {
             commands.register("tpdeny", "Deny a teleport request", new TpDenyCommand());
             commands.register("tptoggle", "Toggle receiving tp requests", new TpToggleCommand());
             commands.register("vote", "View the vote message", new VoteCommand());
+
+            boolean plotSquared = getServer().getPluginManager().isPluginEnabled("PlotSquared");
+
+            if (plotSquared) {
+                commands.register("spawn", "Teleport to spawn", new SpawnCommand());
+            }
         });
     }
 

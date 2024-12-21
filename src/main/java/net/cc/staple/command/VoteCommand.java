@@ -3,6 +3,7 @@ package net.cc.staple.command;
 import net.cc.staple.StaplePlugin;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
+import net.cc.staple.util.StapleUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -23,7 +24,7 @@ public final class VoteCommand implements BasicCommand {
     public void execute(@NotNull CommandSourceStack stack, @NotNull String[] args) {
         CommandSender sender = stack.getSender();
 
-        final String text = plugin.getConfig().getString("vote-message");
+        final String text = plugin.getConfig().getString("messages.vote");
 
         // Deserialize text into component
         if (text != null) {
@@ -37,6 +38,6 @@ public final class VoteCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return "cc.command.vote";
+        return StapleUtil.PERMISSION_COMMAND_VOTE;
     }
 }
