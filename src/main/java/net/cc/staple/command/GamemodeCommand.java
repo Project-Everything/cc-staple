@@ -1,74 +1,142 @@
 package net.cc.staple.command;
 
-import io.papermc.paper.command.brigadier.BasicCommand;
+import com.mojang.brigadier.Command;
+import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
+import io.papermc.paper.command.brigadier.Commands;
+import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import net.cc.staple.util.StapleUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
 import java.util.List;
 
 @SuppressWarnings("UnstableApiUsage")
 
-public final class GamemodeCommand implements BasicCommand {
+public final class GamemodeCommand {
 
-    @Override
-    public void execute(@NotNull CommandSourceStack stack, @NotNull String[] args) {
-        CommandSender sender = stack.getSender();
+    public GamemodeCommand(Commands commands) {
+        commands.register(Commands.literal("gamemode")
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_GAMEMODE))
+                        .executes(this::execute0)
+                        .then(Commands.argument("gamemode", ArgumentTypes.gameMode())
+                                .executes(this::execute1)
+                                .then(Commands.argument("player", ArgumentTypes.player())
+                                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_GAMEMODE_OTHER))
+                                        .executes(this::execute2)))
+                        .build(),
+                "Set your gamemode",
+                List.of("ec")
+        );
+        commands.register(Commands.literal("gms")
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_GAMEMODE))
+                        .executes(context -> execute3(context, GameMode.SURVIVAL))
+                        .then(Commands.argument("player", ArgumentTypes.player())
+                                .executes(context -> execute4(context, GameMode.SURVIVAL)))
+                        .build(),
+                "Set your gamemode to Survival");
 
-        // Check if sender is not player
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage(Component.text("The console cannot use this command.").color(NamedTextColor.RED));
-            return;
-        }
+        commands.register(Commands.literal("gmc")
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_GAMEMODE))
+                        .executes(context -> execute3(context, GameMode.CREATIVE))
+                        .then(Commands.argument("player", ArgumentTypes.player())
+                                .executes(context -> execute4(context, GameMode.CREATIVE)))
+                        .build(),
+                "Set your gamemode to Creative");
 
-        // Check if player entered no arguments
-        if (args.length == 0) {
-            player.sendMessage(Component.text("Usage: /gamemode <gamemode>").color(NamedTextColor.GRAY));
-            return;
-        }
+        commands.register(Commands.literal("gma")
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_GAMEMODE))
+                        .executes(context -> execute3(context, GameMode.ADVENTURE))
+                        .then(Commands.argument("player", ArgumentTypes.player())
+                                .executes(context -> execute4(context, GameMode.ADVENTURE)))
+                        .build(),
+                "Set your gamemode to Adventure");
 
-        String gameModeString = args[0];
-        GameMode gameMode;
-
-        // Set gameMode based on gameModeString
-        switch (gameModeString) {
-            case "creative":
-                gameMode = GameMode.CREATIVE;
-                player.sendMessage(Component.text("Gamemode set to Creative").color(NamedTextColor.GOLD));
-                break;
-            case "survival":
-                gameMode = GameMode.SURVIVAL;
-                player.sendMessage(Component.text("Gamemode set to Survival").color(NamedTextColor.GOLD));
-                break;
-            case "adventure":
-                gameMode = GameMode.ADVENTURE;
-                player.sendMessage(Component.text("Gamemode set to Adventure").color(NamedTextColor.GOLD));
-                break;
-            case "spectator":
-                gameMode = GameMode.SPECTATOR;
-                player.sendMessage(Component.text("Gamemode set to Spectator").color(NamedTextColor.GOLD));
-                break;
-            default:
-                player.sendMessage(Component.text("Unknown gamemode \"" + gameModeString + "\"").color(NamedTextColor.RED));
-                return;
-        }
-
-        player.setGameMode(gameMode);
+        commands.register(Commands.literal("gmsp")
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_GAMEMODE))
+                        .executes(context -> execute3(context, GameMode.SPECTATOR))
+                        .then(Commands.argument("player", ArgumentTypes.player())
+                                .executes(context -> execute4(context, GameMode.SPECTATOR)))
+                        .build(),
+                "Set your gamemode to Spectator");
     }
 
-    @Override
-    public @NotNull Collection<String> suggest(@NotNull CommandSourceStack stack, @NotNull String[] args) {
-        return List.of("creative", "survival", "adventure", "spectator");
+    private int execute0(CommandContext<CommandSourceStack> context) {
+        CommandSender sender = context.getSource().getSender();
+        if (sender instanceof Player player) {
+            player.sendMessage(Component.text()
+                    .content("/" + context.getInput() + " <gamemode> <player>")
+                    .color(NamedTextColor.RED)
+                    .build());
+            return Command.SINGLE_SUCCESS;
+        }
+        return 0;
     }
 
-    @Override
-    public @NotNull String permission() {
-        return StapleUtil.PERMISSION_COMMAND_GAMEMODE;
+    private int execute1(CommandContext<CommandSourceStack> context) {
+        CommandSender sender = context.getSource().getSender();
+        if (sender instanceof Player player) {
+            GameMode gameMode = context.getArgument("gamemode", GameMode.class);
+            player.setGameMode(gameMode);
+            player.sendMessage(Component.text()
+                    .content("Gamemode set to " + gameMode.name().toUpperCase() + ".")
+                    .color(NamedTextColor.GOLD)
+                    .build());
+            return Command.SINGLE_SUCCESS;
+        }
+        return 0;
+    }
+
+    private int execute2(CommandContext<CommandSourceStack> context) {
+        CommandSender sender = context.getSource().getSender();
+        if (sender instanceof Player player) {
+            GameMode gameMode = context.getArgument("gamemode", GameMode.class);
+            Player targetPlayer = context.getArgument("player", Player.class);
+            targetPlayer.setGameMode(gameMode);
+            player.sendMessage(Component.text()
+                    .content("Gamemode set to " + gameMode.name().toUpperCase() + " for " + targetPlayer.getName() + ".")
+                    .color(NamedTextColor.GOLD)
+                    .build());
+            targetPlayer.sendMessage(Component.text()
+                    .content("Gamemode set to " + gameMode.name().toUpperCase() + ".")
+                    .color(NamedTextColor.GOLD)
+                    .build());
+            return Command.SINGLE_SUCCESS;
+        }
+        return 0;
+    }
+
+    private int execute3(CommandContext<CommandSourceStack> context, GameMode gameMode) {
+        CommandSender sender = context.getSource().getSender();
+        if (sender instanceof Player player) {
+            player.setGameMode(gameMode);
+            player.sendMessage(Component.text()
+                    .content("Gamemode set to " + gameMode.name().toUpperCase() + ".")
+                    .color(NamedTextColor.GOLD)
+                    .build());
+            return Command.SINGLE_SUCCESS;
+        }
+        return 0;
+    }
+
+    private int execute4(CommandContext<CommandSourceStack> context, GameMode gameMode) {
+        CommandSender sender = context.getSource().getSender();
+        if (sender instanceof Player player) {
+            Player targetPlayer = context.getArgument("player", Player.class);
+            targetPlayer.setGameMode(gameMode);
+            player.sendMessage(Component.text()
+                    .content("Gamemode set to " + gameMode.name().toUpperCase() + " for " + targetPlayer.getName() + ".")
+                    .color(NamedTextColor.GOLD)
+                    .build());
+            targetPlayer.sendMessage(Component.text()
+                    .content("Gamemode set to " + gameMode.name().toUpperCase() + ".")
+                    .color(NamedTextColor.GOLD)
+                    .build());
+            return Command.SINGLE_SUCCESS;
+        }
+        return 0;
     }
 }

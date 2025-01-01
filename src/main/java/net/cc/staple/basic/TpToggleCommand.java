@@ -1,4 +1,4 @@
-package net.cc.staple.command;
+package net.cc.staple.basic;
 
 import net.cc.staple.StaplePlugin;
 import net.cc.staple.player.StaplePlayer;

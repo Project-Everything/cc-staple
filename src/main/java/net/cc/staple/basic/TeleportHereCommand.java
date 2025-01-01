@@ -1,4 +1,4 @@
-package net.cc.staple.command;
+package net.cc.staple.basic;
 
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
@@ -15,7 +15,7 @@ import java.util.Collection;
 
 @SuppressWarnings("UnstableApiUsage")
 
-public final class TeleportCommand implements BasicCommand {
+public final class TeleportHereCommand implements BasicCommand {
 
     @Override
     public void execute(@NotNull CommandSourceStack stack, @NotNull String[] args) {
@@ -29,7 +29,7 @@ public final class TeleportCommand implements BasicCommand {
 
         // Check if player entered no arguments
         if (args.length == 0) {
-            player.sendMessage(Component.text("Usage: /teleport <player>").color(NamedTextColor.GRAY));
+            player.sendMessage(Component.text("Usage: /teleporthere <player>").color(NamedTextColor.GRAY));
             return;
         }
 
@@ -42,23 +42,9 @@ public final class TeleportCommand implements BasicCommand {
 
         Player targetPlayer = targets.iterator().next();
 
-        // Check if player specified a second target
-        if (args.length == 1) {
-            player.teleport(targetPlayer);
-            player.sendMessage(Component.text("Teleported to " + targetPlayer.getName()).color(NamedTextColor.GOLD));
-        } else {
-            Collection<Player> targetLocations = Bukkit.matchPlayer(args[1]);
-
-            // Attempt to find target location
-            if (targetLocations.isEmpty()) {
-                player.sendMessage(Component.text("Target Player not found").color(NamedTextColor.RED));
-                return;
-            }
-
-            Player targetLocation = targetLocations.iterator().next();
-            targetPlayer.teleport(targetLocation);
-            player.sendMessage(Component.text("Teleported " + targetPlayer.getName() + " to " + targetLocation.getName()).color(NamedTextColor.GOLD));
-        }
+        // Teleport target to player
+        targetPlayer.teleport(player);
+        player.sendMessage(Component.text("Teleported " + targetPlayer.getName() + " to your location").color(NamedTextColor.GOLD));
     }
 
     @Override

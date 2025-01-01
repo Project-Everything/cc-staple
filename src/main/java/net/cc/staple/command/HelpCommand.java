@@ -1,43 +1,36 @@
 package net.cc.staple.command;
 
-import net.cc.staple.StaplePlugin;
-import io.papermc.paper.command.brigadier.BasicCommand;
+import com.mojang.brigadier.Command;
+import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
+import io.papermc.paper.command.brigadier.Commands;
+import net.cc.staple.StaplePlugin;
 import net.cc.staple.util.StapleUtil;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("UnstableApiUsage")
 
-public final class HelpCommand implements BasicCommand {
+public final class HelpCommand {
 
-    private final StaplePlugin plugin;
-
-    public HelpCommand() {
-        this.plugin = StaplePlugin.getInstance();
+    public HelpCommand(Commands commands) {
+        commands.register(Commands.literal("help")
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_HELP))
+                        .executes(this::execute0)
+                        .build(),
+                "View help message");
     }
 
-    @Override
-    public void execute(@NotNull CommandSourceStack stack, @NotNull String[] args) {
-        CommandSender sender = stack.getSender();
+    private int execute0(CommandContext<CommandSourceStack> context) {
+        final StaplePlugin staplePlugin = StaplePlugin.getInstance();
+        final String configText = staplePlugin.getConfig().getString(StapleUtil.CONFIG_MESSAGES_HELP);
 
-        final String text = plugin.getConfig().getString("messages.help");
-
-        // Deserialize text into component
-        if (text != null) {
+        if (configText != null) {
             MiniMessage miniMessage = MiniMessage.miniMessage();
-            Component component = miniMessage.deserialize(text);
-            sender.sendMessage(component);
-        } else {
-            sender.sendMessage(Component.text("Command execution failed. Please notify an admin of this error.").color(NamedTextColor.RED));
+            Component component = miniMessage.deserialize(configText);
+            context.getSource().getSender().sendMessage(component);
+            return Command.SINGLE_SUCCESS;
         }
-    }
-
-    @Override
-    public @NotNull String permission() {
-        return StapleUtil.PERMISSION_COMMAND_HELP;
+        return 0;
     }
 }

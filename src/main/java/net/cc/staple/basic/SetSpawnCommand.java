@@ -1,4 +1,4 @@
-package net.cc.staple.command;
+package net.cc.staple.basic;
 
 import net.cc.staple.StaplePlugin;
 import io.papermc.paper.command.brigadier.BasicCommand;

@@ -1,5 +1,6 @@
-package net.cc.staple.command;
+package net.cc.staple.basic;
 
+import net.cc.staple.StaplePlugin;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.cc.staple.util.StapleUtil;
@@ -13,9 +14,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 
-@SuppressWarnings("UnstableApiUsage")
+@SuppressWarnings({"UnstableApiUsage"})
 
-public final class TeleportHereCommand implements BasicCommand {
+public final class TpaCommand implements BasicCommand {
+
+    private final StaplePlugin plugin;
+
+    public TpaCommand() {
+        this.plugin = StaplePlugin.getInstance();
+    }
 
     @Override
     public void execute(@NotNull CommandSourceStack stack, @NotNull String[] args) {
@@ -29,7 +36,7 @@ public final class TeleportHereCommand implements BasicCommand {
 
         // Check if player entered no arguments
         if (args.length == 0) {
-            player.sendMessage(Component.text("Usage: /teleporthere <player>").color(NamedTextColor.GRAY));
+            player.sendMessage(Component.text("Usage: /tpa <player>").color(NamedTextColor.GRAY));
             return;
         }
 
@@ -41,10 +48,7 @@ public final class TeleportHereCommand implements BasicCommand {
         }
 
         Player targetPlayer = targets.iterator().next();
-
-        // Teleport target to player
-        targetPlayer.teleport(player);
-        player.sendMessage(Component.text("Teleported " + targetPlayer.getName() + " to your location").color(NamedTextColor.GOLD));
+        plugin.getTpaManager().sendRequest(player, targetPlayer, targetPlayer);
     }
 
     @Override
@@ -58,6 +62,6 @@ public final class TeleportHereCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return StapleUtil.PERMISSION_COMMAND_TELEPORT;
+        return StapleUtil.PERMISSION_COMMAND_TPA;
     }
 }

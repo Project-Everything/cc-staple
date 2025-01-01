@@ -1,6 +1,5 @@
-package net.cc.staple.command;
+package net.cc.staple.basic;
 
-import net.cc.staple.StaplePlugin;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.cc.staple.util.StapleUtil;
@@ -14,15 +13,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 
-@SuppressWarnings({"UnstableApiUsage"})
+@SuppressWarnings("UnstableApiUsage")
 
-public final class TpaHereCommand implements BasicCommand {
-
-    private final StaplePlugin plugin;
-
-    public TpaHereCommand() {
-        this.plugin = StaplePlugin.getInstance();
-    }
+public final class TeleportCommand implements BasicCommand {
 
     @Override
     public void execute(@NotNull CommandSourceStack stack, @NotNull String[] args) {
@@ -36,7 +29,7 @@ public final class TpaHereCommand implements BasicCommand {
 
         // Check if player entered no arguments
         if (args.length == 0) {
-            player.sendMessage(Component.text("Usage: /tpahere <player>").color(NamedTextColor.GRAY));
+            player.sendMessage(Component.text("Usage: /teleport <player>").color(NamedTextColor.GRAY));
             return;
         }
 
@@ -48,7 +41,24 @@ public final class TpaHereCommand implements BasicCommand {
         }
 
         Player targetPlayer = targets.iterator().next();
-        plugin.getTpaManager().sendRequest(player, targetPlayer, player);
+
+        // Check if player specified a second target
+        if (args.length == 1) {
+            player.teleport(targetPlayer);
+            player.sendMessage(Component.text("Teleported to " + targetPlayer.getName()).color(NamedTextColor.GOLD));
+        } else {
+            Collection<Player> targetLocations = Bukkit.matchPlayer(args[1]);
+
+            // Attempt to find target location
+            if (targetLocations.isEmpty()) {
+                player.sendMessage(Component.text("Target Player not found").color(NamedTextColor.RED));
+                return;
+            }
+
+            Player targetLocation = targetLocations.iterator().next();
+            targetPlayer.teleport(targetLocation);
+            player.sendMessage(Component.text("Teleported " + targetPlayer.getName() + " to " + targetLocation.getName()).color(NamedTextColor.GOLD));
+        }
     }
 
     @Override
@@ -62,6 +72,6 @@ public final class TpaHereCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return StapleUtil.PERMISSION_COMMAND_TPA;
+        return StapleUtil.PERMISSION_COMMAND_TELEPORT;
     }
 }

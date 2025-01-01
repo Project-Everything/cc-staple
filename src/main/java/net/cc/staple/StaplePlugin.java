@@ -1,5 +1,6 @@
 package net.cc.staple;
 
+import net.cc.staple.basic.*;
 import net.cc.staple.command.*;
 import net.cc.staple.listener.PlayerJoinListener;
 import net.cc.staple.listener.PlayerQuitListener;
@@ -96,15 +97,11 @@ public final class StaplePlugin extends JavaPlugin {
         lifecycleEventManager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
             final Commands commands = event.registrar();
 
-            commands.register("broadcast", "Broadcast a message", List.of("bc", "say"), new BroadcastCommand());
-            commands.register("enderchest", "View your ender chest", List.of("chest", "ec"), new EnderChestCommand());
-            commands.register("gamemode", "Switch your gamemode", List.of("gm"), new GamemodeCommand());
-            commands.register("gma", "Set your gamemode to adventure", new GMACommand());
-            commands.register("gmc", "Set your gamemode to creative", new GMCCommand());
-            commands.register("gms", "Set your gamemode to survival", new GMSCommand());
-            commands.register("gmsp", "Set your gamemode to spectator", new GMSPCommand());
-            commands.register("help", "View the help message", new HelpCommand());
-            commands.register("item", "Give yourself an item", List.of("i"), new ItemCommand());
+            new BroadcastCommand(commands);
+            new EnderChestCommand(commands);
+            new GamemodeCommand(commands);
+            new HelpCommand(commands);
+            new ItemCommand(commands);
             commands.register("jump", "Jump to a location", new JumpCommand());
             commands.register("ping", "Pong!", new PingCommand());
             commands.register("playertime", "Set the player time", List.of("ptime"), new PlayerTimeCommand());

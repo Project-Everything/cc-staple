@@ -1,4 +1,4 @@
-package net.cc.staple.command;
+package net.cc.staple.basic;
 
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;

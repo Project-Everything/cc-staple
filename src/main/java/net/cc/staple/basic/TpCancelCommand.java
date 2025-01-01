@@ -1,4 +1,4 @@
-package net.cc.staple.command;
+package net.cc.staple.basic;
 
 import net.cc.staple.StaplePlugin;
 import io.papermc.paper.command.brigadier.BasicCommand;
@@ -16,11 +16,11 @@ import java.util.Collection;
 
 @SuppressWarnings({"UnstableApiUsage"})
 
-public final class TpDenyCommand implements BasicCommand {
+public final class TpCancelCommand implements BasicCommand {
 
     private final StaplePlugin plugin;
 
-    public TpDenyCommand() {
+    public TpCancelCommand() {
         this.plugin = StaplePlugin.getInstance();
     }
 
@@ -36,7 +36,7 @@ public final class TpDenyCommand implements BasicCommand {
 
         // Check if player entered no arguments
         if (args.length == 0) {
-            player.sendMessage(Component.text("Usage: /tpdeny <player>").color(NamedTextColor.GRAY));
+            player.sendMessage(Component.text("Usage: /tpcancel <player>").color(NamedTextColor.GRAY));
             return;
         }
 
@@ -48,7 +48,7 @@ public final class TpDenyCommand implements BasicCommand {
         }
 
         Player targetPlayer = targets.iterator().next();
-        plugin.getTpaManager().denyRequest(targetPlayer, player);
+        plugin.getTpaManager().cancelRequest(player, targetPlayer);
     }
 
     @Override

@@ -1,61 +1,64 @@
 package net.cc.staple.command;
 
-import io.papermc.paper.command.brigadier.BasicCommand;
+import com.mojang.brigadier.Command;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
+import io.papermc.paper.command.brigadier.Commands;
+import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import net.cc.staple.util.StapleUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
-@SuppressWarnings({"UnstableApiUsage"})
+@SuppressWarnings("UnstableApiUsage")
 
-public final class ItemCommand implements BasicCommand {
+public final class ItemCommand {
 
-    @Override
-    public void execute(@NotNull CommandSourceStack stack, @NotNull String[] args) {
-        CommandSender sender = stack.getSender();
-
-        // Check if sender is not player
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage(Component.text("The console cannot use this command.").color(NamedTextColor.RED));
-            return;
-        }
-
-        // Check if player entered no arguments
-        if (args.length == 0) {
-            player.sendMessage(Component.text("Usage: /item <name>").color(NamedTextColor.GRAY));
-            return;
-        }
-
-        // Attempt to find specified material (item)
-        Material material = Material.matchMaterial(args[0]);
-        if (material == null) {
-            player.sendMessage(Component.text("Invalid item name.").color((NamedTextColor.RED)));
-            return;
-        }
-
-        player.getInventory().addItem(new ItemStack(material, 1));
-        player.sendMessage(Component.text("Received 1x " + args[0].replace("_", " ")).color(NamedTextColor.GOLD));
+    public ItemCommand(Commands commands) {
+        commands.register(Commands.literal("item")
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_ITEM))
+                        .executes(this::execute0)
+                        .then(Commands.argument("item", ArgumentTypes.itemStack())
+                                .executes(this::execute1)
+                                .then(Commands.argument("amount", IntegerArgumentType.integer(0, 1000))
+                                        .executes(this::execute2)))
+                        .build(),
+                "Spawn an item",
+                List.of("i"));
     }
 
-    @Override
-    public @NotNull Collection<String> suggest(@NotNull CommandSourceStack stack, @NotNull String[] args) {
-        Collection<String> suggestions = new ArrayList<>();
-        for (Material material : Material.values()) {
-            suggestions.add(material.name().toLowerCase());
+    private int execute0(CommandContext<CommandSourceStack> context) {
+        CommandSender sender = context.getSource().getSender();
+        if (sender instanceof Player player) {
+            player.sendMessage(Component.text("/" + context.getInput() + " <item> <amount>").color(NamedTextColor.RED));
+            return Command.SINGLE_SUCCESS;
         }
-        return suggestions;
+        return 0;
     }
 
-    @Override
-    public @NotNull String permission() {
-        return StapleUtil.PERMISSION_COMMAND_ITEM;
+    private int execute1(CommandContext<CommandSourceStack> context) {
+        CommandSender sender = context.getSource().getSender();
+        if (sender instanceof Player player) {
+            ItemStack item = context.getArgument("item", ItemStack.class);
+            player.getInventory().addItem(item);
+            player.sendMessage(Component.text("Received 1 " + item.displayName()).color(NamedTextColor.RED));
+        }
+        return 0;
+    }
+
+    private int execute2(CommandContext<CommandSourceStack> context) {
+        CommandSender sender = context.getSource().getSender();
+        if (sender instanceof Player player) {
+            int amount = IntegerArgumentType.getInteger(context, "amount");
+            ItemStack item = context.getArgument("item", ItemStack.class).asQuantity(amount);
+            player.getInventory().addItem(item);
+            player.sendMessage(Component.text("Received 1 " + item.displayName()).color(NamedTextColor.RED));
+        }
+        return 0;
     }
 }

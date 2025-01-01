@@ -1,35 +1,49 @@
 package net.cc.staple.command;
 
-import io.papermc.paper.command.brigadier.BasicCommand;
+import com.mojang.brigadier.Command;
+import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
+import io.papermc.paper.command.brigadier.Commands;
+import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import net.cc.staple.util.StapleUtil;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 @SuppressWarnings("UnstableApiUsage")
 
-public final class EnderChestCommand implements BasicCommand {
+public final class EnderChestCommand {
 
-    @Override
-    public void execute(@NotNull CommandSourceStack stack, @NotNull String[] args) {
-        CommandSender sender = stack.getSender();
-
-        // Check if sender is not player
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage(Component.text("The console cannot use this command.").color(NamedTextColor.RED));
-            return;
-        }
-
-        // Open ender chest
-        player.openInventory(player.getEnderChest());
-        player.sendMessage(Component.text("Opened your ender chest.").color(NamedTextColor.GOLD));
+    public EnderChestCommand(Commands commands) {
+        commands.register(Commands.literal("enderchest")
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_ENDERCHEST))
+                        .executes(this::execute0)
+                        .then(Commands.argument("player", ArgumentTypes.player())
+                                .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_ENDERCHEST_OTHER))
+                                .executes(this::execute1))
+                        .build(),
+                "View your ender chest",
+                List.of("ec")
+        );
     }
 
-    @Override
-    public @NotNull String permission() {
-        return StapleUtil.PERMISSION_COMMAND_ENDERCHEST;
+    private int execute0(CommandContext<CommandSourceStack> context) {
+        CommandSender sender = context.getSource().getSender();
+        if (sender instanceof Player player) {
+            player.openInventory(player.getEnderChest());
+            return Command.SINGLE_SUCCESS;
+        }
+        return 0;
+    }
+
+    private int execute1(CommandContext<CommandSourceStack> context) {
+        CommandSender sender = context.getSource().getSender();
+        if (sender instanceof Player player) {
+            Player targetPlayer = context.getArgument("player", Player.class);
+            player.openInventory(targetPlayer.getEnderChest());
+            return Command.SINGLE_SUCCESS;
+        }
+        return 0;
     }
 }

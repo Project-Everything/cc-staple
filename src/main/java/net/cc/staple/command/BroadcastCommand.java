@@ -1,40 +1,46 @@
 package net.cc.staple.command;
 
-import io.papermc.paper.command.brigadier.BasicCommand;
+import com.mojang.brigadier.Command;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
+import io.papermc.paper.command.brigadier.Commands;
 import net.cc.staple.util.StapleUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 @SuppressWarnings("UnstableApiUsage")
 
-public final class BroadcastCommand implements BasicCommand {
+public final class BroadcastCommand {
 
-    @Override
-    public void execute(@NotNull CommandSourceStack stack, @NotNull String[] args) {
-        CommandSender sender = stack.getSender();
-
-        // Check if player entered no arguments
-        if (args.length == 0) {
-            sender.sendMessage(Component.text("Usage: /broadcast <message>").color(NamedTextColor.GRAY));
-            return;
-        }
-
-        // Broadcast message
-        final TextComponent message = Component.text()
-                .append(Component.text("[Broadcast] ").color(NamedTextColor.DARK_PURPLE))
-                .append(Component.text(String.join(" ", args)).color(NamedTextColor.LIGHT_PURPLE))
-                .build();
-
-        Bukkit.broadcast(message);
+    public BroadcastCommand(Commands command) {
+        command.register(Commands.literal("")
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_BROADCAST))
+                        .executes(this::execute0)
+                        .then(Commands.argument("message", StringArgumentType.greedyString())
+                                .executes(this::execute1))
+                        .build(),
+                "Broadcast a message",
+                List.of("bc"));
     }
 
-    @Override
-    public @NotNull String permission() {
-        return StapleUtil.PERMISSION_COMMAND_BROADCAST;
+    public int execute0(CommandContext<CommandSourceStack> context) {
+        context.getSource().getSender().sendMessage(Component.text("/" + context.getInput() + " <message>").color(NamedTextColor.GRAY));
+        return Command.SINGLE_SUCCESS;
+    }
+
+    public int execute1(CommandContext<CommandSourceStack> context) {
+        String message = context.getArgument("message", String.class);
+        final TextComponent component = Component.text()
+                .content("[Broadcast]").color(NamedTextColor.DARK_PURPLE)
+                .append(Component.space(),
+                        Component.text(message).color(NamedTextColor.LIGHT_PURPLE))
+                .build();
+        Bukkit.broadcast(component);
+        return Command.SINGLE_SUCCESS;
     }
 }

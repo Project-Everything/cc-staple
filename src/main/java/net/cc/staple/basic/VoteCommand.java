@@ -1,4 +1,4 @@
-package net.cc.staple.command;
+package net.cc.staple.basic;
 
 import net.cc.staple.StaplePlugin;
 import io.papermc.paper.command.brigadier.BasicCommand;
@@ -12,11 +12,11 @@ import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("UnstableApiUsage")
 
-public final class RulesCommand implements BasicCommand {
+public final class VoteCommand implements BasicCommand {
 
     private final StaplePlugin plugin;
 
-    public RulesCommand() {
+    public VoteCommand() {
         this.plugin = StaplePlugin.getInstance();
     }
 
@@ -24,7 +24,7 @@ public final class RulesCommand implements BasicCommand {
     public void execute(@NotNull CommandSourceStack stack, @NotNull String[] args) {
         CommandSender sender = stack.getSender();
 
-        final String text = plugin.getConfig().getString("messages.rules");
+        final String text = plugin.getConfig().getString("messages.vote");
 
         // Deserialize text into component
         if (text != null) {
@@ -38,6 +38,6 @@ public final class RulesCommand implements BasicCommand {
 
     @Override
     public @NotNull String permission() {
-        return StapleUtil.PERMISSION_COMMAND_RULES;
+        return StapleUtil.PERMISSION_COMMAND_VOTE;
     }
 }
