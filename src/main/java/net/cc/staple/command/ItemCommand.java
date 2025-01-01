@@ -46,7 +46,12 @@ public final class ItemCommand {
         if (sender instanceof Player player) {
             ItemStack item = context.getArgument("item", ItemStack.class);
             player.getInventory().addItem(item);
-            player.sendMessage(Component.text("Received 1 " + item.displayName()).color(NamedTextColor.RED));
+            player.sendMessage(Component.text()
+                    .content("Received 1x")
+                    .color(NamedTextColor.GOLD)
+                    .append(Component.space(),
+                            item.displayName().color(NamedTextColor.YELLOW))
+                    .build());
         }
         return 0;
     }
@@ -57,7 +62,12 @@ public final class ItemCommand {
             int amount = IntegerArgumentType.getInteger(context, "amount");
             ItemStack item = context.getArgument("item", ItemStack.class).asQuantity(amount);
             player.getInventory().addItem(item);
-            player.sendMessage(Component.text("Received 1 " + item.displayName()).color(NamedTextColor.RED));
+            player.sendMessage(Component.text()
+                    .content("Received " + amount + "x")
+                    .color(NamedTextColor.GOLD)
+                    .append(Component.space(),
+                            item.displayName().color(NamedTextColor.YELLOW))
+                    .build());
         }
         return 0;
     }

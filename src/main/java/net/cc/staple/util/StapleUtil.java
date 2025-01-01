@@ -23,4 +23,6 @@ public final class StapleUtil {
     public static final String PERMISSION_COMMAND_VOTE = "cc.command.vote";
 
     public static final String CONFIG_MESSAGES_HELP = "messages.help";
+    public static final String CONFIG_MESSAGES_RULES = "messages.rules";
+    public static final String CONFIG_MESSAGES_VOTE = "messages.vote";
 }

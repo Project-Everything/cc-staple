@@ -106,11 +106,10 @@ public final class StaplePlugin extends JavaPlugin {
             commands.register("ping", "Pong!", new PingCommand());
             commands.register("playertime", "Set the player time", List.of("ptime"), new PlayerTimeCommand());
             commands.register("respawn", "Set your health to 0", new RespawnCommand());
-            commands.register("rules", "View the rules message", new RulesCommand());
+            new RulesCommand(commands);
             commands.register("setspawn", "Set the server spawn", new SetSpawnCommand());
             commands.register("speed", "Set your player speed", new SpeedCommand());
-            commands.register("teleport", "Teleport to a player", List.of("tp"), new TeleportCommand());
-            commands.register("teleporthere", "Teleport a player to your location", List.of("tphere"), new TeleportHereCommand());
+            new TeleportCommand(commands);
             commands.register("top", "Teleport to the highest block above you", new TopCommand());
             commands.register("tpaccept", "Accept a teleport request", new TpAcceptCommand());
             commands.register("tpa", "Send a teleport request", new TpaCommand());
@@ -118,7 +117,7 @@ public final class StaplePlugin extends JavaPlugin {
             commands.register("tpcancel", "Cancel a teleport request", new TpCancelCommand());
             commands.register("tpdeny", "Deny a teleport request", new TpDenyCommand());
             commands.register("tptoggle", "Toggle receiving tp requests", new TpToggleCommand());
-            commands.register("vote", "View the vote message", new VoteCommand());
+            new VoteCommand(commands);
 
             boolean plotSquared = getServer().getPluginManager().isPluginEnabled("PlotSquared");
 

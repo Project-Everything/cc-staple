@@ -6,6 +6,8 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import net.cc.staple.util.StapleUtil;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -32,6 +34,7 @@ public final class EnderChestCommand {
         CommandSender sender = context.getSource().getSender();
         if (sender instanceof Player player) {
             player.openInventory(player.getEnderChest());
+            player.sendMessage(Component.text("Opened your ender chest.").color(NamedTextColor.GOLD));
             return Command.SINGLE_SUCCESS;
         }
         return 0;
@@ -42,6 +45,7 @@ public final class EnderChestCommand {
         if (sender instanceof Player player) {
             Player targetPlayer = context.getArgument("player", Player.class);
             player.openInventory(targetPlayer.getEnderChest());
+            player.sendMessage(Component.text("Opened " + targetPlayer.getName() + "'s ender chest.").color(NamedTextColor.GOLD));
             return Command.SINGLE_SUCCESS;
         }
         return 0;
