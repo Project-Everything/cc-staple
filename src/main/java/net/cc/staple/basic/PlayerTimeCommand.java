@@ -2,7 +2,7 @@ package net.cc.staple.basic;
 
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
-import net.cc.staple.util.StapleUtil;
+import net.cc.staple.StapleUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;

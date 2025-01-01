@@ -6,7 +6,7 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.cc.staple.StaplePlugin;
 import net.cc.staple.player.StaplePlayer;
-import net.cc.staple.util.StapleUtil;
+import net.cc.staple.StapleUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
@@ -20,7 +20,8 @@ public final class TpToggleCommand {
         commands.register(Commands.literal("tptoggle")
                 .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_TPTOGGLE))
                 .executes(this::execute0)
-                .build());
+                .build(),
+                "Toggle teleportation requests");
     }
 
     private int execute0(CommandContext<CommandSourceStack> context) {
@@ -32,9 +33,9 @@ public final class TpToggleCommand {
                 staplePlayer.setTpDisabled(!isTpDisabled);
 
                 if (isTpDisabled) {
-                    player.sendMessage(Component.text("Enabled receiving tp requests").color(NamedTextColor.GOLD));
+                    player.sendMessage(Component.text("Enabled receiving tp requests.").color(NamedTextColor.GOLD));
                 } else {
-                    player.sendMessage(Component.text("Disabled receiving tp requests").color(NamedTextColor.GOLD));
+                    player.sendMessage(Component.text("Disabled receiving tp requests.").color(NamedTextColor.GOLD));
                 }
                 return Command.SINGLE_SUCCESS;
             }

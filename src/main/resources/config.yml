@@ -3,12 +3,16 @@ mysql:
   username: username
   password: password
 
-is-hub-server: false
-spawn-x: 0
-spawn-y: 64
-spawn-z: 0
+spawn:
+  x: 0
+  y: 0
+  z: 0
+  yaw: 0
+  pitch: 0
 
 messages:
   help: "<aqua>View our server help guide at:</aqua>\n<yellow><click:open_url:'https://creative-central.net/help'>creative-central.net/help</click></yellow>"
   rules: "<aqua>View our server rules at:</aqua>\n<yellow><click:open_url:'https://creative-central.net/rules'>creative-central.net/rules</click></yellow>"
+  spawn: "<gold>Teleported to spawn!</gold>"
+  setspawn: "<gold>Spawn has been set to your location.</gold>"
   vote: "<aqua>Vote for our server at:</aqua>\n<yellow><click:open_url:'https://creative-central.net/vote'>creative-central.net/vote</click></yellow>"

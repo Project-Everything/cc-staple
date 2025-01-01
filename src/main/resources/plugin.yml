@@ -1,5 +1,5 @@
 name: cc-staple
-version: '1.0.1'
+version: '1.0'
 main: net.cc.staple.StaplePlugin
 description: A general purpose plugin for Creative Central
 authors: [ SpektrSoyuz ]

@@ -4,10 +4,9 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
-import net.cc.staple.StaplePlugin;
-import net.cc.staple.util.StapleUtil;
+import net.cc.staple.StapleConfig;
+import net.cc.staple.StapleUtil;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 
 @SuppressWarnings("UnstableApiUsage")
 
@@ -22,15 +21,8 @@ public final class HelpCommand {
     }
 
     private int execute0(CommandContext<CommandSourceStack> context) {
-        final StaplePlugin staplePlugin = StaplePlugin.getInstance();
-        final String configText = staplePlugin.getConfig().getString(StapleUtil.CONFIG_MESSAGES_HELP);
-
-        if (configText != null) {
-            MiniMessage miniMessage = MiniMessage.miniMessage();
-            Component component = miniMessage.deserialize(configText);
-            context.getSource().getSender().sendMessage(component);
-            return Command.SINGLE_SUCCESS;
-        }
-        return 0;
+        Component component = StapleConfig.getHelpMessage();
+        context.getSource().getSender().sendMessage(component);
+        return Command.SINGLE_SUCCESS;
     }
 }

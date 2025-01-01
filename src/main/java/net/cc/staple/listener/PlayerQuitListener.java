@@ -25,9 +25,8 @@ public final class PlayerQuitListener implements Listener {
         UUID playerId = player.getUniqueId();
 
         plugin.getLogger().info("Player " + player.getName() + " left. Removing from cache.");
-
-        // Save StaplePlayer instance to storage, clear from cache
         StaplePlayer staplePlayer = plugin.getPlayerManager().get(playerId);
+
         plugin.getStorage().savePlayer(staplePlayer);
         plugin.getPlayerManager().remove(playerId);
     }

@@ -2,6 +2,7 @@ package net.cc.staple;
 
 import net.cc.staple.basic.*;
 import net.cc.staple.command.*;
+import net.cc.staple.command.SpawnCommand;
 import net.cc.staple.listener.PlayerJoinListener;
 import net.cc.staple.listener.PlayerQuitListener;
 import net.cc.staple.player.PlayerManager;
@@ -27,8 +28,6 @@ public final class StaplePlugin extends JavaPlugin {
     private PlayerManager playerManager;
     private TpaManager tpaManager;
 
-    private boolean isHubServer;
-
     @Override
     public void onLoad() {
         instance = this;
@@ -37,18 +36,12 @@ public final class StaplePlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Load config
-        try {
-            this.isHubServer = getConfig().getBoolean("is-hub-server");
-        } catch (NullPointerException e) {
-            getLogger().severe("Configuration is invalid!");
-            getLogger().severe("Exception: " + e.getMessage());
-        }
+        StapleConfig.load(this);
 
         // Load database
-        String mysqlUrl = getConfig().getString("mysql.url");
-        String mysqlUsername = getConfig().getString("mysql.username");
-        String mysqlPassword = getConfig().getString("mysql.password");
+        String mysqlUrl = StapleConfig.getMySqlUrl();
+        String mysqlUsername = StapleConfig.getMySqlUser();
+        String mysqlPassword = StapleConfig.getMySqlPassword();
 
         // Connect to database using HikariCP
         try {
@@ -63,7 +56,6 @@ public final class StaplePlugin extends JavaPlugin {
 
         // Setup methods
         registerCommands();
-        registerHooks();
         registerListeners();
         registerManagers();
     }
@@ -88,10 +80,6 @@ public final class StaplePlugin extends JavaPlugin {
         return tpaManager;
     }
 
-    public boolean isHubServer() {
-        return isHubServer;
-    }
-
     private void registerCommands() {
         LifecycleEventManager<Plugin> lifecycleEventManager = getLifecycleManager();
         lifecycleEventManager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
@@ -107,24 +95,14 @@ public final class StaplePlugin extends JavaPlugin {
             commands.register("playertime", "Set the player time", List.of("ptime"), new PlayerTimeCommand());
             commands.register("respawn", "Set your health to 0", new RespawnCommand());
             new RulesCommand(commands);
-            commands.register("setspawn", "Set the server spawn", new SetSpawnCommand());
             commands.register("speed", "Set your player speed", new SpeedCommand());
+            new SpawnCommand(commands);
             new TeleportCommand(commands);
             commands.register("top", "Teleport to the highest block above you", new TopCommand());
             new TpaCommand(commands);
             new TpToggleCommand(commands);
             new VoteCommand(commands);
-
-            boolean plotSquared = getServer().getPluginManager().isPluginEnabled("PlotSquared");
-
-            if (plotSquared) {
-                commands.register("spawn", "Teleport to spawn", new SpawnCommand());
-            }
         });
-    }
-
-    private void registerHooks() {
-
     }
 
     private void registerListeners() {
@@ -140,7 +118,6 @@ public final class StaplePlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         playerManager.saveAll();
-
         instance = null;
     }
 }

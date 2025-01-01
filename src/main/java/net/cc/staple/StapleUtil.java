@@ -1,6 +1,7 @@
-package net.cc.staple.util;
+package net.cc.staple;
 
 public final class StapleUtil {
+    /* Permission Constants */
     public static final String PERMISSION_COMMAND_BROADCAST = "cc.command.broadcast";
     public static final String PERMISSION_COMMAND_ENDERCHEST = "cc.command.enderchest";
     public static final String PERMISSION_COMMAND_ENDERCHEST_OTHER = "cc.command.enderchest.other";
@@ -21,8 +22,4 @@ public final class StapleUtil {
     public static final String PERMISSION_COMMAND_TPA = "cc.command.tpa";
     public static final String PERMISSION_COMMAND_TPTOGGLE = "cc.command.tptoggle";
     public static final String PERMISSION_COMMAND_VOTE = "cc.command.vote";
-
-    public static final String CONFIG_MESSAGES_HELP = "messages.help";
-    public static final String CONFIG_MESSAGES_RULES = "messages.rules";
-    public static final String CONFIG_MESSAGES_VOTE = "messages.vote";
 }
