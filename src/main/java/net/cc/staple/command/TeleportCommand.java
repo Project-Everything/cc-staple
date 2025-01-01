@@ -16,6 +16,7 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -29,7 +30,9 @@ public final class TeleportCommand {
                         .then(Commands.argument("target", ArgumentTypes.player())
                                 .executes(this::teleport1)
                                 .then(Commands.argument("target2", ArgumentTypes.player())
-                                        .executes(this::teleport2)))
+                                        .executes(this::teleport2))
+                                .then(Commands.argument("position", ArgumentTypes.finePosition(true))
+                                        .executes(this::teleport4)))
                         .then(Commands.argument("position", ArgumentTypes.finePosition(true))
                                 .executes(this::teleport3))
                         .build(),
@@ -59,6 +62,7 @@ public final class TeleportCommand {
 
             try {
                 final Player target = targetResolver.resolve(context.getSource()).getFirst();
+
                 player.teleport(target);
                 player.sendMessage(Component.text("Teleported to " + target.getName() + ".").color(NamedTextColor.GOLD));
                 return Command.SINGLE_SUCCESS;
@@ -76,6 +80,7 @@ public final class TeleportCommand {
         try {
             final Player target = targetResolver.resolve(context.getSource()).getFirst();
             final Player target2 = targetResolver2.resolve(context.getSource()).getFirst();
+
             target.teleport(target2);
             context.getSource().getSender().sendMessage(Component.text("Teleported " + target.getName() + " to " + target2.getName() + ".").color(NamedTextColor.GOLD));
             return Command.SINGLE_SUCCESS;
@@ -91,10 +96,35 @@ public final class TeleportCommand {
             FinePositionResolver finePositionResolver = context.getArgument("position", FinePositionResolver.class);
 
             try {
-                FinePosition finePosition = finePositionResolver.resolve(context.getSource());
-                Location location = finePosition.toLocation(player.getWorld());
+                final FinePosition finePosition = finePositionResolver.resolve(context.getSource());
+                final Location location = finePosition.toLocation(player.getWorld());
+                DecimalFormat df = new DecimalFormat("#.##");
+
                 player.teleport(location);
-                player.sendMessage(Component.text("Teleported to " + location.getX() + ", " + location.getY() + ", " + location.getZ()).color(NamedTextColor.GOLD));
+                player.sendMessage(Component.text("Teleported to " + df.format(location.getX()) + ", " + df.format(location.getY()) + ", " + df.format(location.getZ())).color(NamedTextColor.GOLD));
+                return Command.SINGLE_SUCCESS;
+            } catch (CommandSyntaxException e) {
+                context.getSource().getSender().sendMessage(Component.text(e.getMessage()).color(NamedTextColor.RED));
+            }
+        }
+        return 0;
+    }
+
+    private int teleport4(CommandContext<CommandSourceStack> context) {
+        CommandSender sender = context.getSource().getSender();
+        if (sender instanceof Player player) {
+            PlayerSelectorArgumentResolver targetResolver = context.getArgument("target", PlayerSelectorArgumentResolver.class);
+            FinePositionResolver finePositionResolver = context.getArgument("position", FinePositionResolver.class);
+
+            try {
+                final Player target = targetResolver.resolve(context.getSource()).getFirst();
+                final FinePosition finePosition = finePositionResolver.resolve(context.getSource());
+                final Location location = finePosition.toLocation(player.getWorld());
+                DecimalFormat df = new DecimalFormat("#.##");
+
+                target.teleport(location);
+                player.sendMessage(Component.text("Teleported " + target.getName() + " to " + df.format(location.getX()) + ", " + df.format(location.getY()) + ", " + df.format(location.getZ())).color(NamedTextColor.GOLD));
+                target.sendMessage(Component.text("Teleported to " + df.format(location.getX()) + ", " + df.format(location.getY()) + ", " + df.format(location.getZ())).color(NamedTextColor.GOLD));
                 return Command.SINGLE_SUCCESS;
             } catch (CommandSyntaxException e) {
                 context.getSource().getSender().sendMessage(Component.text(e.getMessage()).color(NamedTextColor.RED));
@@ -104,7 +134,7 @@ public final class TeleportCommand {
     }
 
     private int teleportHere0(CommandContext<CommandSourceStack> context) {
-        context.getSource().getSender().sendMessage(Component.text("/" + context.getInput() + " <player>").color(NamedTextColor.RED));
+        context.getSource().getSender().sendMessage(Component.text("/" + context.getInput() + " <target>").color(NamedTextColor.RED));
         return Command.SINGLE_SUCCESS;
     }
 
@@ -115,6 +145,7 @@ public final class TeleportCommand {
 
             try {
                 final Player target = targetResolver.resolve(context.getSource()).getFirst();
+
                 target.teleport(player);
                 player.sendMessage(Component.text("Teleported " + target.getName() + " to your location.").color(NamedTextColor.GOLD));
                 return Command.SINGLE_SUCCESS;
