@@ -19,7 +19,7 @@ import java.util.concurrent.CompletableFuture;
 
 @SuppressWarnings("UnstableApiUsage")
 
-public final class TimeArgumentType implements CustomArgumentType.Converted<StapleTime, String> {
+public final class StapleTimeArgumentType implements CustomArgumentType.Converted<StapleTime, String> {
 
     @Override
     public @NotNull StapleTime convert(@NotNull String nativeType) throws CommandSyntaxException {

@@ -8,7 +8,7 @@ import io.papermc.paper.command.brigadier.Commands;
 import net.cc.staple.StapleConfig;
 import net.cc.staple.StapleUtil;
 import net.cc.staple.command.argument.StapleTime;
-import net.cc.staple.command.argument.TimeArgumentType;
+import net.cc.staple.command.argument.StapleTimeArgumentType;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextReplacementConfig;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -25,7 +25,7 @@ public final class PlayerTimeCommand {
         commands.register(Commands.literal("playertime")
                 .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_PLAYERTIME))
                 .executes(this::execute0)
-                .then(Commands.argument("preset", new TimeArgumentType())
+                .then(Commands.argument("preset", new StapleTimeArgumentType())
                         .executes(this::execute1))
                 .then(Commands.argument("value", LongArgumentType.longArg())
                         .executes(this::execute2))
