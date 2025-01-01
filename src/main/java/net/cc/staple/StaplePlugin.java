@@ -111,12 +111,8 @@ public final class StaplePlugin extends JavaPlugin {
             commands.register("speed", "Set your player speed", new SpeedCommand());
             new TeleportCommand(commands);
             commands.register("top", "Teleport to the highest block above you", new TopCommand());
-            commands.register("tpaccept", "Accept a teleport request", new TpAcceptCommand());
-            commands.register("tpa", "Send a teleport request", new TpaCommand());
-            commands.register("tpahere", "Send a teleport request to your location", new TpaHereCommand());
-            commands.register("tpcancel", "Cancel a teleport request", new TpCancelCommand());
-            commands.register("tpdeny", "Deny a teleport request", new TpDenyCommand());
-            commands.register("tptoggle", "Toggle receiving tp requests", new TpToggleCommand());
+            new TpaCommand(commands);
+            new TpToggleCommand(commands);
             new VoteCommand(commands);
 
             boolean plotSquared = getServer().getPluginManager().isPluginEnabled("PlotSquared");
