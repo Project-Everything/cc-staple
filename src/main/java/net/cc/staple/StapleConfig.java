@@ -26,6 +26,11 @@ public final class StapleConfig {
     private static String spawnMessage;
     private static String setSpawnMessage;
     private static String voteMessage;
+    private static String playerTimeMessage;
+    private static String topMessage;
+    private static String jumpMessage;
+    private static String respawnMessage;
+    private static String speedMessage;
 
     public static void load(StaplePlugin staplePlugin) {
         try {
@@ -47,6 +52,11 @@ public final class StapleConfig {
             spawnMessage = staplePlugin.getConfig().getString("messages.spawn");
             setSpawnMessage = staplePlugin.getConfig().getString("messages.setspawn");
             voteMessage = staplePlugin.getConfig().getString("messages.vote");
+            playerTimeMessage = staplePlugin.getConfig().getString("messages.playertime");
+            topMessage = staplePlugin.getConfig().getString("messages.top");
+            jumpMessage = staplePlugin.getConfig().getString("messages.jump");
+            respawnMessage = staplePlugin.getConfig().getString("messages.respawn");
+            speedMessage = staplePlugin.getConfig().getString("messages.speed");
         } catch (NullPointerException e) {
             staplePlugin.getLogger().severe("Configuration did not load properly, disabling plugin!");
             Bukkit.getPluginManager().disablePlugin(staplePlugin);
@@ -67,6 +77,11 @@ public final class StapleConfig {
         staplePlugin.getConfig().set("messages.spawn", spawnMessage);
         staplePlugin.getConfig().set("messages.setspawn", setSpawnMessage);
         staplePlugin.getConfig().set("messages.vote", voteMessage);
+        staplePlugin.getConfig().set("messages.playertime", playerTimeMessage);
+        staplePlugin.getConfig().set("messages.top", topMessage);
+        staplePlugin.getConfig().set("messages.jump", jumpMessage);
+        staplePlugin.getConfig().set("messages.respawn", respawnMessage);
+        staplePlugin.getConfig().set("messages.speed", speedMessage);
         staplePlugin.saveConfig();
     }
 
@@ -112,5 +127,25 @@ public final class StapleConfig {
 
     public static Component getVoteMessage() {
         return MiniMessage.miniMessage().deserialize(voteMessage);
+    }
+
+    public static Component getPlayerTimeMessage() {
+        return MiniMessage.miniMessage().deserialize(playerTimeMessage);
+    }
+
+    public static Component getTopMessage() {
+        return MiniMessage.miniMessage().deserialize(topMessage);
+    }
+
+    public static Component getJumpMessage() {
+        return MiniMessage.miniMessage().deserialize(jumpMessage);
+    }
+
+    public static Component getRespawnMessage() {
+        return MiniMessage.miniMessage().deserialize(respawnMessage);
+    }
+
+    public static Component getSpeedMessage() {
+        return MiniMessage.miniMessage().deserialize(speedMessage);
     }
 }

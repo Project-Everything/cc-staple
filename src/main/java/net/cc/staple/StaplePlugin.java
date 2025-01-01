@@ -1,8 +1,8 @@
 package net.cc.staple;
 
-import net.cc.staple.basic.*;
 import net.cc.staple.command.*;
-import net.cc.staple.command.SpawnCommand;
+import net.cc.staple.command.PingCommand;
+import net.cc.staple.command.RespawnCommand;
 import net.cc.staple.listener.PlayerJoinListener;
 import net.cc.staple.listener.PlayerQuitListener;
 import net.cc.staple.player.PlayerManager;
@@ -17,7 +17,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
-import java.util.List;
 
 @SuppressWarnings("UnstableApiUsage")
 
@@ -90,15 +89,14 @@ public final class StaplePlugin extends JavaPlugin {
             new GamemodeCommand(commands);
             new HelpCommand(commands);
             new ItemCommand(commands);
-            commands.register("jump", "Jump to a location", new JumpCommand());
-            commands.register("ping", "Pong!", new PingCommand());
-            commands.register("playertime", "Set the player time", List.of("ptime"), new PlayerTimeCommand());
-            commands.register("respawn", "Set your health to 0", new RespawnCommand());
+            new PingCommand(commands);
+            new PlayerTimeCommand(commands);
+            new RespawnCommand(commands);
             new RulesCommand(commands);
-            commands.register("speed", "Set your player speed", new SpeedCommand());
+            new SpeedCommand(commands);
             new SpawnCommand(commands);
             new TeleportCommand(commands);
-            commands.register("top", "Teleport to the highest block above you", new TopCommand());
+            new TopCommand(commands);
             new TpaCommand(commands);
             new TpToggleCommand(commands);
             new VoteCommand(commands);
