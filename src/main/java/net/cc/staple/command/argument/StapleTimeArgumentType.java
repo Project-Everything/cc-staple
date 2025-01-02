@@ -24,7 +24,7 @@ public final class StapleTimeArgumentType implements CustomArgumentType.Converte
     @Override
     public @NotNull StapleTime convert(@NotNull String nativeType) throws CommandSyntaxException {
         try {
-            return StapleTime.valueOf(nativeType.toUpperCase(Locale.ENGLISH));
+            return StapleTime.valueOf(nativeType.toLowerCase(Locale.ENGLISH));
         } catch (IllegalArgumentException ignored) {
             Message message = MessageComponentSerializer.message().serialize(Component.text("%s is not a valid time of day!".formatted(nativeType), NamedTextColor.RED));
             throw new CommandSyntaxException(new SimpleCommandExceptionType(message), message);

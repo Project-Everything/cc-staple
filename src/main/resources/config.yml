@@ -1,3 +1,4 @@
+server: hub
 mysql:
   url: url
   username: username

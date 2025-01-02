@@ -11,6 +11,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.codehaus.plexus.util.StringUtils;
 
 import java.util.List;
 
@@ -82,7 +83,7 @@ public final class GamemodeCommand {
             GameMode gameMode = context.getArgument("gamemode", GameMode.class);
             player.setGameMode(gameMode);
             player.sendMessage(Component.text()
-                    .content("Gamemode set to " + gameMode.name().toUpperCase() + ".")
+                    .content("Gamemode set to " + StringUtils.capitalizeFirstLetter(gameMode.name()) + ".")
                     .color(NamedTextColor.GOLD)
                     .build());
             return Command.SINGLE_SUCCESS;
@@ -97,11 +98,11 @@ public final class GamemodeCommand {
             Player targetPlayer = context.getArgument("player", Player.class);
             targetPlayer.setGameMode(gameMode);
             player.sendMessage(Component.text()
-                    .content("Gamemode set to " + gameMode.name().toUpperCase() + " for " + targetPlayer.getName() + ".")
+                    .content("Gamemode set to " + StringUtils.capitalizeFirstLetter(gameMode.name()) + " for " + targetPlayer.getName() + ".")
                     .color(NamedTextColor.GOLD)
                     .build());
             targetPlayer.sendMessage(Component.text()
-                    .content("Gamemode set to " + gameMode.name().toUpperCase() + ".")
+                    .content("Gamemode set to " + StringUtils.capitalizeFirstLetter(gameMode.name()) + ".")
                     .color(NamedTextColor.GOLD)
                     .build());
             return Command.SINGLE_SUCCESS;
@@ -114,7 +115,7 @@ public final class GamemodeCommand {
         if (sender instanceof Player player) {
             player.setGameMode(gameMode);
             player.sendMessage(Component.text()
-                    .content("Gamemode set to " + gameMode.name().toUpperCase() + ".")
+                    .content("Gamemode set to " + StringUtils.capitalizeFirstLetter(gameMode.name()) + ".")
                     .color(NamedTextColor.GOLD)
                     .build());
             return Command.SINGLE_SUCCESS;
@@ -128,11 +129,11 @@ public final class GamemodeCommand {
             Player targetPlayer = context.getArgument("player", Player.class);
             targetPlayer.setGameMode(gameMode);
             player.sendMessage(Component.text()
-                    .content("Gamemode set to " + gameMode.name().toUpperCase() + " for " + targetPlayer.getName() + ".")
+                    .content("Gamemode set to " + StringUtils.capitalizeFirstLetter(gameMode.name()) + " for " + targetPlayer.getName() + ".")
                     .color(NamedTextColor.GOLD)
                     .build());
             targetPlayer.sendMessage(Component.text()
-                    .content("Gamemode set to " + gameMode.name().toUpperCase() + ".")
+                    .content("Gamemode set to " + StringUtils.capitalizeFirstLetter(gameMode.name()) + ".")
                     .color(NamedTextColor.GOLD)
                     .build());
             return Command.SINGLE_SUCCESS;

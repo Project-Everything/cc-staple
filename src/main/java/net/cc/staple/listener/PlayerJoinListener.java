@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public final class PlayerJoinListener implements Listener {
@@ -16,7 +17,6 @@ public final class PlayerJoinListener implements Listener {
 
     public PlayerJoinListener() {
         this.plugin = StaplePlugin.getInstance();
-
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
@@ -28,7 +28,9 @@ public final class PlayerJoinListener implements Listener {
         plugin.getLogger().info("Player " + player.getName() + " joined. Loading into cache.");
         plugin.getPlayerManager().load(playerId);
 
-        Location location = StapleConfig.getSpawnLocation(player.getWorld());
-        player.teleport(location);
+        if (Objects.equals(StaplePlugin.serverName, "hub")) {
+            Location location = StapleConfig.getSpawnLocation(player.getWorld());
+            player.teleport(location);
+        }
     }
 }

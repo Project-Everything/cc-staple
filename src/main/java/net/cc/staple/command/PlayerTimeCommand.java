@@ -51,10 +51,10 @@ public final class PlayerTimeCommand {
 
             long longTime;
             switch (stapleTime) {
-                case MORNING -> longTime = 0;
-                case DAY -> longTime = 6000;
-                case EVENING -> longTime = 12000;
-                case NIGHT -> longTime = 18000;
+                case morning -> longTime = 0;
+                case day -> longTime = 6000;
+                case evening -> longTime = 12000;
+                case night -> longTime = 18000;
                 default -> longTime = -1;
             }
 

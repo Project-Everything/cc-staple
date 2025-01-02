@@ -23,6 +23,8 @@ import java.sql.SQLException;
 public final class StaplePlugin extends JavaPlugin {
 
     private static StaplePlugin instance;
+    public static String serverName;
+
     private Storage storage;
     private PlayerManager playerManager;
     private TpaManager tpaManager;
@@ -35,28 +37,24 @@ public final class StaplePlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        serverName = getConfig().getString("server");
         StapleConfig.load(this);
 
-        // Load database
-        String mysqlUrl = StapleConfig.getMySqlUrl();
-        String mysqlUsername = StapleConfig.getMySqlUser();
-        String mysqlPassword = StapleConfig.getMySqlPassword();
-
-        // Connect to database using HikariCP
         try {
-            this.storage = new MySQLManager(mysqlUrl, mysqlUsername, mysqlPassword);
-            getLogger().info("MySQL Database loaded.");
-        } catch (ClassNotFoundException | SQLException e) {
-            getLogger().severe("SQL Exception while initializing SQL Manager: " + e.getMessage());
-            getLogger().severe("MySQL Database did not load, disabling plugin.");
-            getServer().getPluginManager().disablePlugin(this);
-            return;
+            setupStorage();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
-        // Setup methods
-        registerCommands();
-        registerListeners();
-        registerManagers();
+        setupCommands();
+        setupListeners();
+        setupManagers();
+    }
+
+    @Override
+    public void onDisable() {
+        playerManager.saveAll();
+        instance = null;
     }
 
     @NotNull
@@ -79,7 +77,24 @@ public final class StaplePlugin extends JavaPlugin {
         return tpaManager;
     }
 
-    private void registerCommands() {
+    private void setupStorage() throws SQLException, ClassNotFoundException {
+        String url = StapleConfig.getMySqlUrl();
+        String username = StapleConfig.getMySqlUser();
+        String password = StapleConfig.getMySqlPassword();
+        storage = new MySQLManager(url, username, password);
+    }
+
+    private void setupManagers() {
+        playerManager = new PlayerManager();
+        tpaManager = new TpaManager();
+    }
+
+    private void setupListeners() {
+        new PlayerJoinListener();
+        new PlayerQuitListener();
+    }
+
+    private void setupCommands() {
         LifecycleEventManager<Plugin> lifecycleEventManager = getLifecycleManager();
         lifecycleEventManager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
             final Commands commands = event.registrar();
@@ -94,28 +109,17 @@ public final class StaplePlugin extends JavaPlugin {
             new RespawnCommand(commands);
             new RulesCommand(commands);
             new SpeedCommand(commands);
-            new SpawnCommand(commands);
             new TeleportCommand(commands);
             new TopCommand(commands);
             new TpaCommand(commands);
             new TpToggleCommand(commands);
             new VoteCommand(commands);
+
+            boolean plotSquared = getServer().getPluginManager().isPluginEnabled("PlotSquared");
+
+            if (plotSquared) {
+                new SpawnCommand(commands);
+            }
         });
-    }
-
-    private void registerListeners() {
-        new PlayerJoinListener();
-        new PlayerQuitListener();
-    }
-
-    private void registerManagers() {
-        playerManager = new PlayerManager();
-        tpaManager = new TpaManager();
-    }
-
-    @Override
-    public void onDisable() {
-        playerManager.saveAll();
-        instance = null;
     }
 }

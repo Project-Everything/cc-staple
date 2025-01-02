@@ -1,9 +1,9 @@
 package net.cc.staple.command.argument;
 
 public enum StapleTime {
-    DAY,
-    NIGHT,
-    MORNING,
-    EVENING,
-    OFF
+    day,
+    night,
+    morning,
+    evening,
+    off
 }

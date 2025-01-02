@@ -15,7 +15,6 @@ public final class PlayerQuitListener implements Listener {
 
     public PlayerQuitListener() {
         this.plugin = StaplePlugin.getInstance();
-
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
