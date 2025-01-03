@@ -12,10 +12,11 @@ import net.cc.staple.command.argument.StapleTimeArgumentType;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextReplacementConfig;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.Locale;
+import java.util.List;
 
 @SuppressWarnings("UnstableApiUsage")
 
@@ -23,13 +24,15 @@ public final class PlayerTimeCommand {
 
     public PlayerTimeCommand(Commands commands) {
         commands.register(Commands.literal("playertime")
-                .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_PLAYERTIME))
-                .executes(this::execute0)
-                .then(Commands.argument("preset", new StapleTimeArgumentType())
-                        .executes(this::execute1))
-                .then(Commands.argument("value", LongArgumentType.longArg())
-                        .executes(this::execute2))
-                .build());
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_PLAYERTIME))
+                        .executes(this::execute0)
+                        .then(Commands.argument("preset", new StapleTimeArgumentType())
+                                .executes(this::execute1))
+                        .then(Commands.argument("value", LongArgumentType.longArg())
+                                .executes(this::execute2))
+                        .build(),
+                "Set the player time",
+                List.of("ptime"));
     }
 
     private int execute0(CommandContext<CommandSourceStack> context) {
@@ -66,7 +69,7 @@ public final class PlayerTimeCommand {
 
             TextReplacementConfig config = TextReplacementConfig.builder()
                     .matchLiteral("{time}")
-                    .replacement(stapleTime.name().toUpperCase(Locale.ENGLISH))
+                    .replacement(StringUtils.capitalize(stapleTime.name()))
                     .build();
 
             player.sendMessage(StapleConfig.getPlayerTimeMessage().replaceText(config));

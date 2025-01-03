@@ -1,7 +1,7 @@
 package net.cc.staple.command;
 
 import com.mojang.brigadier.Command;
-import com.mojang.brigadier.arguments.FloatArgumentType;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
@@ -21,7 +21,7 @@ public final class SpeedCommand {
         commands.register(Commands.literal("speed")
                         .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_SPEED))
                         .executes(this::execute0)
-                        .then(Commands.argument("value", FloatArgumentType.floatArg())
+                        .then(Commands.argument("value", IntegerArgumentType.integer(0, 10))
                                 .executes(this::execute1))
                         .then(Commands.literal("reset")
                                 .executes(this::execute2))
@@ -37,10 +37,10 @@ public final class SpeedCommand {
     private int execute1(CommandContext<CommandSourceStack> context) {
         CommandSender sender = context.getSource().getSender();
         if (sender instanceof Player player) {
-            float value = context.getArgument("value", Float.class);
+            int value = context.getArgument("value", Integer.class);
             String state = "walkspeed";
             if (player.isFlying()) {
-                player.setFlySpeed(value);
+                player.setFlySpeed((float) value / 10);
                 state = "flyspeed";
             } else {
                 player.setWalkSpeed(value);
@@ -49,6 +49,8 @@ public final class SpeedCommand {
             TextReplacementConfig config = TextReplacementConfig.builder()
                     .matchLiteral("{state}")
                     .replacement(state)
+                    .matchLiteral("{value}")
+                    .replacement(String.valueOf(value))
                     .build();
 
             player.sendMessage(StapleConfig.getSpeedMessage().replaceText(config));
