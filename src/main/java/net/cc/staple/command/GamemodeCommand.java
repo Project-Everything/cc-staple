@@ -71,9 +71,10 @@ public final class GamemodeCommand {
         CommandSender sender = context.getSource().getSender();
         if (sender instanceof Player player) {
             player.sendMessage(StapleUtil.getUsageComponent("/" + context.getInput() + " <gamemode> <player>"));
-            return Command.SINGLE_SUCCESS;
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 
     private int execute1(CommandContext<CommandSourceStack> context) {
@@ -81,9 +82,10 @@ public final class GamemodeCommand {
         if (sender instanceof Player player) {
             GameMode gameMode = context.getArgument("gamemode", GameMode.class);
             setGamemode(player, gameMode);
-            return Command.SINGLE_SUCCESS;
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 
     private int execute2(CommandContext<CommandSourceStack> context) {
@@ -94,21 +96,23 @@ public final class GamemodeCommand {
             try {
                 Player target = targetResolver.resolve(context.getSource()).getFirst();
                 setGamemode(player, target, gameMode);
-                return Command.SINGLE_SUCCESS;
             } catch (CommandSyntaxException e) {
                 context.getSource().getSender().sendMessage(Component.text(e.getMessage()).color(NamedTextColor.RED));
             }
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 
     private int execute3(CommandContext<CommandSourceStack> context, GameMode gameMode) {
         CommandSender sender = context.getSource().getSender();
         if (sender instanceof Player player) {
             setGamemode(player, gameMode);
-            return Command.SINGLE_SUCCESS;
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 
     private int execute4(CommandContext<CommandSourceStack> context, GameMode gameMode) {
@@ -118,12 +122,13 @@ public final class GamemodeCommand {
             try {
                 Player target = targetResolver.resolve(context.getSource()).getFirst();
                 setGamemode(player, target, gameMode);
-                return Command.SINGLE_SUCCESS;
             } catch (CommandSyntaxException e) {
                 context.getSource().getSender().sendMessage(Component.text(e.getMessage()).color(NamedTextColor.RED));
             }
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 
     private void setGamemode(Player source, GameMode gameMode) {

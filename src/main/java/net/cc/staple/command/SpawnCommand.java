@@ -39,9 +39,10 @@ public final class SpawnCommand {
             final Location location = StapleConfig.getSpawnLocation(player.getWorld());
             player.teleport(location);
             player.sendMessage(Component.text("Teleported to spawn!", NamedTextColor.GOLD));
-            return Command.SINGLE_SUCCESS;
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 
     private int setSpawnCommand(CommandContext<CommandSourceStack> context) {
@@ -52,8 +53,9 @@ public final class SpawnCommand {
             StapleConfig.save(staplePlugin);
             player.getWorld().setSpawnLocation(location);
             player.sendMessage(Component.text("Set spawn to your location.", NamedTextColor.GOLD));
-            return Command.SINGLE_SUCCESS;
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 }

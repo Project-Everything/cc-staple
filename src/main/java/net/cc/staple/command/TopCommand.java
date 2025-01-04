@@ -40,9 +40,10 @@ public final class TopCommand {
                 player.teleport(location);
             }
             player.sendMessage(Component.text("You've been teleported up!", NamedTextColor.GOLD));
-            return Command.SINGLE_SUCCESS;
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 
     private int execute1(CommandContext<CommandSourceStack> context) {
@@ -51,16 +52,17 @@ public final class TopCommand {
             Block targetBlock = player.getTargetBlockExact(100);
             if (targetBlock == null) {
                 player.sendMessage(Component.text("Could not find a block within 100m.", NamedTextColor.RED));
-                return Command.SINGLE_SUCCESS;
+            } else {
+                Location location = targetBlock.getLocation().add(0, 1, 0);
+                location.setDirection(player.getLocation().getDirection());
+                location.setPitch(player.getLocation().getPitch());
+
+                player.teleport(location);
+                player.sendMessage(Component.text("You've jumped to a location!", NamedTextColor.GOLD));
             }
-
-            Location location = targetBlock.getLocation().add(0, 1, 0);
-            location.setDirection(player.getLocation().getDirection());
-            location.setPitch(player.getLocation().getPitch());
-
-            player.teleport(location);
-            player.sendMessage(Component.text("You've jumped to a location!", NamedTextColor.GOLD));
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 }

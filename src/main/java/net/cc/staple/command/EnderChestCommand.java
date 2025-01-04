@@ -35,9 +35,10 @@ public final class EnderChestCommand {
         if (sender instanceof Player player) {
             player.openInventory(player.getEnderChest());
             player.sendMessage(Component.text("Opened your ender chest.").color(NamedTextColor.GOLD));
-            return Command.SINGLE_SUCCESS;
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 
     private int execute1(CommandContext<CommandSourceStack> context) {
@@ -46,8 +47,9 @@ public final class EnderChestCommand {
             Player targetPlayer = context.getArgument("player", Player.class);
             player.openInventory(targetPlayer.getEnderChest());
             player.sendMessage(Component.text("Opened " + targetPlayer.getName() + "'s ender chest.").color(NamedTextColor.GOLD));
-            return Command.SINGLE_SUCCESS;
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 }

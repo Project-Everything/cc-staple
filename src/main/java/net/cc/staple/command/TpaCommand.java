@@ -82,8 +82,9 @@ public final class TpaCommand {
             } catch (CommandSyntaxException e) {
                 context.getSource().getSender().sendMessage(Component.text(e.getMessage()).color(NamedTextColor.RED));
             }
-            return Command.SINGLE_SUCCESS;
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 }

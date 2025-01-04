@@ -37,9 +37,10 @@ public final class TpToggleCommand {
                 } else {
                     player.sendMessage(Component.text("Disabled receiving tp requests.").color(NamedTextColor.GOLD));
                 }
-                return Command.SINGLE_SUCCESS;
             }
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 }

@@ -45,9 +45,10 @@ public final class SpeedCommand {
             }
 
             player.sendMessage(Component.text("Set your " + state + " to " + value + ".").color(NamedTextColor.GOLD));
-            return Command.SINGLE_SUCCESS;
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 
     private int execute2(CommandContext<CommandSourceStack> context) {
@@ -62,8 +63,9 @@ public final class SpeedCommand {
             }
 
             player.sendMessage(Component.text("Reset your " + state + ".").color(NamedTextColor.GOLD));
-            return Command.SINGLE_SUCCESS;
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 }

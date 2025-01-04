@@ -27,8 +27,9 @@ public final class RespawnCommand {
         if (sender instanceof Player player) {
             player.setHealth(0);
             player.sendMessage(Component.text("You've respawned!", NamedTextColor.GOLD));
-            return Command.SINGLE_SUCCESS;
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 }

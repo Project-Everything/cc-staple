@@ -65,12 +65,13 @@ public final class TeleportCommand {
 
                 player.teleport(target);
                 player.sendMessage(Component.text("Teleported to " + target.getName() + ".").color(NamedTextColor.GOLD));
-                return Command.SINGLE_SUCCESS;
             } catch (CommandSyntaxException e) {
                 context.getSource().getSender().sendMessage(Component.text(e.getMessage()).color(NamedTextColor.RED));
             }
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 
     private int teleport2(CommandContext<CommandSourceStack> context) {
@@ -83,11 +84,10 @@ public final class TeleportCommand {
 
             target.teleport(target2);
             context.getSource().getSender().sendMessage(Component.text("Teleported " + target.getName() + " to " + target2.getName() + ".").color(NamedTextColor.GOLD));
-            return Command.SINGLE_SUCCESS;
         } catch (CommandSyntaxException e) {
             context.getSource().getSender().sendMessage(Component.text(e.getMessage()).color(NamedTextColor.RED));
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 
     private int teleport3(CommandContext<CommandSourceStack> context) {
@@ -102,12 +102,13 @@ public final class TeleportCommand {
 
                 player.teleport(location);
                 player.sendMessage(Component.text("Teleported to " + df.format(location.getX()) + ", " + df.format(location.getY()) + ", " + df.format(location.getZ())).color(NamedTextColor.GOLD));
-                return Command.SINGLE_SUCCESS;
             } catch (CommandSyntaxException e) {
                 context.getSource().getSender().sendMessage(Component.text(e.getMessage()).color(NamedTextColor.RED));
             }
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 
     private int teleport4(CommandContext<CommandSourceStack> context) {
@@ -125,12 +126,13 @@ public final class TeleportCommand {
                 target.teleport(location);
                 player.sendMessage(Component.text("Teleported " + target.getName() + " to " + df.format(location.getX()) + ", " + df.format(location.getY()) + ", " + df.format(location.getZ())).color(NamedTextColor.GOLD));
                 target.sendMessage(Component.text("Teleported to " + df.format(location.getX()) + ", " + df.format(location.getY()) + ", " + df.format(location.getZ())).color(NamedTextColor.GOLD));
-                return Command.SINGLE_SUCCESS;
             } catch (CommandSyntaxException e) {
                 context.getSource().getSender().sendMessage(Component.text(e.getMessage()).color(NamedTextColor.RED));
             }
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 
     private int teleportHere0(CommandContext<CommandSourceStack> context) {
@@ -148,11 +150,12 @@ public final class TeleportCommand {
 
                 target.teleport(player);
                 player.sendMessage(Component.text("Teleported " + target.getName() + " to your location.").color(NamedTextColor.GOLD));
-                return Command.SINGLE_SUCCESS;
             } catch (CommandSyntaxException e) {
                 context.getSource().getSender().sendMessage(Component.text(e.getMessage()).color(NamedTextColor.RED));
             }
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 }

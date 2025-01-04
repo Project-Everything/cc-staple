@@ -36,9 +36,10 @@ public final class ItemCommand {
         CommandSender sender = context.getSource().getSender();
         if (sender instanceof Player player) {
             player.sendMessage(Component.text("/" + context.getInput() + " <item> <amount>").color(NamedTextColor.RED));
-            return Command.SINGLE_SUCCESS;
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 
     private int execute1(CommandContext<CommandSourceStack> context) {
@@ -52,8 +53,10 @@ public final class ItemCommand {
                     .append(Component.space(),
                             item.displayName().color(NamedTextColor.YELLOW))
                     .build());
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 
     private int execute2(CommandContext<CommandSourceStack> context) {
@@ -68,7 +71,9 @@ public final class ItemCommand {
                     .append(Component.space(),
                             item.displayName().color(NamedTextColor.YELLOW))
                     .build());
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 }

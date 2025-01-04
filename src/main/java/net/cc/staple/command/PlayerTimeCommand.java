@@ -40,9 +40,10 @@ public final class PlayerTimeCommand {
                     .content("/" + context.getInput() + " <day/night/morning/evening/off>")
                     .color(NamedTextColor.GOLD)
                     .build());
-            return Command.SINGLE_SUCCESS;
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 
     private int execute1(CommandContext<CommandSourceStack> context) {
@@ -66,9 +67,10 @@ public final class PlayerTimeCommand {
             }
 
             player.sendMessage(Component.text("Time set to " + StringUtils.capitalize(stapleTime.name()), NamedTextColor.GOLD));
-            return Command.SINGLE_SUCCESS;
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 
     private int execute2(CommandContext<CommandSourceStack> context) {
@@ -83,8 +85,9 @@ public final class PlayerTimeCommand {
             }
 
             player.sendMessage(Component.text("Time set to " + longTime, NamedTextColor.GOLD));
-            return Command.SINGLE_SUCCESS;
+        } else {
+            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 }
