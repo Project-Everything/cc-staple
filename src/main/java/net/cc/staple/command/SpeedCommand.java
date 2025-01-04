@@ -5,10 +5,8 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
-import net.cc.staple.StapleConfig;
 import net.cc.staple.StapleUtil;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextReplacementConfig;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -46,14 +44,7 @@ public final class SpeedCommand {
                 player.setWalkSpeed(value);
             }
 
-            TextReplacementConfig config = TextReplacementConfig.builder()
-                    .matchLiteral("{state}")
-                    .replacement(state)
-                    .matchLiteral("{value}")
-                    .replacement(String.valueOf(value))
-                    .build();
-
-            player.sendMessage(StapleConfig.getSpeedMessage().replaceText(config));
+            player.sendMessage(Component.text("Set your " + state + " to " + value + ".").color(NamedTextColor.GOLD));
             return Command.SINGLE_SUCCESS;
         }
         return 0;
@@ -70,12 +61,7 @@ public final class SpeedCommand {
                 player.setWalkSpeed(0.2f);
             }
 
-            TextReplacementConfig config = TextReplacementConfig.builder()
-                    .matchLiteral("{state}")
-                    .replacement(state)
-                    .build();
-
-            player.sendMessage(StapleConfig.getSpeedMessage().replaceText(config));
+            player.sendMessage(Component.text("Reset your " + state + ".").color(NamedTextColor.GOLD));
             return Command.SINGLE_SUCCESS;
         }
         return 0;

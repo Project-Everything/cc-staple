@@ -10,15 +10,3 @@ spawn:
   z: 0
   yaw: 0
   pitch: 0
-
-messages:
-  help: "<aqua>View our server help guide at:</aqua>\n<yellow><click:open_url:'https://creative-central.net/help'>creative-central.net/help</click></yellow>"
-  rules: "<aqua>View our server rules at:</aqua>\n<yellow><click:open_url:'https://creative-central.net/rules'>creative-central.net/rules</click></yellow>"
-  spawn: "<gold>Teleported to spawn!</gold>"
-  setspawn: "<gold>Spawn has been set to your location.</gold>"
-  vote: "<aqua>Vote for our server at:</aqua>\n<yellow><click:open_url:'https://creative-central.net/vote'>creative-central.net/vote</click></yellow>"
-  playertime: "<gold>Time set to {time}.</gold>"
-  top: "<gold>You've been teleported up!</gold>"
-  jump: "<gold>You've jumped to a location!</gold>"
-  respawn: "<gold>You've respawned.</gold>"
-  speed: "<gold>Changed {state} to {value}.</gold>"

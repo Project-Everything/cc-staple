@@ -29,7 +29,7 @@ public final class BroadcastCommand {
     }
 
     public int execute0(CommandContext<CommandSourceStack> context) {
-        context.getSource().getSender().sendMessage(Component.text("/" + context.getInput() + " <message>").color(NamedTextColor.RED));
+        context.getSource().getSender().sendMessage(StapleUtil.getUsageComponent("/" + context.getInput() + " <message>"));
         return Command.SINGLE_SUCCESS;
     }
 

@@ -5,12 +5,10 @@ import com.mojang.brigadier.arguments.LongArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
-import net.cc.staple.StapleConfig;
 import net.cc.staple.StapleUtil;
 import net.cc.staple.command.argument.StapleTime;
 import net.cc.staple.command.argument.StapleTimeArgumentType;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextReplacementConfig;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.command.CommandSender;
@@ -67,12 +65,7 @@ public final class PlayerTimeCommand {
                 player.setPlayerTime(longTime, false);
             }
 
-            TextReplacementConfig config = TextReplacementConfig.builder()
-                    .matchLiteral("{time}")
-                    .replacement(StringUtils.capitalize(stapleTime.name()))
-                    .build();
-
-            player.sendMessage(StapleConfig.getPlayerTimeMessage().replaceText(config));
+            player.sendMessage(Component.text("Time set to " + StringUtils.capitalize(stapleTime.name()), NamedTextColor.GOLD));
             return Command.SINGLE_SUCCESS;
         }
         return 0;
@@ -89,11 +82,8 @@ public final class PlayerTimeCommand {
                 player.setPlayerTime(longTime, false);
             }
 
-            TextReplacementConfig config = TextReplacementConfig.builder()
-                    .matchLiteral("{time}")
-                    .replacement(String.valueOf(longTime))
-                    .build();
-            player.sendMessage(StapleConfig.getPlayerTimeMessage().replaceText(config));
+            player.sendMessage(Component.text("Time set to " + longTime, NamedTextColor.GOLD));
+            return Command.SINGLE_SUCCESS;
         }
         return 0;
     }

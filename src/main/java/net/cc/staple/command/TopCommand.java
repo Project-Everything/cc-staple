@@ -4,7 +4,6 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
-import net.cc.staple.StapleConfig;
 import net.cc.staple.StapleUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -40,7 +39,7 @@ public final class TopCommand {
             if (location.getY() > player.getLocation().getY()) {
                 player.teleport(location);
             }
-            player.sendMessage(StapleConfig.getTopMessage());
+            player.sendMessage(Component.text("You've been teleported up!", NamedTextColor.GOLD));
             return Command.SINGLE_SUCCESS;
         }
         return 0;
@@ -51,7 +50,7 @@ public final class TopCommand {
         if (sender instanceof Player player) {
             Block targetBlock = player.getTargetBlockExact(100);
             if (targetBlock == null) {
-                player.sendMessage(Component.text("Could not find a block within 100m.").color(NamedTextColor.RED));
+                player.sendMessage(Component.text("Could not find a block within 100m.", NamedTextColor.RED));
                 return Command.SINGLE_SUCCESS;
             }
 
@@ -60,7 +59,7 @@ public final class TopCommand {
             location.setPitch(player.getLocation().getPitch());
 
             player.teleport(location);
-            player.sendMessage(StapleConfig.getJumpMessage());
+            player.sendMessage(Component.text("You've jumped to a location!", NamedTextColor.GOLD));
         }
         return 0;
     }

@@ -70,10 +70,7 @@ public final class GamemodeCommand {
     private int execute0(CommandContext<CommandSourceStack> context) {
         CommandSender sender = context.getSource().getSender();
         if (sender instanceof Player player) {
-            player.sendMessage(Component.text()
-                    .content("/" + context.getInput() + " <gamemode> <player>")
-                    .color(NamedTextColor.RED)
-                    .build());
+            player.sendMessage(StapleUtil.getUsageComponent("/" + context.getInput() + " <gamemode> <player>"));
             return Command.SINGLE_SUCCESS;
         }
         return 0;

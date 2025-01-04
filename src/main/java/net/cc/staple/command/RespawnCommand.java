@@ -4,8 +4,9 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
-import net.cc.staple.StapleConfig;
 import net.cc.staple.StapleUtil;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -25,7 +26,7 @@ public final class RespawnCommand {
         CommandSender sender = context.getSource().getSender();
         if (sender instanceof Player player) {
             player.setHealth(0);
-            player.sendMessage(StapleConfig.getRespawnMessage());
+            player.sendMessage(Component.text("You've respawned!", NamedTextColor.GOLD));
             return Command.SINGLE_SUCCESS;
         }
         return 0;

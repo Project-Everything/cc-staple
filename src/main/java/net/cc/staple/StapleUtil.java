@@ -1,6 +1,12 @@
 package net.cc.staple;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
+import org.jetbrains.annotations.NotNull;
+
 public final class StapleUtil {
+
     /* Permission Constants */
     public static final String PERMISSION_COMMAND_BROADCAST = "cc.command.broadcast";
     public static final String PERMISSION_COMMAND_ENDERCHEST = "cc.command.enderchest";
@@ -22,4 +28,28 @@ public final class StapleUtil {
     public static final String PERMISSION_COMMAND_TPA = "cc.command.tpa";
     public static final String PERMISSION_COMMAND_TPTOGGLE = "cc.command.tptoggle";
     public static final String PERMISSION_COMMAND_VOTE = "cc.command.vote";
+
+    /* Common Components */
+    public static final Component MESSAGE_PERMISSION_MISSING = Component.text()
+            .append(Component.text("! ").color(NamedTextColor.RED).decorate(TextDecoration.BOLD),
+                    Component.text("You do not have permission to use that command!", NamedTextColor.RED)
+            ).build();
+
+    public static final Component MESSAGE_CONSOLE_SENDER = Component.text()
+            .append(Component.text("! ").color(NamedTextColor.RED).decorate(TextDecoration.BOLD),
+                    Component.text("Only players can use that command.", NamedTextColor.RED)
+            ).build();
+
+    public static final Component COMMAND_HEADER = Component.text()
+            .content(" ".repeat(50))
+            .color(NamedTextColor.GRAY)
+            .decorate(TextDecoration.STRIKETHROUGH)
+            .build();
+
+    public static @NotNull Component getUsageComponent(String input) {
+        return Component.text()
+                .append(Component.text("? ").color(NamedTextColor.YELLOW).decorate(TextDecoration.BOLD),
+                        Component.text(input, NamedTextColor.YELLOW)
+                ).build();
+    }
 }
