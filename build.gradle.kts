@@ -32,6 +32,15 @@ java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }
 
+tasks {
+    shadowJar {
+        archiveClassifier.set("")
+    }
+    build {
+        dependsOn(shadowJar)
+    }
+}
+
 publishing {
     repositories {
         maven {
