@@ -7,6 +7,7 @@ import io.papermc.paper.command.brigadier.Commands;
 import net.cc.staple.StaplePlugin;
 import net.cc.staple.StapleConfig;
 import net.cc.staple.StapleUtil;
+import net.cc.staple.player.StaplePlayer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
@@ -36,6 +37,9 @@ public final class SpawnCommand {
     private int spawnCommand(CommandContext<CommandSourceStack> context) {
         CommandSender sender = context.getSource().getSender();
         if (sender instanceof Player player) {
+            StaplePlayer staplePlayer = staplePlugin.getPlayerManager().get(player.getUniqueId());
+            staplePlayer.setOldLocation(player.getLocation());
+
             final Location location = StapleConfig.getSpawnLocation(player.getWorld());
             player.teleport(location);
             player.sendMessage(Component.text("Teleported to spawn!", NamedTextColor.GOLD));

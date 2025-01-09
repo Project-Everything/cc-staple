@@ -9,7 +9,9 @@ import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.resolvers.FinePositionResolver;
 import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
 import io.papermc.paper.math.FinePosition;
+import net.cc.staple.StaplePlugin;
 import net.cc.staple.StapleUtil;
+import net.cc.staple.player.StaplePlayer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
@@ -62,6 +64,8 @@ public final class TeleportCommand {
 
             try {
                 final Player target = targetResolver.resolve(context.getSource()).getFirst();
+                StaplePlayer staplePlayer = StaplePlugin.getInstance().getPlayerManager().get(player);
+                staplePlayer.setOldLocation(player.getLocation());
 
                 player.teleport(target);
                 player.sendMessage(Component.text("Teleported to " + target.getName() + ".").color(NamedTextColor.GOLD));
@@ -81,6 +85,8 @@ public final class TeleportCommand {
         try {
             final Player target = targetResolver.resolve(context.getSource()).getFirst();
             final Player target2 = targetResolver2.resolve(context.getSource()).getFirst();
+            StaplePlayer staplePlayer = StaplePlugin.getInstance().getPlayerManager().get(target);
+            staplePlayer.setOldLocation(target.getLocation());
 
             target.teleport(target2);
             context.getSource().getSender().sendMessage(Component.text("Teleported " + target.getName() + " to " + target2.getName() + ".").color(NamedTextColor.GOLD));
@@ -99,6 +105,8 @@ public final class TeleportCommand {
                 final FinePosition finePosition = finePositionResolver.resolve(context.getSource());
                 final Location location = finePosition.toLocation(player.getWorld());
                 DecimalFormat df = new DecimalFormat("#.##");
+                StaplePlayer staplePlayer = StaplePlugin.getInstance().getPlayerManager().get(player);
+                staplePlayer.setOldLocation(player.getLocation());
 
                 player.teleport(location);
                 player.sendMessage(Component.text("Teleported to " + df.format(location.getX()) + ", " + df.format(location.getY()) + ", " + df.format(location.getZ())).color(NamedTextColor.GOLD));
@@ -122,6 +130,8 @@ public final class TeleportCommand {
                 final FinePosition finePosition = finePositionResolver.resolve(context.getSource());
                 final Location location = finePosition.toLocation(player.getWorld());
                 DecimalFormat df = new DecimalFormat("#.##");
+                StaplePlayer staplePlayer = StaplePlugin.getInstance().getPlayerManager().get(target);
+                staplePlayer.setOldLocation(target.getLocation());
 
                 target.teleport(location);
                 player.sendMessage(Component.text("Teleported " + target.getName() + " to " + df.format(location.getX()) + ", " + df.format(location.getY()) + ", " + df.format(location.getZ())).color(NamedTextColor.GOLD));
@@ -147,6 +157,8 @@ public final class TeleportCommand {
 
             try {
                 final Player target = targetResolver.resolve(context.getSource()).getFirst();
+                StaplePlayer staplePlayer = StaplePlugin.getInstance().getPlayerManager().get(target);
+                staplePlayer.setOldLocation(target.getLocation());
 
                 target.teleport(player);
                 player.sendMessage(Component.text("Teleported " + target.getName() + " to your location.").color(NamedTextColor.GOLD));

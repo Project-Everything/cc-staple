@@ -78,6 +78,9 @@ public final class TpaManager {
         if (destinationPlayer.equals(sourcePlayer)) {
             sourcePlayer.sendMessage(Component.text(targetPlayer.getName() + " accepted your request.").color(NamedTextColor.GOLD));
             targetPlayer.sendMessage(Component.text("Request accepted. Teleporting to " + destinationPlayer.getName() + ".").color(NamedTextColor.GOLD));
+            StaplePlayer staplePlayer = StaplePlugin.getInstance().getPlayerManager().get(sourcePlayer);
+            staplePlayer.setOldLocation(sourcePlayer.getLocation());
+
             targetPlayer.teleport(destinationPlayer);
             tpaRequests.remove(sourcePlayer.getUniqueId());
         } else if (destinationPlayer.equals(targetPlayer)) {
