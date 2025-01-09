@@ -11,22 +11,18 @@ import java.util.UUID;
 
 public final class PlayerQuitListener implements Listener {
 
-    private final StaplePlugin plugin;
+    private final StaplePlugin staplePlugin;
 
     public PlayerQuitListener() {
-        this.plugin = StaplePlugin.getInstance();
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+        this.staplePlugin = StaplePlugin.getInstance();
+        staplePlugin.getServer().getPluginManager().registerEvents(this, staplePlugin);
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        UUID playerId = player.getUniqueId();
-
-        plugin.getLogger().info("Player " + player.getName() + " left. Removing from cache.");
-        StaplePlayer staplePlayer = plugin.getPlayerManager().get(playerId);
-
-        plugin.getStorage().savePlayer(staplePlayer);
-        plugin.getPlayerManager().remove(playerId);
+        UUID mojangId = player.getUniqueId();
+        StaplePlayer staplePlayer = staplePlugin.getPlayerManager().get(mojangId);
+        staplePlugin.getStorage().savePlayer(staplePlayer);
     }
 }

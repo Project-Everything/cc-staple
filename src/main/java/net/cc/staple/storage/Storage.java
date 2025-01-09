@@ -10,9 +10,9 @@ import java.util.concurrent.CompletableFuture;
 
 public abstract class Storage {
 
-    public abstract CompletableFuture<Void> addPlayer(StaplePlayer staplePlayer);
-
     public abstract CompletableFuture<Void> savePlayer(StaplePlayer staplePlayer);
 
-    public abstract CompletableFuture<StaplePlayerQuery> queryPlayer(UUID playerId);
+    public abstract CompletableFuture<StaplePlayerQuery> queryPlayer(UUID mojangId);
+
+    public abstract CompletableFuture<StaplePlayerQuery> queryPlayers();
 }

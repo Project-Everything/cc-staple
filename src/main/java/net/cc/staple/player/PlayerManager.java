@@ -1,42 +1,58 @@
 package net.cc.staple.player;
 
 import net.cc.staple.StaplePlugin;
-import net.cc.staple.util.CacheManager;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
+import java.util.Map;
 import java.util.UUID;
-import java.util.function.Consumer;
+import java.util.concurrent.ConcurrentHashMap;
 
-public final class PlayerManager extends CacheManager<StaplePlayer> {
+public final class PlayerManager {
 
-    private final StaplePlugin plugin;
+    private final StaplePlugin staplePlugin;
+    private final Map<UUID, StaplePlayer> cache;
 
     public PlayerManager() {
-        this.plugin = StaplePlugin.getInstance();
+        this.staplePlugin = StaplePlugin.getInstance();
+        this.cache = new ConcurrentHashMap<>();
     }
 
-    @Override
-    public StaplePlayer createInstance(UUID playerId) {
-        return new StaplePlayer(playerId);
+    public StaplePlayer getAndLoad(Player player) {
+        return getAndLoad(player.getUniqueId());
     }
 
-    @Override
-    public void loadData(UUID playerId, StaplePlayer instance, Consumer<StaplePlayer> callback) {
-        plugin.getStorage().queryPlayer(playerId).thenAccept(staplePlayerQuery -> {
-            if (staplePlayerQuery.hasResults()) {
-                StaplePlayer existing = staplePlayerQuery.getFirst();
-                instance.setTpDisabled(existing.isTpDisabled());
-                instance.setVanished(existing.isVanished());
-            } else {
-                instance.setTpDisabled(false);
-                instance.setVanished(false);
-                plugin.getStorage().addPlayer(instance);
-            }
-            callback.accept(instance);
-        });
+    public StaplePlayer getAndLoad(UUID mojangId) {
+        if (cache.containsKey(mojangId)) {
+            return cache.get(mojangId);
+        }
+
+        Player player = Bukkit.getPlayer(mojangId);
+        if (player != null) {
+            StaplePlayer staplePlayer = new StaplePlayer(mojangId, false, player.getLocation());
+
+            // Fetch staple player
+            staplePlugin.getStorage().queryPlayer(mojangId).thenAccept(staplePlayerQuery -> {
+                if (staplePlayerQuery.hasResults()) {
+                    StaplePlayer found = staplePlayerQuery.getFirst();
+                    staplePlayer.setTpDisabled(found.isTpDisabled());
+                    staplePlayer.setOldLocation(found.getOldLocation());
+                } else {
+                    staplePlugin.getStorage().savePlayer(staplePlayer);
+                }
+            });
+
+            cache.put(mojangId, staplePlayer);
+            return staplePlayer;
+        }
+        return null;
     }
 
-    @Override
-    public void saveData(StaplePlayer instance) {
-        plugin.getStorage().savePlayer(instance);
+    public StaplePlayer get(UUID mojangId) {
+        return cache.get(mojangId);
+    }
+
+    public StaplePlayer get(Player player) {
+        return get(player.getUniqueId());
     }
 }

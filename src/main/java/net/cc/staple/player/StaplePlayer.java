@@ -1,25 +1,23 @@
 package net.cc.staple.player;
 
+import org.bukkit.Location;
+
 import java.util.UUID;
 
 public final class StaplePlayer {
 
-    private final UUID playerId;
+    private final UUID mojangId;
     private boolean tpDisabled;
-    private boolean vanished;
+    private Location oldLocation;
 
-    public StaplePlayer(final UUID playerId) {
-        this.playerId = playerId;
-    }
-
-    public StaplePlayer(final UUID playerId, final boolean tpDisabled, final boolean vanished) {
-        this.playerId = playerId;
+    public StaplePlayer(UUID mojangId, boolean tpDisabled, Location oldLocation) {
+        this.mojangId = mojangId;
         this.tpDisabled = tpDisabled;
-        this.vanished = vanished;
+        this.oldLocation = oldLocation;
     }
 
-    public UUID getPlayerId() {
-        return playerId;
+    public UUID getMojangId() {
+        return mojangId;
     }
 
     public boolean isTpDisabled() {
@@ -30,11 +28,11 @@ public final class StaplePlayer {
         this.tpDisabled = tpDisabled;
     }
 
-    public boolean isVanished() {
-        return vanished;
+    public Location getOldLocation() {
+        return oldLocation;
     }
 
-    public void setVanished(boolean vanished) {
-        this.vanished = vanished;
+    public void setOldLocation(Location oldLocation) {
+        this.oldLocation = oldLocation;
     }
 }

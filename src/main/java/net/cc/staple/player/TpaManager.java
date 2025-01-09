@@ -9,11 +9,11 @@ import java.util.*;
 
 public final class TpaManager {
 
-    private final StaplePlugin plugin;
+    private final StaplePlugin staplePlugin;
     private final Map<UUID, TpaRequest> tpaRequests;
 
     public TpaManager() {
-        this.plugin = StaplePlugin.getInstance();
+        this.staplePlugin = StaplePlugin.getInstance();
         this.tpaRequests = new HashMap<>();
     }
 
@@ -37,7 +37,7 @@ public final class TpaManager {
         }
 
         // Get StaplePlayer instance from cache
-        StaplePlayer staplePlayer = plugin.getPlayerManager().get(targetPlayer.getUniqueId());
+        StaplePlayer staplePlayer = staplePlugin.getPlayerManager().get(targetPlayer.getUniqueId());
         if (staplePlayer == null) {
             sourcePlayer.sendMessage(Component.text("Command execution failed. Please notify an admin of this error.").color(NamedTextColor.RED));
             return;

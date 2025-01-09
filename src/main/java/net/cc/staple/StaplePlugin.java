@@ -53,7 +53,6 @@ public final class StaplePlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        playerManager.saveAll();
         instance = null;
     }
 
