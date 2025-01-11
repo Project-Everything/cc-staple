@@ -98,6 +98,7 @@ public final class StaplePlugin extends JavaPlugin {
         lifecycleEventManager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
             final Commands commands = event.registrar();
 
+            new BackCommand(commands);
             new BroadcastCommand(commands);
             new EnderChestCommand(commands);
             new GamemodeCommand(commands);
