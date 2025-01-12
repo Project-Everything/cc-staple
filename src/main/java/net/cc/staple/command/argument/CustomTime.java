@@ -1,6 +1,6 @@
 package net.cc.staple.command.argument;
 
-public enum StapleTime {
+public enum CustomTime {
     day,
     night,
     morning,

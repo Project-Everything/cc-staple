@@ -41,7 +41,7 @@ public final class SpeedCommand {
                 player.setFlySpeed((float) value / 10);
                 state = "flyspeed";
             } else {
-                player.setWalkSpeed(value);
+                player.setWalkSpeed((float) value / 10);
             }
 
             player.sendMessage(Component.text("Set your " + state + " to " + value + ".").color(NamedTextColor.GOLD));

@@ -30,7 +30,7 @@ public final class RulesCommand {
                         Component.newline(),
                         Component.text("Rules").color(NamedTextColor.AQUA).decorate(TextDecoration.BOLD),
                         Component.text(" > ").color(NamedTextColor.GRAY).decorate(TextDecoration.BOLD),
-                        Component.text("creative-central.net/rules'>")
+                        Component.text("creative-central.net/rules")
                                 .clickEvent(ClickEvent.openUrl("https://creative-central.net/rules")),
                         Component.newline(),
                         Component.newline(),

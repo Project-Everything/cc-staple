@@ -43,14 +43,14 @@ public abstract class SQLStorage extends Storage {
                 String sql = "INSERT INTO " + Table.STAPLE_PLAYERS + " (id, tp_disabled, old_location_x, old_location_y, old_location_z) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE tp_disabled = ?, old_location_x = ?, old_location_y = ?, old_location_z = ?;";
                 PreparedStatement statement = connection.prepareStatement(sql);
                 statement.setString(1, staplePlayer.getMojangId().toString());
-                statement.setBoolean(1, staplePlayer.isTpDisabled());
-                statement.setDouble(2, staplePlayer.getOldLocation().getX());
-                statement.setDouble(3, staplePlayer.getOldLocation().getY());
-                statement.setDouble(4, staplePlayer.getOldLocation().getZ());
-                statement.setBoolean(5, staplePlayer.isTpDisabled());
-                statement.setDouble(6, staplePlayer.getOldLocation().getX());
-                statement.setDouble(7, staplePlayer.getOldLocation().getY());
-                statement.setDouble(8, staplePlayer.getOldLocation().getZ());
+                statement.setBoolean(2, staplePlayer.isTpDisabled());
+                statement.setDouble(3, staplePlayer.getOldLocation().getX());
+                statement.setDouble(4, staplePlayer.getOldLocation().getY());
+                statement.setDouble(5, staplePlayer.getOldLocation().getZ());
+                statement.setBoolean(6, staplePlayer.isTpDisabled());
+                statement.setDouble(7, staplePlayer.getOldLocation().getX());
+                statement.setDouble(8, staplePlayer.getOldLocation().getY());
+                statement.setDouble(9, staplePlayer.getOldLocation().getZ());
                 statement.executeUpdate();
             } catch (SQLException e) {
                 staplePlugin.getLogger().severe("SQL Exception while saving instance of StaplePlayer: " + e.getMessage());

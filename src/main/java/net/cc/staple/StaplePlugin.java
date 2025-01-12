@@ -3,8 +3,7 @@ package net.cc.staple;
 import net.cc.staple.command.*;
 import net.cc.staple.command.PingCommand;
 import net.cc.staple.command.RespawnCommand;
-import net.cc.staple.listener.PlayerJoinListener;
-import net.cc.staple.listener.PlayerQuitListener;
+import net.cc.staple.listener.PlayerListener;
 import net.cc.staple.player.PlayerManager;
 import net.cc.staple.player.TpaManager;
 import net.cc.staple.storage.impl.MySQLManager;
@@ -89,8 +88,7 @@ public final class StaplePlugin extends JavaPlugin {
     }
 
     private void setupListeners() {
-        new PlayerJoinListener();
-        new PlayerQuitListener();
+        new PlayerListener();
     }
 
     private void setupCommands() {

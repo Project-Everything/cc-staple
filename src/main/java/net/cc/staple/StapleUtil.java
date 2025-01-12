@@ -48,8 +48,8 @@ public final class StapleUtil {
 
     public static @NotNull Component getUsageComponent(String input) {
         return Component.text()
-                .append(Component.text("? ").color(NamedTextColor.YELLOW).decorate(TextDecoration.BOLD),
-                        Component.text(input, NamedTextColor.YELLOW)
+                .append(Component.text("! ").color(NamedTextColor.RED).decorate(TextDecoration.BOLD),
+                        Component.text(input, NamedTextColor.RED)
                 ).build();
     }
 }

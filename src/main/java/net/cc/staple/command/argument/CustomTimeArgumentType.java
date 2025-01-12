@@ -19,12 +19,12 @@ import java.util.concurrent.CompletableFuture;
 
 @SuppressWarnings("UnstableApiUsage")
 
-public final class StapleTimeArgumentType implements CustomArgumentType.Converted<StapleTime, String> {
+public final class CustomTimeArgumentType implements CustomArgumentType.Converted<CustomTime, String> {
 
     @Override
-    public @NotNull StapleTime convert(@NotNull String nativeType) throws CommandSyntaxException {
+    public @NotNull CustomTime convert(@NotNull String nativeType) throws CommandSyntaxException {
         try {
-            return StapleTime.valueOf(nativeType.toLowerCase(Locale.ENGLISH));
+            return CustomTime.valueOf(nativeType.toLowerCase(Locale.ENGLISH));
         } catch (IllegalArgumentException ignored) {
             Message message = MessageComponentSerializer.message().serialize(Component.text("%s is not a valid time of day!".formatted(nativeType), NamedTextColor.RED));
             throw new CommandSyntaxException(new SimpleCommandExceptionType(message), message);
@@ -38,8 +38,8 @@ public final class StapleTimeArgumentType implements CustomArgumentType.Converte
 
     @Override
     public @NotNull CompletableFuture<Suggestions> listSuggestions(@NotNull CommandContext context, @NotNull SuggestionsBuilder builder) {
-        for (StapleTime stapleTime : StapleTime.values()) {
-            builder.suggest(stapleTime.name());
+        for (CustomTime customTime : CustomTime.values()) {
+            builder.suggest(customTime.name());
         }
         return builder.buildFuture();
     }

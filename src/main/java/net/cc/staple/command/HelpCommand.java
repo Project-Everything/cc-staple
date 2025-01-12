@@ -30,7 +30,7 @@ public final class HelpCommand {
                         Component.newline(),
                         Component.text("Help").color(NamedTextColor.AQUA).decorate(TextDecoration.BOLD),
                         Component.text(" > ").color(NamedTextColor.GRAY).decorate(TextDecoration.BOLD),
-                        Component.text("creative-central.net/help'>")
+                        Component.text("creative-central.net/help")
                                 .clickEvent(ClickEvent.openUrl("https://creative-central.net/help")),
                         Component.newline(),
                         Component.newline(),

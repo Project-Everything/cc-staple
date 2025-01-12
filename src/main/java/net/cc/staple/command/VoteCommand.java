@@ -30,7 +30,7 @@ public final class VoteCommand {
                         Component.newline(),
                         Component.text("Vote").color(NamedTextColor.AQUA).decorate(TextDecoration.BOLD),
                         Component.text(" > ").color(NamedTextColor.GRAY).decorate(TextDecoration.BOLD),
-                        Component.text("creative-central.net/vote'>")
+                        Component.text("creative-central.net/vote")
                                 .clickEvent(ClickEvent.openUrl("https://creative-central.net/vote")),
                         Component.newline(),
                         Component.newline(),

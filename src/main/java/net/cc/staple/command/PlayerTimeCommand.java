@@ -6,8 +6,8 @@ import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.cc.staple.StapleUtil;
-import net.cc.staple.command.argument.StapleTime;
-import net.cc.staple.command.argument.StapleTimeArgumentType;
+import net.cc.staple.command.argument.CustomTime;
+import net.cc.staple.command.argument.CustomTimeArgumentType;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.apache.commons.lang3.StringUtils;
@@ -24,7 +24,7 @@ public final class PlayerTimeCommand {
         commands.register(Commands.literal("playertime")
                         .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_PLAYERTIME))
                         .executes(this::execute0)
-                        .then(Commands.argument("preset", new StapleTimeArgumentType())
+                        .then(Commands.argument("preset", new CustomTimeArgumentType())
                                 .executes(this::execute1))
                         .then(Commands.argument("value", LongArgumentType.longArg())
                                 .executes(this::execute2))
@@ -49,10 +49,10 @@ public final class PlayerTimeCommand {
     private int execute1(CommandContext<CommandSourceStack> context) {
         CommandSender sender = context.getSource().getSender();
         if (sender instanceof Player player) {
-            StapleTime stapleTime = context.getArgument("preset", StapleTime.class);
+            CustomTime customTime = context.getArgument("preset", CustomTime.class);
 
             long longTime;
-            switch (stapleTime) {
+            switch (customTime) {
                 case morning -> longTime = 0;
                 case day -> longTime = 6000;
                 case evening -> longTime = 12000;
@@ -66,7 +66,7 @@ public final class PlayerTimeCommand {
                 player.setPlayerTime(longTime, false);
             }
 
-            player.sendMessage(Component.text("Time set to " + StringUtils.capitalize(stapleTime.name()), NamedTextColor.GOLD));
+            player.sendMessage(Component.text("Time set to " + StringUtils.capitalize(customTime.name()), NamedTextColor.GOLD));
         } else {
             sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }
