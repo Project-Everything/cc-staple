@@ -100,6 +100,7 @@ public final class StaplePlugin extends JavaPlugin {
             new BroadcastCommand(commands);
             new EnderChestCommand(commands);
             new GamemodeCommand(commands);
+            new HatCommand(commands);
             new HelpCommand(commands);
             new ItemCommand(commands);
             new PingCommand(commands);

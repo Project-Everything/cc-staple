@@ -11,6 +11,8 @@ permissions:
     description: 'Access your ender chest'
   cc.command.gamemode:
     description: 'Switch your gamemode'
+  cc.command.hat:
+    description: 'Put on a hat'
   cc.command.help:
     description: 'View the help page'
   cc.command.item:
