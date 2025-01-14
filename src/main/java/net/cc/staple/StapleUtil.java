@@ -13,6 +13,7 @@ public final class StapleUtil {
     public static final String PERMISSION_COMMAND_ENDERCHEST_OTHER = "cc.command.enderchest.other";
     public static final String PERMISSION_COMMAND_GAMEMODE = "cc.command.gamemode";
     public static final String PERMISSION_COMMAND_GAMEMODE_OTHER = "cc.command.gamemode.other";
+    public static final String PERMISSION_COMMAND_HAT = "cc.command.hat";
     public static final String PERMISSION_COMMAND_HELP = "cc.command.help";
     public static final String PERMISSION_COMMAND_ITEM = "cc.command.item";
     public static final String PERMISSION_COMMAND_JUMP = "cc.command.jump";
