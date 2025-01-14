@@ -1,6 +1,5 @@
 plugins {
     id("java")
-    id("maven-publish")
     id("com.gradleup.shadow") version ("9.0.0-beta2")
 }
 
@@ -38,26 +37,5 @@ tasks {
     }
     build {
         dependsOn(shadowJar)
-    }
-}
-
-publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/Project-Everything/cc-staple")
-            credentials {
-                username = "CreativeCentral-mc"
-                password = "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"
-            }
-        }
-    }
-    publications {
-        create<MavenPublication>("maven") {
-            from(components["java"])
-            groupId = group.toString()
-            artifactId = "staple"
-            version = version.toString()
-        }
     }
 }

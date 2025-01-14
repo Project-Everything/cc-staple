@@ -15,8 +15,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.sql.SQLException;
-
 @SuppressWarnings("UnstableApiUsage")
 
 public final class StaplePlugin extends JavaPlugin {
@@ -39,10 +37,11 @@ public final class StaplePlugin extends JavaPlugin {
         serverName = getConfig().getString("server");
         StapleConfig.load(this);
 
-        try {
-            setupStorage();
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+        setupStorage();
+        if (this.storage == null) {
+            getLogger().severe("Storage was not initialized correctly. Disabling plugin.");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
         }
 
         setupCommands();
@@ -75,11 +74,15 @@ public final class StaplePlugin extends JavaPlugin {
         return tpaManager;
     }
 
-    private void setupStorage() throws SQLException, ClassNotFoundException {
-        String url = StapleConfig.getMySqlUrl();
-        String username = StapleConfig.getMySqlUser();
-        String password = StapleConfig.getMySqlPassword();
-        storage = new MySQLManager(url, username, password);
+    private void setupStorage() {
+        try {
+            String url = getConfig().getString("mysql.url");
+            String username = getConfig().getString("mysql.username");
+            String password = getConfig().getString("mysql.password");
+            this.storage = new MySQLManager(url, username, password);
+        } catch (ClassNotFoundException e) {
+            getLogger().severe("Error while setting up SQL storage: " + e.getMessage());
+        }
     }
 
     private void setupManagers() {
