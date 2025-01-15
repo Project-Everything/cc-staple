@@ -6,7 +6,7 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.cc.staple.StaplePlugin;
 import net.cc.staple.StapleConfig;
-import net.cc.staple.StapleUtil;
+import net.cc.staple.util.StapleUtil;
 import net.cc.staple.player.StaplePlayer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -18,10 +18,10 @@ import org.bukkit.entity.Player;
 
 public final class SpawnCommand {
 
-    private final StaplePlugin staplePlugin;
+    private final StaplePlugin plugin;
 
-    public SpawnCommand(Commands commands) {
-        staplePlugin = StaplePlugin.getInstance();
+    public SpawnCommand(final StaplePlugin plugin, Commands commands) {
+        this.plugin = plugin;
         commands.register(Commands.literal("spawn")
                         .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_SPAWN))
                         .executes(this::spawnCommand)
@@ -37,7 +37,7 @@ public final class SpawnCommand {
     private int spawnCommand(CommandContext<CommandSourceStack> context) {
         CommandSender sender = context.getSource().getSender();
         if (sender instanceof Player player) {
-            StaplePlayer staplePlayer = staplePlugin.getPlayerManager().get(player.getUniqueId());
+            StaplePlayer staplePlayer = plugin.getPlayerManager().get(player.getUniqueId());
             staplePlayer.setOldLocation(player.getLocation());
 
             final Location location = StapleConfig.getSpawnLocation(player.getWorld());
@@ -54,7 +54,7 @@ public final class SpawnCommand {
         if (sender instanceof Player player) {
             final Location location = player.getLocation();
             StapleConfig.setSpawnLocation(location);
-            StapleConfig.save(staplePlugin);
+            StapleConfig.save(plugin);
             player.getWorld().setSpawnLocation(location);
             player.sendMessage(Component.text("Set spawn to your location.", NamedTextColor.GOLD));
         } else {

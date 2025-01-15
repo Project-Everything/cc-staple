@@ -6,11 +6,6 @@ import org.bukkit.World;
 
 public final class StapleConfig {
 
-    /* SQL Storage options */
-    private static String mySqlUrl;
-    private static String mySqlUser;
-    private static String mySqlPassword;
-
     /* Spawn options */
     private static double spawnX;
     private static double spawnY;
@@ -18,47 +13,28 @@ public final class StapleConfig {
     private static float spawnYaw;
     private static float spawnPitch;
 
-    public static void load(StaplePlugin staplePlugin) {
+    public static void load(StaplePlugin plugin) {
         try {
-            /* SQL Storage options */
-            mySqlUrl = staplePlugin.getConfig().getString("mysql.url");
-            mySqlUser = staplePlugin.getConfig().getString("mysql.username");
-            mySqlPassword = staplePlugin.getConfig().getString("mysql.password");
 
             /* Spawn options */
-            spawnX = staplePlugin.getConfig().getDouble("spawn.x");
-            spawnY = staplePlugin.getConfig().getDouble("spawn.y");
-            spawnZ = staplePlugin.getConfig().getDouble("spawn.z");
-            spawnYaw = (float) staplePlugin.getConfig().getDouble("spawn.yaw");
-            spawnPitch = (float) staplePlugin.getConfig().getDouble("spawn.pitch");
+            spawnX = plugin.getConfig().getDouble("spawn.x");
+            spawnY = plugin.getConfig().getDouble("spawn.y");
+            spawnZ = plugin.getConfig().getDouble("spawn.z");
+            spawnYaw = (float) plugin.getConfig().getDouble("spawn.yaw");
+            spawnPitch = (float) plugin.getConfig().getDouble("spawn.pitch");
         } catch (NullPointerException e) {
-            staplePlugin.getLogger().severe("Configuration did not load properly, disabling plugin!");
-            Bukkit.getPluginManager().disablePlugin(staplePlugin);
+            plugin.getLogger().severe("Configuration did not load properly, disabling plugin!");
+            Bukkit.getPluginManager().disablePlugin(plugin);
         }
     }
 
-    public static void save(StaplePlugin staplePlugin) {
-        staplePlugin.getConfig().set("mysql.url", mySqlUrl);
-        staplePlugin.getConfig().set("mysql.username", mySqlUser);
-        staplePlugin.getConfig().set("mysql.password", mySqlPassword);
-        staplePlugin.getConfig().set("spawn.x", spawnX);
-        staplePlugin.getConfig().set("spawn.y", spawnY);
-        staplePlugin.getConfig().set("spawn.z", spawnZ);
-        staplePlugin.getConfig().set("spawn.yaw", spawnYaw);
-        staplePlugin.getConfig().set("spawn.pitch", spawnPitch);
-        staplePlugin.saveConfig();
-    }
-
-    public static String getMySqlUrl() {
-        return mySqlUrl;
-    }
-
-    public static String getMySqlUser() {
-        return mySqlUser;
-    }
-
-    public static String getMySqlPassword() {
-        return mySqlPassword;
+    public static void save(StaplePlugin plugin) {
+        plugin.getConfig().set("spawn.x", spawnX);
+        plugin.getConfig().set("spawn.y", spawnY);
+        plugin.getConfig().set("spawn.z", spawnZ);
+        plugin.getConfig().set("spawn.yaw", spawnYaw);
+        plugin.getConfig().set("spawn.pitch", spawnPitch);
+        plugin.saveConfig();
     }
 
     public static Location getSpawnLocation(World world) {

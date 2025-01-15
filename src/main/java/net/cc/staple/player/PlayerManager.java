@@ -10,11 +10,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public final class PlayerManager {
 
-    private final StaplePlugin staplePlugin;
+    private final StaplePlugin plugin;
     private final Map<UUID, StaplePlayer> cache;
 
-    public PlayerManager() {
-        this.staplePlugin = StaplePlugin.getInstance();
+    public PlayerManager(StaplePlugin plugin) {
+        this.plugin = plugin;
         this.cache = new ConcurrentHashMap<>();
     }
 
@@ -32,13 +32,13 @@ public final class PlayerManager {
             StaplePlayer staplePlayer = new StaplePlayer(mojangId, false, player.getLocation());
 
             // Fetch staple player
-            staplePlugin.getStorage().queryPlayer(mojangId).thenAccept(staplePlayerQuery -> {
+            plugin.getStorage().queryPlayer(mojangId).thenAccept(staplePlayerQuery -> {
                 if (staplePlayerQuery.hasResults()) {
                     StaplePlayer found = staplePlayerQuery.getFirst();
                     staplePlayer.setTpDisabled(found.isTpDisabled());
                     staplePlayer.setOldLocation(found.getOldLocation());
                 } else {
-                    staplePlugin.getStorage().savePlayer(staplePlayer);
+                    plugin.getStorage().savePlayer(staplePlayer);
                 }
             });
 

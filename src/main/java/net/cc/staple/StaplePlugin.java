@@ -19,7 +19,6 @@ import org.jetbrains.annotations.NotNull;
 
 public final class StaplePlugin extends JavaPlugin {
 
-    private static StaplePlugin instance;
     public static String serverName;
 
     private Storage storage;
@@ -28,7 +27,6 @@ public final class StaplePlugin extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        instance = this;
         saveDefaultConfig();
     }
 
@@ -47,16 +45,6 @@ public final class StaplePlugin extends JavaPlugin {
         setupCommands();
         setupListeners();
         setupManagers();
-    }
-
-    @Override
-    public void onDisable() {
-        instance = null;
-    }
-
-    @NotNull
-    public static StaplePlugin getInstance() {
-        return instance;
     }
 
     @NotNull
@@ -79,19 +67,19 @@ public final class StaplePlugin extends JavaPlugin {
             String url = getConfig().getString("mysql.url");
             String username = getConfig().getString("mysql.username");
             String password = getConfig().getString("mysql.password");
-            this.storage = new MySQLManager(url, username, password);
+            this.storage = new MySQLManager(this, url, username, password);
         } catch (ClassNotFoundException e) {
             getLogger().severe("Error while setting up SQL storage: " + e.getMessage());
         }
     }
 
     private void setupManagers() {
-        playerManager = new PlayerManager();
-        tpaManager = new TpaManager();
+        playerManager = new PlayerManager(this);
+        tpaManager = new TpaManager(this);
     }
 
     private void setupListeners() {
-        new PlayerListener();
+        new PlayerListener(this);
     }
 
     private void setupCommands() {
@@ -99,7 +87,7 @@ public final class StaplePlugin extends JavaPlugin {
         lifecycleEventManager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
             final Commands commands = event.registrar();
 
-            new BackCommand(commands);
+            new BackCommand(this, commands);
             new BroadcastCommand(commands);
             new EnderChestCommand(commands);
             new GamemodeCommand(commands);
@@ -111,16 +99,16 @@ public final class StaplePlugin extends JavaPlugin {
             new RespawnCommand(commands);
             new RulesCommand(commands);
             new SpeedCommand(commands);
-            new TeleportCommand(commands);
+            new TeleportCommand(this, commands);
             new TopCommand(commands);
-            new TpaCommand(commands);
-            new TpToggleCommand(commands);
+            new TpaCommand(this, commands);
+            new TpToggleCommand(this, commands);
             new VoteCommand(commands);
 
             boolean plotSquared = getServer().getPluginManager().isPluginEnabled("PlotSquared");
 
             if (plotSquared) {
-                new SpawnCommand(commands);
+                new SpawnCommand(this, commands);
             }
         });
     }

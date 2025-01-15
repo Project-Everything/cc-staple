@@ -6,7 +6,7 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.cc.staple.StaplePlugin;
 import net.cc.staple.player.StaplePlayer;
-import net.cc.staple.StapleUtil;
+import net.cc.staple.util.StapleUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
@@ -16,7 +16,10 @@ import org.bukkit.entity.Player;
 
 public final class TpToggleCommand {
 
-    public TpToggleCommand(Commands commands) {
+    private final StaplePlugin plugin;
+
+    public TpToggleCommand(final StaplePlugin plugin, Commands commands) {
+        this.plugin = plugin;
         commands.register(Commands.literal("tptoggle")
                 .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_TPTOGGLE))
                 .executes(this::execute0)
@@ -27,7 +30,7 @@ public final class TpToggleCommand {
     private int execute0(CommandContext<CommandSourceStack> context) {
         CommandSender sender = context.getSource().getSender();
         if (sender instanceof Player player) {
-            StaplePlayer staplePlayer = StaplePlugin.getInstance().getPlayerManager().get(player.getUniqueId());
+            StaplePlayer staplePlayer = plugin.getPlayerManager().get(player.getUniqueId());
             if (staplePlayer != null) {
                 boolean isTpDisabled = staplePlayer.isTpDisabled();
                 staplePlayer.setTpDisabled(!isTpDisabled);

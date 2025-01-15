@@ -8,7 +8,7 @@ import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
 import net.cc.staple.StaplePlugin;
-import net.cc.staple.StapleUtil;
+import net.cc.staple.util.StapleUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
@@ -18,10 +18,10 @@ import org.bukkit.entity.Player;
 
 public final class TpaCommand {
 
-    private final StaplePlugin staplePlugin;
+    private final StaplePlugin plugin;
 
-    public TpaCommand(Commands commands) {
-        staplePlugin = StaplePlugin.getInstance();
+    public TpaCommand(final StaplePlugin plugin, Commands commands) {
+        this.plugin = plugin;
         commands.register(Commands.literal("tpa")
                         .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_TPA))
                         .executes(this::tpa0)
@@ -73,11 +73,11 @@ public final class TpaCommand {
             try {
                 final Player target = targetResolver.resolve(context.getSource()).getFirst();
                 switch (label) {
-                    case "tpa" -> staplePlugin.getTpaManager().sendRequest(player, target, target);
-                    case "tpahere" -> staplePlugin.getTpaManager().sendRequest(player, target, player);
-                    case "tpaccept" -> staplePlugin.getTpaManager().acceptRequest(target, player);
-                    case "tpdeny" -> staplePlugin.getTpaManager().denyRequest(target, player);
-                    case "tpcancel" -> staplePlugin.getTpaManager().cancelRequest(player, target);
+                    case "tpa" -> plugin.getTpaManager().sendRequest(player, target, target);
+                    case "tpahere" -> plugin.getTpaManager().sendRequest(player, target, player);
+                    case "tpaccept" -> plugin.getTpaManager().acceptRequest(target, player);
+                    case "tpdeny" -> plugin.getTpaManager().denyRequest(target, player);
+                    case "tpcancel" -> plugin.getTpaManager().cancelRequest(player, target);
                 }
             } catch (CommandSyntaxException e) {
                 context.getSource().getSender().sendMessage(Component.text(e.getMessage()).color(NamedTextColor.RED));

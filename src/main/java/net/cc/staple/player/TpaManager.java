@@ -9,11 +9,11 @@ import java.util.*;
 
 public final class TpaManager {
 
-    private final StaplePlugin staplePlugin;
+    private final StaplePlugin plugin;
     private final Map<UUID, TpaRequest> tpaRequests;
 
-    public TpaManager() {
-        this.staplePlugin = StaplePlugin.getInstance();
+    public TpaManager(StaplePlugin plugin) {
+        this.plugin = plugin;
         this.tpaRequests = new HashMap<>();
     }
 
@@ -37,7 +37,7 @@ public final class TpaManager {
         }
 
         // Get StaplePlayer instance from cache
-        StaplePlayer staplePlayer = staplePlugin.getPlayerManager().get(targetPlayer.getUniqueId());
+        StaplePlayer staplePlayer = plugin.getPlayerManager().get(targetPlayer.getUniqueId());
         if (staplePlayer == null) {
             sourcePlayer.sendMessage(Component.text("Command execution failed. Please notify an admin of this error.").color(NamedTextColor.RED));
             return;
@@ -78,7 +78,7 @@ public final class TpaManager {
         if (destinationPlayer.equals(sourcePlayer)) {
             sourcePlayer.sendMessage(Component.text(targetPlayer.getName() + " accepted your request.").color(NamedTextColor.GOLD));
             targetPlayer.sendMessage(Component.text("Request accepted. Teleporting to " + destinationPlayer.getName() + ".").color(NamedTextColor.GOLD));
-            StaplePlayer staplePlayer = StaplePlugin.getInstance().getPlayerManager().get(sourcePlayer);
+            StaplePlayer staplePlayer = plugin.getPlayerManager().get(sourcePlayer);
             staplePlayer.setOldLocation(sourcePlayer.getLocation());
 
             targetPlayer.teleport(destinationPlayer);

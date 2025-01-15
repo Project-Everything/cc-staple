@@ -16,17 +16,17 @@ import java.util.UUID;
 
 public final class PlayerListener implements Listener {
 
-    private final StaplePlugin staplePlugin;
+    private final StaplePlugin plugin;
 
-    public PlayerListener() {
-        this.staplePlugin = StaplePlugin.getInstance();
-        staplePlugin.getServer().getPluginManager().registerEvents(this, staplePlugin);
+    public PlayerListener(final StaplePlugin plugin) {
+        this.plugin = plugin;
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        StaplePlayer staplePlayer = staplePlugin.getPlayerManager().getAndLoad(player);
+        StaplePlayer staplePlayer = plugin.getPlayerManager().getAndLoad(player);
 
         if (Objects.equals(StaplePlugin.serverName, "hub")) {
             Location location = StapleConfig.getSpawnLocation(player.getWorld());
@@ -38,7 +38,7 @@ public final class PlayerListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         UUID mojangId = player.getUniqueId();
-        StaplePlayer staplePlayer = staplePlugin.getPlayerManager().get(mojangId);
-        staplePlugin.getStorage().savePlayer(staplePlayer);
+        StaplePlayer staplePlayer = plugin.getPlayerManager().get(mojangId);
+        plugin.getStorage().savePlayer(staplePlayer);
     }
 }

@@ -5,7 +5,7 @@ import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.cc.staple.StaplePlugin;
-import net.cc.staple.StapleUtil;
+import net.cc.staple.util.StapleUtil;
 import net.cc.staple.player.StaplePlayer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -17,7 +17,10 @@ import org.bukkit.entity.Player;
 
 public final class BackCommand {
 
-    public BackCommand(Commands commands) {
+    private final StaplePlugin plugin;
+
+    public BackCommand(final StaplePlugin plugin, Commands commands) {
+        this.plugin = plugin;
         commands.register(Commands.literal("back")
                         .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_TELEPORT))
                         .executes(this::execute0)
@@ -28,7 +31,7 @@ public final class BackCommand {
     private int execute0(CommandContext<CommandSourceStack> context) {
         CommandSender sender = context.getSource().getSender();
         if (sender instanceof Player player) {
-            StaplePlayer staplePlayer = StaplePlugin.getInstance().getPlayerManager().get(player);
+            StaplePlayer staplePlayer = plugin.getPlayerManager().get(player);
             if (staplePlayer != null) {
                 Location oldLocation = staplePlayer.getOldLocation();
                 oldLocation.setPitch(player.getPitch());

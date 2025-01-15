@@ -14,10 +14,10 @@ import java.util.concurrent.CompletableFuture;
 
 public abstract class SQLStorage extends Storage {
 
-    private final StaplePlugin staplePlugin;
+    private final StaplePlugin plugin;
 
-    public SQLStorage() {
-        this.staplePlugin = StaplePlugin.getInstance();
+    public SQLStorage(final StaplePlugin plugin) {
+        this.plugin = plugin;
     }
 
     protected void createTables() {
@@ -26,7 +26,7 @@ public abstract class SQLStorage extends Storage {
             statement.addBatch("CREATE TABLE IF NOT EXISTS " + Table.STAPLE_PLAYERS + " (id VARCHAR(36) PRIMARY KEY, tp_disabled BOOLEAN, old_location_x DOUBLE, old_location_y DOUBLE, old_location_z DOUBLE);");
             statement.executeBatch();
         } catch (SQLException e) {
-            staplePlugin.getLogger().severe("SQL Exception while creating tables: " + e.getMessage());
+            plugin.getLogger().severe("SQL Exception while creating tables: " + e.getMessage());
         }
     }
 
@@ -53,7 +53,7 @@ public abstract class SQLStorage extends Storage {
                 statement.setDouble(9, staplePlayer.getOldLocation().getZ());
                 statement.executeUpdate();
             } catch (SQLException e) {
-                staplePlugin.getLogger().severe("SQL Exception while saving instance of StaplePlayer: " + e.getMessage());
+                plugin.getLogger().severe("SQL Exception while saving instance of StaplePlayer: " + e.getMessage());
             }
         });
     }
@@ -88,7 +88,7 @@ public abstract class SQLStorage extends Storage {
                     }
                 }
             } catch (SQLException e) {
-                staplePlugin.getLogger().severe("SQL Exception while querying instance of StaplePlayer: " + e.getMessage());
+                plugin.getLogger().severe("SQL Exception while querying instance of StaplePlayer: " + e.getMessage());
             }
             return query;
         });
@@ -123,7 +123,7 @@ public abstract class SQLStorage extends Storage {
                     }
                 }
             } catch (SQLException e) {
-                staplePlugin.getLogger().severe("SQL Exception while querying all instances of StaplePlayer: " + e.getMessage());
+                plugin.getLogger().severe("SQL Exception while querying all instances of StaplePlayer: " + e.getMessage());
             }
             return query;
         });

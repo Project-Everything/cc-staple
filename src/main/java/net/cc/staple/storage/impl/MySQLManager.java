@@ -11,8 +11,8 @@ public final class MySQLManager extends SQLStorage {
 
     private final HikariDataSource dataSource;
 
-    public MySQLManager(String url, String username, String password) throws ClassNotFoundException {
-        final StaplePlugin staplePlugin = StaplePlugin.getInstance();
+    public MySQLManager(final StaplePlugin plugin, String url, String username, String password) throws ClassNotFoundException {
+        super(plugin);
 
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(url);
@@ -21,9 +21,9 @@ public final class MySQLManager extends SQLStorage {
         config.setMaximumPoolSize(10);
         config.setPoolName("cc-staple-pool");
         Class.forName("com.mysql.cj.jdbc.Driver");
-        staplePlugin.getLogger().info("jdbc url: " + url);
-        staplePlugin.getLogger().info("jdbc username: " + username);
-        staplePlugin.getLogger().info("jdbc password: " + password);
+        plugin.getLogger().info("jdbc url: " + url);
+        plugin.getLogger().info("jdbc username: " + username);
+        plugin.getLogger().info("jdbc password: " + password);
 
         dataSource = new HikariDataSource(config);
         createTables();
