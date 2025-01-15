@@ -2,5 +2,7 @@ name: cc-staple
 version: '1.0'
 main: net.cc.staple.StaplePlugin
 description: A general purpose plugin for Creative Central
+api-version: '1.21.4'
+bootstrapper: net.cc.staple.StaplePluginBootstrap
+load: STARTUP
 authors: [ SpektrSoyuz ]
-api-version: '1.21'
