@@ -66,6 +66,11 @@ public final class TpaManager {
         }
 
         tpaRequests.put(sourcePlayer.getUniqueId(), new TpaRequest(sourcePlayer, targetPlayer, destinationPlayer));
+        mostRecentRequests.put(targetPlayer.getUniqueId(), sourcePlayer);
+    }
+
+    public void acceptRequest(Player targetPlayer) {
+        acceptRequest(mostRecentRequests.get(targetPlayer.getUniqueId()), targetPlayer);
     }
 
     public void acceptRequest(Player sourcePlayer, Player targetPlayer) {
@@ -97,6 +102,10 @@ public final class TpaManager {
         }
     }
 
+    public void denyRequest(Player targetPlayer) {
+        denyRequest(mostRecentRequests.get(targetPlayer.getUniqueId()), targetPlayer);
+    }
+
     public void denyRequest(Player sourcePlayer, Player targetPlayer) {
         TpaRequest tpaRequest = tpaRequests.get(sourcePlayer.getUniqueId());
 
@@ -108,6 +117,10 @@ public final class TpaManager {
         sourcePlayer.sendMessage(Component.text(targetPlayer.getName() + " denied your request.", NamedTextColor.GOLD));
         targetPlayer.sendMessage(Component.text("Request denied.").color(NamedTextColor.GOLD));
         tpaRequests.remove(sourcePlayer.getUniqueId());
+    }
+
+    public void cancelRequest(Player targetPlayer) {
+        cancelRequest(mostRecentRequests.get(targetPlayer.getUniqueId()), targetPlayer);
     }
 
     public void cancelRequest(Player sourcePlayer, Player targetPlayer) {

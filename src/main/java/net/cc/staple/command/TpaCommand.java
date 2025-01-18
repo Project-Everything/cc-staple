@@ -60,7 +60,18 @@ public final class TpaCommand {
     }
 
     private int tpa0(CommandContext<CommandSourceStack> context) {
-        context.getSource().getSender().sendMessage(Component.text("/" + context.getInput() + " <player>").color(NamedTextColor.RED));
+        CommandSender sender = context.getSource().getSender();
+        if (sender instanceof Player player) {
+            final String label = context.getInput().split(" ")[0];
+            switch (label) {
+                case "tpa", "tpahere" -> sender.sendMessage(Component.text("/" + context.getInput() + " <player>").color(NamedTextColor.RED));
+                case "tpaccept" -> plugin.getTpaManager().acceptRequest(player);
+                case "tpdeny" -> plugin.getTpaManager().denyRequest(player);
+                case "tpcancel" -> plugin.getTpaManager().cancelRequest(player);
+            }
+        } else {
+            sender.sendMessage(Component.text("/" + context.getInput() + " <player>").color(NamedTextColor.RED));
+        }
         return Command.SINGLE_SUCCESS;
     }
 
