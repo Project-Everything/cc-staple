@@ -18,7 +18,7 @@ import java.util.List;
 public final class BroadcastCommand {
 
     public BroadcastCommand(Commands command) {
-        command.register(Commands.literal("")
+        command.register(Commands.literal("broadcast")
                         .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_BROADCAST))
                         .executes(this::execute0)
                         .then(Commands.argument("message", StringArgumentType.greedyString())
