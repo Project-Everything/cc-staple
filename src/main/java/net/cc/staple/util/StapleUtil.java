@@ -50,6 +50,13 @@ public final class StapleUtil {
     public static @NotNull Component getUsageComponent(String input) {
         return Component.text()
                 .append(Component.text("! ").color(NamedTextColor.RED).decorate(TextDecoration.BOLD),
+                        Component.text("Usage: " + input, NamedTextColor.RED)
+                ).build();
+    }
+
+    public static @NotNull Component getErrorComponent(String input) {
+        return Component.text()
+                .append(Component.text("! ").color(NamedTextColor.RED).decorate(TextDecoration.BOLD),
                         Component.text(input, NamedTextColor.RED)
                 ).build();
     }

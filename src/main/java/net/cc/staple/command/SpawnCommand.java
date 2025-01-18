@@ -5,7 +5,7 @@ import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.cc.staple.StaplePlugin;
-import net.cc.staple.StapleConfig;
+import net.cc.staple.util.SpawnUtil;
 import net.cc.staple.util.StapleUtil;
 import net.cc.staple.player.StaplePlayer;
 import net.kyori.adventure.text.Component;
@@ -40,7 +40,7 @@ public final class SpawnCommand {
             StaplePlayer staplePlayer = plugin.getPlayerManager().get(player.getUniqueId());
             staplePlayer.setOldLocation(player.getLocation());
 
-            final Location location = StapleConfig.getSpawnLocation(player.getWorld());
+            final Location location = SpawnUtil.getSpawnLocation(plugin, player.getWorld());
             player.teleport(location);
             player.sendMessage(Component.text("Teleported to spawn!", NamedTextColor.GOLD));
         } else {
@@ -53,8 +53,7 @@ public final class SpawnCommand {
         CommandSender sender = context.getSource().getSender();
         if (sender instanceof Player player) {
             final Location location = player.getLocation();
-            StapleConfig.setSpawnLocation(location);
-            StapleConfig.save(plugin);
+            SpawnUtil.setSpawnLocation(plugin, location);
             player.getWorld().setSpawnLocation(location);
             player.sendMessage(Component.text("Set spawn to your location.", NamedTextColor.GOLD));
         } else {

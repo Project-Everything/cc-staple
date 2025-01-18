@@ -29,7 +29,6 @@ public final class StaplePlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         serverName = getConfig().getString("server");
-        StapleConfig.load(this);
 
         setupStorage();
         if (this.storage == null) {
