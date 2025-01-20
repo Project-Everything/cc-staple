@@ -15,6 +15,8 @@ public final class PlayerManager {
     public PlayerManager(StaplePlugin plugin) {
         this.plugin = plugin;
         this.cache = new ConcurrentHashMap<>();
+
+        loadAll();
     }
 
     public StaplePlayer loadPlayer(Player player) {
@@ -46,5 +48,15 @@ public final class PlayerManager {
 
     public StaplePlayer getPlayer(Player player) {
         return getPlayer(player.getUniqueId());
+    }
+
+    private void loadAll() {
+        plugin.getDatabaseManager().queryPlayers().thenAccept(staplePlayerQuery -> {
+            if (staplePlayerQuery.hasResults()) {
+                for (StaplePlayer staplePlayer : staplePlayerQuery.getResults()) {
+                    cache.put(staplePlayer.getMojangId(), staplePlayer);
+                }
+            }
+        });
     }
 }
