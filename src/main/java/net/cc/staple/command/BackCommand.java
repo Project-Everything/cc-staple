@@ -31,7 +31,7 @@ public final class BackCommand {
     private int execute0(CommandContext<CommandSourceStack> context) {
         CommandSender sender = context.getSource().getSender();
         if (sender instanceof Player player) {
-            StaplePlayer staplePlayer = plugin.getPlayerManager().get(player);
+            StaplePlayer staplePlayer = plugin.getPlayerManager().getPlayer(player);
             if (staplePlayer != null) {
                 Location oldLocation = staplePlayer.getOldLocation();
                 oldLocation.setPitch(player.getPitch());

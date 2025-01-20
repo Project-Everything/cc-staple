@@ -67,7 +67,7 @@ public final class TeleportCommand {
 
             try {
                 final Player target = targetResolver.resolve(context.getSource()).getFirst();
-                StaplePlayer staplePlayer = plugin.getPlayerManager().get(player);
+                StaplePlayer staplePlayer = plugin.getPlayerManager().getPlayer(player);
                 staplePlayer.setOldLocation(player.getLocation());
 
                 player.teleport(target);
@@ -88,7 +88,7 @@ public final class TeleportCommand {
         try {
             final Player target = targetResolver.resolve(context.getSource()).getFirst();
             final Player target2 = targetResolver2.resolve(context.getSource()).getFirst();
-            StaplePlayer staplePlayer = plugin.getPlayerManager().get(target);
+            StaplePlayer staplePlayer = plugin.getPlayerManager().getPlayer(target);
             staplePlayer.setOldLocation(target.getLocation());
 
             target.teleport(target2);
@@ -108,7 +108,7 @@ public final class TeleportCommand {
                 final FinePosition finePosition = finePositionResolver.resolve(context.getSource());
                 final Location location = finePosition.toLocation(player.getWorld());
                 DecimalFormat df = new DecimalFormat("#.##");
-                StaplePlayer staplePlayer = plugin.getPlayerManager().get(player);
+                StaplePlayer staplePlayer = plugin.getPlayerManager().getPlayer(player);
                 staplePlayer.setOldLocation(player.getLocation());
 
                 player.teleport(location);
@@ -133,7 +133,7 @@ public final class TeleportCommand {
                 final FinePosition finePosition = finePositionResolver.resolve(context.getSource());
                 final Location location = finePosition.toLocation(player.getWorld());
                 DecimalFormat df = new DecimalFormat("#.##");
-                StaplePlayer staplePlayer = plugin.getPlayerManager().get(target);
+                StaplePlayer staplePlayer = plugin.getPlayerManager().getPlayer(target);
                 staplePlayer.setOldLocation(target.getLocation());
 
                 target.teleport(location);
@@ -160,7 +160,7 @@ public final class TeleportCommand {
 
             try {
                 final Player target = targetResolver.resolve(context.getSource()).getFirst();
-                StaplePlayer staplePlayer = plugin.getPlayerManager().get(target);
+                StaplePlayer staplePlayer = plugin.getPlayerManager().getPlayer(target);
                 staplePlayer.setOldLocation(target.getLocation());
 
                 target.teleport(player);

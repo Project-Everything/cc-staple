@@ -13,14 +13,14 @@ import net.kyori.adventure.text.format.TextDecoration;
 
 @SuppressWarnings("UnstableApiUsage")
 
-public final class VoteCommand {
+public final class DiscordCommand {
 
-    public VoteCommand(Commands commands) {
-        commands.register(Commands.literal("vote")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_VOTE))
+    public DiscordCommand(Commands commands) {
+        commands.register(Commands.literal("discord")
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_RULES))
                         .executes(this::execute0)
                         .build(),
-                "View vote message");
+                "View discord message");
     }
 
     private int execute0(CommandContext<CommandSourceStack> context) {
@@ -28,10 +28,10 @@ public final class VoteCommand {
                 .append(StapleUtil.COMMAND_HEADER,
                         Component.newline(),
                         Component.newline(),
-                        Component.text("Vote").color(NamedTextColor.AQUA).decorate(TextDecoration.BOLD),
+                        Component.text("Discord").color(NamedTextColor.AQUA).decorate(TextDecoration.BOLD),
                         Component.text(" > ").color(NamedTextColor.GRAY).decorate(TextDecoration.BOLD),
-                        Component.text("creative-central.net/vote")
-                                .clickEvent(ClickEvent.openUrl("https://creative-central.net/vote")),
+                        Component.text("discord.gg/Hpg5K7wgUb")
+                                .clickEvent(ClickEvent.openUrl("https://discord.gg/Hpg5K7wgUb")),
                         Component.newline(),
                         Component.newline(),
                         StapleUtil.COMMAND_HEADER

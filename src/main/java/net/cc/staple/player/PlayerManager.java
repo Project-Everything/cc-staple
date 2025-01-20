@@ -1,7 +1,6 @@
 package net.cc.staple.player;
 
 import net.cc.staple.StaplePlugin;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
@@ -18,41 +17,34 @@ public final class PlayerManager {
         this.cache = new ConcurrentHashMap<>();
     }
 
-    public StaplePlayer getAndLoad(Player player) {
-        return getAndLoad(player.getUniqueId());
-    }
+    public StaplePlayer loadPlayer(Player player) {
+        UUID mojangId = player.getUniqueId();
 
-    public StaplePlayer getAndLoad(UUID mojangId) {
         if (cache.containsKey(mojangId)) {
             return cache.get(mojangId);
         }
 
-        Player player = Bukkit.getPlayer(mojangId);
-        if (player != null) {
-            StaplePlayer staplePlayer = new StaplePlayer(mojangId, false, player.getLocation());
+        StaplePlayer staplePlayer = new StaplePlayer(mojangId, false, player.getLocation());
 
-            // Fetch staple player
-            plugin.getStorage().queryPlayer(mojangId).thenAccept(staplePlayerQuery -> {
-                if (staplePlayerQuery.hasResults()) {
-                    StaplePlayer found = staplePlayerQuery.getFirst();
-                    staplePlayer.setTpDisabled(found.isTpDisabled());
-                    staplePlayer.setOldLocation(found.getOldLocation());
-                } else {
-                    plugin.getStorage().savePlayer(staplePlayer);
-                }
-            });
+        plugin.getDatabaseManager().queryPlayer(mojangId).thenAccept(staplePlayerQuery -> {
+            if (staplePlayerQuery.hasResults()) {
+                StaplePlayer found = staplePlayerQuery.getFirst();
+                staplePlayer.setTpDisabled(found.isTpDisabled());
+                staplePlayer.setOldLocation(found.getOldLocation());
+            } else {
+                plugin.getDatabaseManager().savePlayer(staplePlayer);
+            }
+        });
 
-            cache.put(mojangId, staplePlayer);
-            return staplePlayer;
-        }
-        return null;
+        cache.put(mojangId, staplePlayer);
+        return staplePlayer;
     }
 
-    public StaplePlayer get(UUID mojangId) {
+    public StaplePlayer getPlayer(UUID mojangId) {
         return cache.get(mojangId);
     }
 
-    public StaplePlayer get(Player player) {
-        return get(player.getUniqueId());
+    public StaplePlayer getPlayer(Player player) {
+        return getPlayer(player.getUniqueId());
     }
 }

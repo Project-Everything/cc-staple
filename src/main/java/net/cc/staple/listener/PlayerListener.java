@@ -26,9 +26,9 @@ public final class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        StaplePlayer staplePlayer = plugin.getPlayerManager().getAndLoad(player);
+        StaplePlayer staplePlayer = plugin.getPlayerManager().loadPlayer(player);
 
-        if (Objects.equals(StaplePlugin.serverName, "hub")) {
+        if (Objects.equals(plugin.getServerName(), "hub")) {
             Location location = SpawnUtil.getSpawnLocation(plugin, player.getWorld());
             player.teleport(location);
         }
@@ -38,7 +38,7 @@ public final class PlayerListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         UUID mojangId = player.getUniqueId();
-        StaplePlayer staplePlayer = plugin.getPlayerManager().get(mojangId);
-        plugin.getStorage().savePlayer(staplePlayer);
+        StaplePlayer staplePlayer = plugin.getPlayerManager().getPlayer(mojangId);
+        plugin.getDatabaseManager().savePlayer(staplePlayer);
     }
 }

@@ -1,8 +1,10 @@
-server: hub
-mysql:
-  url: url
-  username: username
-  password: password
+server: 'default'
+database:
+  host: 'localhost'
+  port: 3306
+  database: 'database'
+  username: 'username'
+  password: 'password'
 
 spawn:
   x: 0

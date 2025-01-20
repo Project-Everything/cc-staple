@@ -37,7 +37,7 @@ public final class SpawnCommand {
     private int spawnCommand(CommandContext<CommandSourceStack> context) {
         CommandSender sender = context.getSource().getSender();
         if (sender instanceof Player player) {
-            StaplePlayer staplePlayer = plugin.getPlayerManager().get(player.getUniqueId());
+            StaplePlayer staplePlayer = plugin.getPlayerManager().getPlayer(player.getUniqueId());
             staplePlayer.setOldLocation(player.getLocation());
 
             final Location location = SpawnUtil.getSpawnLocation(plugin, player.getWorld());

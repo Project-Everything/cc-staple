@@ -41,7 +41,7 @@ public final class TpaManager {
         }
 
         // Get StaplePlayer instance from cache
-        StaplePlayer staplePlayer = plugin.getPlayerManager().get(targetPlayer.getUniqueId());
+        StaplePlayer staplePlayer = plugin.getPlayerManager().getPlayer(targetPlayer.getUniqueId());
         if (staplePlayer == null) {
             sourcePlayer.sendMessage(StapleUtil.getErrorComponent("Command execution failed. Please notify an admin of this error."));
             return;
@@ -87,7 +87,7 @@ public final class TpaManager {
         if (destinationPlayer.equals(sourcePlayer)) {
             sourcePlayer.sendMessage(Component.text(targetPlayer.getName() + " accepted your request.", NamedTextColor.GOLD));
             targetPlayer.sendMessage(Component.text("Request accepted. Teleporting to " + destinationPlayer.getName() + ".", NamedTextColor.GOLD));
-            StaplePlayer staplePlayer = plugin.getPlayerManager().get(sourcePlayer);
+            StaplePlayer staplePlayer = plugin.getPlayerManager().getPlayer(sourcePlayer);
             staplePlayer.setOldLocation(sourcePlayer.getLocation());
 
             targetPlayer.teleport(destinationPlayer);

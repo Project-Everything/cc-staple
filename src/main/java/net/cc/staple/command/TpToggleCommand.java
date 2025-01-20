@@ -30,7 +30,7 @@ public final class TpToggleCommand {
     private int execute0(CommandContext<CommandSourceStack> context) {
         CommandSender sender = context.getSource().getSender();
         if (sender instanceof Player player) {
-            StaplePlayer staplePlayer = plugin.getPlayerManager().get(player.getUniqueId());
+            StaplePlayer staplePlayer = plugin.getPlayerManager().getPlayer(player.getUniqueId());
             if (staplePlayer != null) {
                 boolean isTpDisabled = staplePlayer.isTpDisabled();
                 staplePlayer.setTpDisabled(!isTpDisabled);
