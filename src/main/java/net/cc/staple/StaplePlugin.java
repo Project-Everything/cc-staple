@@ -3,6 +3,7 @@ package net.cc.staple;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import net.cc.staple.command.*;
+import net.cc.staple.config.ConfigManager;
 import net.cc.staple.listener.PlayerListener;
 import net.cc.staple.player.PlayerManager;
 import net.cc.staple.player.TpaManager;
@@ -14,21 +15,18 @@ import org.jetbrains.annotations.NotNull;
 
 public final class StaplePlugin extends JavaPlugin {
 
-    private String serverName;
-
+    private ConfigManager configManager;
     private DatabaseManager databaseManager;
     private PlayerManager playerManager;
     private TpaManager tpaManager;
 
     @Override
     public void onLoad() {
-        saveDefaultConfig();
+        configManager = new ConfigManager(this);
     }
 
     @Override
     public void onEnable() {
-        serverName = getConfig().getString("server");
-
         databaseManager = new DatabaseManager(this);
         playerManager = new PlayerManager(this);
         tpaManager = new TpaManager(this);
@@ -68,6 +66,11 @@ public final class StaplePlugin extends JavaPlugin {
     }
 
     @NotNull
+    public ConfigManager getConfigManager() {
+        return configManager;
+    }
+
+    @NotNull
     public DatabaseManager getDatabaseManager() {
         return databaseManager;
     }
@@ -80,10 +83,5 @@ public final class StaplePlugin extends JavaPlugin {
     @NotNull
     public TpaManager getTpaManager() {
         return tpaManager;
-    }
-
-    @NotNull
-    public String getServerName() {
-        return serverName;
     }
 }

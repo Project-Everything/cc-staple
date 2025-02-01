@@ -2,7 +2,6 @@ package net.cc.staple.listener;
 
 import net.cc.staple.StaplePlugin;
 import net.cc.staple.player.StaplePlayer;
-import net.cc.staple.util.SpawnUtil;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,9 +27,11 @@ public final class PlayerListener implements Listener {
         Player player = event.getPlayer();
         StaplePlayer staplePlayer = plugin.getPlayerManager().loadPlayer(player);
 
-        if (Objects.equals(plugin.getServerName(), "hub")) {
-            Location location = SpawnUtil.getSpawnLocation(plugin, player.getWorld());
-            player.teleport(location);
+        if (Objects.equals(plugin.getConfigManager().getServerName(), "hub")) {
+            Location location = plugin.getConfigManager().getSpawnLocation();
+            if (location != null) {
+                player.teleport(location);
+            }
         }
     }
 

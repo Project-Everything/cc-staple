@@ -24,6 +24,7 @@ repositories {
 
 dependencies {
     implementation("com.zaxxer:HikariCP:5.1.0")
+    implementation("org.spongepowered:configurate-hocon:4.1.2")
     compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
 }
 
