@@ -34,6 +34,8 @@ public class DatabaseManager {
     private void init() {
         HikariConfig hikariConfig = new HikariConfig();
 
+        // TODO get database information from ConfigManager
+
         String host = config.getString("database.host");
         int port = config.getInt("database.port");
         String database = config.getString("database.database");

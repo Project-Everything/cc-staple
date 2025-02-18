@@ -2,9 +2,11 @@ package net.cc.staple.command;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
+import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
 import net.cc.staple.util.StapleUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -17,20 +19,22 @@ import java.util.List;
 
 public final class EnderChestCommand {
 
+    // Constructor
     public EnderChestCommand(Commands commands) {
         commands.register(Commands.literal("enderchest")
                         .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_ENDERCHEST))
-                        .executes(this::execute0)
-                        .then(Commands.argument("player", ArgumentTypes.player())
+                        .executes(this::openInventory)
+                        .then(Commands.argument("target", ArgumentTypes.player())
                                 .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_ENDERCHEST_OTHER))
-                                .executes(this::execute1))
+                                .executes(this::openInventoryOther))
                         .build(),
                 "View your ender chest",
-                List.of("ec")
+                List.of("echest", "ec")
         );
     }
 
-    private int execute0(CommandContext<CommandSourceStack> context) {
+    // Method to execute command
+    private int openInventory(CommandContext<CommandSourceStack> context) {
         CommandSender sender = context.getSource().getSender();
         if (sender instanceof Player player) {
             player.openInventory(player.getEnderChest());
@@ -41,12 +45,18 @@ public final class EnderChestCommand {
         return Command.SINGLE_SUCCESS;
     }
 
-    private int execute1(CommandContext<CommandSourceStack> context) {
+    // Method to execute command with additional Player argument
+    private int openInventoryOther(CommandContext<CommandSourceStack> context) {
         CommandSender sender = context.getSource().getSender();
         if (sender instanceof Player player) {
-            Player targetPlayer = context.getArgument("player", Player.class);
-            player.openInventory(targetPlayer.getEnderChest());
-            player.sendMessage(Component.text("Opened " + targetPlayer.getName() + "'s ender chest.").color(NamedTextColor.GOLD));
+            final PlayerSelectorArgumentResolver targetResolver = context.getArgument("target", PlayerSelectorArgumentResolver.class);
+            try {
+                final Player targetPlayer = targetResolver.resolve(context.getSource()).getFirst();
+                player.openInventory(targetPlayer.getEnderChest());
+                player.sendMessage(Component.text("Opened " + targetPlayer.getName() + "'s ender chest.").color(NamedTextColor.GOLD));
+            } catch (CommandSyntaxException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
         }

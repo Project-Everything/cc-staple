@@ -23,6 +23,7 @@ public final class ConfigManager {
     private final Logger logger;
     private CommentedConfigurationNode root;
 
+    // Constructor
     public ConfigManager(final StaplePlugin plugin) {
         this.plugin = plugin;
         this.dataFolder = plugin.getDataFolder();
@@ -31,6 +32,7 @@ public final class ConfigManager {
         loadConfig();
     }
 
+    // Method to load the config file into the root variable
     public void loadConfig() {
         final File configFile = new File(dataFolder, CONFIG);
         final HoconConfigurationLoader loader = HoconConfigurationLoader.builder().path(configFile.toPath()).build();
@@ -46,11 +48,13 @@ public final class ConfigManager {
         }
     }
 
+    // Method to get the server name from the config
     public String getServerName() {
         final ConfigurationNode node = root.node("server");
         return node.getString("default");
     }
 
+    // Method to get the Spawn Location from the config
     public Location getSpawnLocation() {
         final ConfigurationNode node = root.node("settings", "spawn-location");
         final String spawnString = node.getString();
@@ -71,6 +75,7 @@ public final class ConfigManager {
         return null;
     }
 
+    // Method to save the Spawn Location to the config
     public void setSpawnLocation(final Location location) {
         final File configFile = new File(dataFolder, CONFIG);
         final HoconConfigurationLoader loader = HoconConfigurationLoader.builder().path(configFile.toPath()).build();
