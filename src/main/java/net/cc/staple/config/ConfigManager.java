@@ -9,7 +9,6 @@ import org.spongepowered.configurate.hocon.HoconConfigurationLoader;
 import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
 
 public final class ConfigManager {
 
-    public static final String CONFIG = "config.conf";
+    private static final String CONFIG = "config.conf";
     private final StaplePlugin plugin;
     private final File dataFolder;
     private final Logger logger;
@@ -28,23 +27,24 @@ public final class ConfigManager {
         this.plugin = plugin;
         this.dataFolder = plugin.getDataFolder();
         this.logger = plugin.getLogger();
-
-        loadConfig();
     }
 
-    // Method to load the config file into the root variable
-    public void loadConfig() {
-        final File configFile = new File(dataFolder, CONFIG);
-        final HoconConfigurationLoader loader = HoconConfigurationLoader.builder().path(configFile.toPath()).build();
+    // Method to create and load config file
+    public void init() {
+        File configFile = new File(dataFolder, CONFIG);
+        HoconConfigurationLoader loader = HoconConfigurationLoader.builder()
+                .path(configFile.toPath())
+                .build();
 
         if (!configFile.exists()) {
-            plugin.saveResource(CONFIG, false); // save config file if it does not exist
+            plugin.saveResource(CONFIG, false); // save config file if missing
+            logger.info(String.format("Created %s", CONFIG));
         }
 
         try {
             root = loader.load();
-        } catch (IOException e) {
-            logger.warning("Failed to load " + CONFIG + ": " + e.getMessage());
+        } catch (ConfigurateException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -95,6 +95,16 @@ public final class ConfigManager {
         try {
             loader.save(root);
         } catch (ConfigurateException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // Method to get the database settings from the config
+    public DatabaseSettings getDatabaseSettings() {
+        ConfigurationNode node = root.node("database");
+        try {
+            return node.get(DatabaseSettings.class);
+        } catch (SerializationException e) {
             throw new RuntimeException(e);
         }
     }

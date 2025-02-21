@@ -23,6 +23,7 @@ public final class StaplePlugin extends JavaPlugin {
     @Override
     public void onLoad() {
         configManager = new ConfigManager(this);
+        configManager.init();
     }
 
     @Override

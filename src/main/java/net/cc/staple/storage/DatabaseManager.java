@@ -3,11 +3,12 @@ package net.cc.staple.storage;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import net.cc.staple.StaplePlugin;
+import net.cc.staple.config.ConfigManager;
+import net.cc.staple.config.DatabaseSettings;
 import net.cc.staple.player.StaplePlayer;
 import net.cc.staple.storage.query.StaplePlayerQuery;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.sql.*;
@@ -17,34 +18,28 @@ import java.util.logging.Logger;
 
 public class DatabaseManager {
 
-    private final FileConfiguration config;
+    private final ConfigManager config;
     private final Logger logger;
     private HikariDataSource dataSource;
 
     public static final String STAPLE_PLAYERS = "staple_players";
 
     public DatabaseManager(final StaplePlugin plugin) {
-        this.config = plugin.getConfig();
+        this.config = plugin.getConfigManager();
         this.logger = plugin.getLogger();
 
         init();
         createTables();
     }
 
-    private void init() {
+    // Method to create the HikariCP data source (connection to SQL database)
+    public void init() {
+        DatabaseSettings settings = config.getDatabaseSettings();
         HikariConfig hikariConfig = new HikariConfig();
 
-        // TODO get database information from ConfigManager
-
-        String host = config.getString("database.host");
-        int port = config.getInt("database.port");
-        String database = config.getString("database.database");
-        String username = config.getString("database.username");
-        String password = config.getString("database.password");
-
-        hikariConfig.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + database);
-        hikariConfig.setUsername(username);
-        hikariConfig.setPassword(password);
+        hikariConfig.setJdbcUrl("jdbc:mysql://" + settings.getHost() + ":" + settings.getPort() + "/" + settings.getDatabase());
+        hikariConfig.setUsername(settings.getUsername());
+        hikariConfig.setPassword(settings.getPassword());
         hikariConfig.addDataSourceProperty("cachePrepStmts", "true");
         hikariConfig.addDataSourceProperty("prepStmtCacheSize", "250");
         hikariConfig.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
