@@ -5,7 +5,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
-import net.cc.staple.util.StapleUtil;
+import net.cc.staple.util.StapleUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
@@ -17,7 +17,7 @@ public final class SpeedCommand {
 
     public SpeedCommand(Commands commands) {
         commands.register(Commands.literal("speed")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_SPEED))
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_SPEED))
                         .executes(this::execute0)
                         .then(Commands.argument("value", IntegerArgumentType.integer(0, 10))
                                 .executes(this::execute1))
@@ -46,7 +46,7 @@ public final class SpeedCommand {
 
             player.sendMessage(Component.text("Set your " + state + " to " + value + ".").color(NamedTextColor.GOLD));
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }
@@ -64,7 +64,7 @@ public final class SpeedCommand {
 
             player.sendMessage(Component.text("Reset your " + state + ".").color(NamedTextColor.GOLD));
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }

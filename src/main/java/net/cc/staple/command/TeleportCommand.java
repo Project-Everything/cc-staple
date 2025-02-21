@@ -10,7 +10,7 @@ import io.papermc.paper.command.brigadier.argument.resolvers.FinePositionResolve
 import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
 import io.papermc.paper.math.FinePosition;
 import net.cc.staple.StaplePlugin;
-import net.cc.staple.util.StapleUtil;
+import net.cc.staple.util.StapleUtils;
 import net.cc.staple.player.StaplePlayer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -30,7 +30,7 @@ public final class TeleportCommand {
     public TeleportCommand(final StaplePlugin plugin, Commands commands) {
         this.plugin = plugin;
         commands.register(Commands.literal("teleport")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_TELEPORT))
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_TELEPORT))
                         .executes(this::teleport0)
                         .then(Commands.argument("target", ArgumentTypes.player())
                                 .executes(this::teleport1)
@@ -44,7 +44,7 @@ public final class TeleportCommand {
                 "Teleport to a player",
                 List.of("tp"));
         commands.register(Commands.literal("teleporthere")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_TELEPORT))
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_TELEPORT))
                         .executes(this::teleportHere0)
                         .then(Commands.argument("target", ArgumentTypes.player())
                                 .executes(this::teleportHere1))
@@ -76,7 +76,7 @@ public final class TeleportCommand {
                 context.getSource().getSender().sendMessage(Component.text(e.getMessage()).color(NamedTextColor.RED));
             }
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }
@@ -117,7 +117,7 @@ public final class TeleportCommand {
                 context.getSource().getSender().sendMessage(Component.text(e.getMessage()).color(NamedTextColor.RED));
             }
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }
@@ -143,7 +143,7 @@ public final class TeleportCommand {
                 context.getSource().getSender().sendMessage(Component.text(e.getMessage()).color(NamedTextColor.RED));
             }
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }
@@ -169,7 +169,7 @@ public final class TeleportCommand {
                 context.getSource().getSender().sendMessage(Component.text(e.getMessage()).color(NamedTextColor.RED));
             }
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }

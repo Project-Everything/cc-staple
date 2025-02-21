@@ -1,9 +1,13 @@
 package net.cc.staple.player;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Location;
 
 import java.util.UUID;
 
+@Getter
+@Setter
 public final class StaplePlayer {
 
     private final UUID mojangId;
@@ -13,26 +17,6 @@ public final class StaplePlayer {
     public StaplePlayer(UUID mojangId, boolean tpDisabled, Location oldLocation) {
         this.mojangId = mojangId;
         this.tpDisabled = tpDisabled;
-        this.oldLocation = oldLocation;
-    }
-
-    public UUID getMojangId() {
-        return mojangId;
-    }
-
-    public boolean isTpDisabled() {
-        return tpDisabled;
-    }
-
-    public void setTpDisabled(boolean tpDisabled) {
-        this.tpDisabled = tpDisabled;
-    }
-
-    public Location getOldLocation() {
-        return oldLocation;
-    }
-
-    public void setOldLocation(Location oldLocation) {
         this.oldLocation = oldLocation;
     }
 }

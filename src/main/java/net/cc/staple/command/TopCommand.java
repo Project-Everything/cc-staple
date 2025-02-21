@@ -4,7 +4,7 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
-import net.cc.staple.util.StapleUtil;
+import net.cc.staple.util.StapleUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
@@ -18,12 +18,12 @@ public final class TopCommand {
 
     public TopCommand(Commands commands) {
         commands.register(Commands.literal("top")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_TOP))
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_TOP))
                         .executes(this::execute0)
                         .build(),
                 "Teleport to the highest block");
         commands.register(Commands.literal("jump")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_JUMP))
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_JUMP))
                         .executes(this::execute1)
                         .build(),
                 "Teleport to a direct block");
@@ -41,7 +41,7 @@ public final class TopCommand {
             }
             player.sendMessage(Component.text("You've been teleported up!", NamedTextColor.GOLD));
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }
@@ -61,7 +61,7 @@ public final class TopCommand {
                 player.sendMessage(Component.text("You've jumped to a location!", NamedTextColor.GOLD));
             }
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }

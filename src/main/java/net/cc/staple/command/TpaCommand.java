@@ -8,7 +8,7 @@ import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
 import net.cc.staple.StaplePlugin;
-import net.cc.staple.util.StapleUtil;
+import net.cc.staple.util.StapleUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
@@ -23,35 +23,35 @@ public final class TpaCommand {
     public TpaCommand(final StaplePlugin plugin, Commands commands) {
         this.plugin = plugin;
         commands.register(Commands.literal("tpa")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_TPA))
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_TPA))
                         .executes(this::tpa0)
                         .then(Commands.argument("target", ArgumentTypes.player())
                                 .executes(this::tpa1))
                         .build(),
                 "Send a teleport request");
         commands.register(Commands.literal("tpahere")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_TPA))
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_TPA))
                         .executes(this::tpa0)
                         .then(Commands.argument("target", ArgumentTypes.player())
                                 .executes(this::tpa1))
                         .build(),
                 "Send a teleport here request");
         commands.register(Commands.literal("tpaccept")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_TPA))
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_TPA))
                         .executes(this::tpa0)
                         .then(Commands.argument("target", ArgumentTypes.player())
                                 .executes(this::tpa1))
                         .build(),
                 "Accept a teleport request");
         commands.register(Commands.literal("tpdeny")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_TPA))
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_TPA))
                         .executes(this::tpa0)
                         .then(Commands.argument("target", ArgumentTypes.player())
                                 .executes(this::tpa1))
                         .build(),
                 "Deny a teleport request");
         commands.register(Commands.literal("tpcancel")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_TPA))
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_TPA))
                         .executes(this::tpa0)
                         .then(Commands.argument("target", ArgumentTypes.player())
                                 .executes(this::tpa1))
@@ -94,7 +94,7 @@ public final class TpaCommand {
                 context.getSource().getSender().sendMessage(Component.text(e.getMessage()).color(NamedTextColor.RED));
             }
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }

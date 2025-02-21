@@ -4,7 +4,7 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
-import net.cc.staple.util.StapleUtil;
+import net.cc.staple.util.StapleUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
@@ -17,7 +17,7 @@ public final class HelpCommand {
 
     public HelpCommand(Commands commands) {
         commands.register(Commands.literal("help")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_HELP))
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_HELP))
                         .executes(this::execute0)
                         .build(),
                 "View help message");
@@ -25,7 +25,7 @@ public final class HelpCommand {
 
     private int execute0(CommandContext<CommandSourceStack> context) {
         final TextComponent component = Component.text()
-                .append(StapleUtil.COMMAND_HEADER,
+                .append(StapleUtils.COMMAND_HEADER,
                         Component.newline(),
                         Component.newline(),
                         Component.text("Help").color(NamedTextColor.AQUA).decorate(TextDecoration.BOLD),
@@ -34,7 +34,7 @@ public final class HelpCommand {
                                 .clickEvent(ClickEvent.openUrl("https://creative-central.net/help")),
                         Component.newline(),
                         Component.newline(),
-                        StapleUtil.COMMAND_HEADER
+                        StapleUtils.COMMAND_HEADER
                 ).build();
 
         context.getSource().getSender().sendMessage(component);

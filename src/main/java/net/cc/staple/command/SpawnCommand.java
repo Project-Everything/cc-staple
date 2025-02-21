@@ -5,7 +5,7 @@ import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.cc.staple.StaplePlugin;
-import net.cc.staple.util.StapleUtil;
+import net.cc.staple.util.StapleUtils;
 import net.cc.staple.player.StaplePlayer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -22,12 +22,12 @@ public final class SpawnCommand {
     public SpawnCommand(final StaplePlugin plugin, Commands commands) {
         this.plugin = plugin;
         commands.register(Commands.literal("spawn")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_SPAWN))
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_SPAWN))
                         .executes(this::spawnCommand)
                         .build(),
                 "Teleport to spawn");
         commands.register(Commands.literal("setspawn")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_SETSPAWN))
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_SETSPAWN))
                         .executes(this::setSpawnCommand)
                         .build(),
                 "Set the world spawn");
@@ -45,7 +45,7 @@ public final class SpawnCommand {
                 player.sendMessage(Component.text("Teleported to spawn!", NamedTextColor.GOLD));
             }
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }
@@ -58,7 +58,7 @@ public final class SpawnCommand {
             player.getWorld().setSpawnLocation(location);
             player.sendMessage(Component.text("Set spawn to your location.", NamedTextColor.GOLD));
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }

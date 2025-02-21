@@ -1,7 +1,7 @@
 package net.cc.staple.player;
 
 import net.cc.staple.StaplePlugin;
-import net.cc.staple.util.StapleUtil;
+import net.cc.staple.util.StapleUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
@@ -28,14 +28,14 @@ public final class TpaManager {
     public void sendRequest(Player sourcePlayer, Player targetPlayer, Player destinationPlayer) {
         // Check if source player = target player
         if (sourcePlayer.equals(targetPlayer)) {
-            sourcePlayer.sendMessage(StapleUtil.getErrorComponent("You cannot send a request to yourself!"));
+            sourcePlayer.sendMessage(StapleUtils.getErrorComponent("You cannot send a request to yourself!"));
             return;
         }
 
         // Check if there is an outstanding request from the source player
         for (TpaRequest request : getRequests()) {
             if (sourcePlayer.equals(request.sourcePlayer())) {
-                sourcePlayer.sendMessage(StapleUtil.getErrorComponent("You have already sent a request to " + request.targetPlayer().getName() + "."));
+                sourcePlayer.sendMessage(StapleUtils.getErrorComponent("You have already sent a request to " + request.targetPlayer().getName() + "."));
                 return;
             }
         }
@@ -43,14 +43,14 @@ public final class TpaManager {
         // Get StaplePlayer instance from cache
         StaplePlayer staplePlayer = plugin.getPlayerManager().getPlayer(targetPlayer.getUniqueId());
         if (staplePlayer == null) {
-            sourcePlayer.sendMessage(StapleUtil.getErrorComponent("Command execution failed. Please notify an admin of this error."));
+            sourcePlayer.sendMessage(StapleUtils.getErrorComponent("Command execution failed. Please notify an admin of this error."));
             return;
         }
 
         // Check if target player has tp disabled
         boolean isTpDisabled = staplePlayer.isTpDisabled();
         if (isTpDisabled) {
-            sourcePlayer.sendMessage(StapleUtil.getErrorComponent(targetPlayer.getName() + " has teleportation disabled!"));
+            sourcePlayer.sendMessage(StapleUtils.getErrorComponent(targetPlayer.getName() + " has teleportation disabled!"));
             return;
         }
 
@@ -61,7 +61,7 @@ public final class TpaManager {
         } else if (destinationPlayer.equals(targetPlayer)) {
             targetPlayer.sendMessage(Component.text().append(Component.text("You received a teleport request from " + sourcePlayer.getName() + ".").color(NamedTextColor.GOLD)).append(Component.text("\nType /tpaccept to accept or /tpdeny to deny").color(NamedTextColor.GOLD)).build());
         } else {
-            sourcePlayer.sendMessage(StapleUtil.getErrorComponent("Command execution failed. Please notify an admin of this error."));
+            sourcePlayer.sendMessage(StapleUtils.getErrorComponent("Command execution failed. Please notify an admin of this error."));
             return;
         }
 
@@ -77,7 +77,7 @@ public final class TpaManager {
         TpaRequest tpaRequest = tpaRequests.get(sourcePlayer.getUniqueId());
 
         if (tpaRequest == null) {
-            targetPlayer.sendMessage(StapleUtil.getErrorComponent("You do not have request from " + sourcePlayer.getName()));
+            targetPlayer.sendMessage(StapleUtils.getErrorComponent("You do not have request from " + sourcePlayer.getName()));
             return;
         }
 
@@ -98,7 +98,7 @@ public final class TpaManager {
             sourcePlayer.teleport(destinationPlayer);
             tpaRequests.remove(sourcePlayer.getUniqueId());
         } else {
-            sourcePlayer.sendMessage(StapleUtil.getErrorComponent("Command execution failed. Please notify an admin of this error."));
+            sourcePlayer.sendMessage(StapleUtils.getErrorComponent("Command execution failed. Please notify an admin of this error."));
         }
     }
 
@@ -110,7 +110,7 @@ public final class TpaManager {
         TpaRequest tpaRequest = tpaRequests.get(sourcePlayer.getUniqueId());
 
         if (tpaRequest == null) {
-            targetPlayer.sendMessage(StapleUtil.getErrorComponent("You do not have request from " + sourcePlayer.getName()));
+            targetPlayer.sendMessage(StapleUtils.getErrorComponent("You do not have request from " + sourcePlayer.getName()));
             return;
         }
 
@@ -127,7 +127,7 @@ public final class TpaManager {
         TpaRequest tpaRequest = tpaRequests.get(sourcePlayer.getUniqueId());
 
         if (tpaRequest == null) {
-            sourcePlayer.sendMessage(StapleUtil.getErrorComponent("You have not sent a request to " + targetPlayer.getName()));
+            sourcePlayer.sendMessage(StapleUtils.getErrorComponent("You have not sent a request to " + targetPlayer.getName()));
             return;
         }
 

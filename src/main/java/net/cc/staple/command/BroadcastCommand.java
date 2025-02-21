@@ -5,7 +5,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
-import net.cc.staple.util.StapleUtil;
+import net.cc.staple.util.StapleUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -19,7 +19,7 @@ public final class BroadcastCommand {
 
     public BroadcastCommand(Commands command) {
         command.register(Commands.literal("broadcast")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_BROADCAST))
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_BROADCAST))
                         .executes(this::execute0)
                         .then(Commands.argument("message", StringArgumentType.greedyString())
                                 .executes(this::execute1))
@@ -29,7 +29,7 @@ public final class BroadcastCommand {
     }
 
     public int execute0(CommandContext<CommandSourceStack> context) {
-        context.getSource().getSender().sendMessage(StapleUtil.getUsageComponent("/" + context.getInput() + " <message>"));
+        context.getSource().getSender().sendMessage(StapleUtils.getUsageComponent("/" + context.getInput() + " <message>"));
         return Command.SINGLE_SUCCESS;
     }
 

@@ -7,7 +7,7 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
-import net.cc.staple.util.StapleUtil;
+import net.cc.staple.util.StapleUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
@@ -22,10 +22,10 @@ public final class EnderChestCommand {
     // Constructor
     public EnderChestCommand(Commands commands) {
         commands.register(Commands.literal("enderchest")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_ENDERCHEST))
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_ENDERCHEST))
                         .executes(this::openInventory)
                         .then(Commands.argument("target", ArgumentTypes.player())
-                                .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_ENDERCHEST_OTHER))
+                                .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_ENDERCHEST_OTHER))
                                 .executes(this::openInventoryOther))
                         .build(),
                 "View your ender chest",
@@ -40,7 +40,7 @@ public final class EnderChestCommand {
             player.openInventory(player.getEnderChest());
             player.sendMessage(Component.text("Opened your ender chest.").color(NamedTextColor.GOLD));
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }
@@ -58,7 +58,7 @@ public final class EnderChestCommand {
                 throw new RuntimeException(e);
             }
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }

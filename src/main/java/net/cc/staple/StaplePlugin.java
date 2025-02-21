@@ -2,6 +2,7 @@ package net.cc.staple;
 
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import lombok.Getter;
 import net.cc.staple.command.*;
 import net.cc.staple.config.ConfigManager;
 import net.cc.staple.listener.PlayerListener;
@@ -9,10 +10,9 @@ import net.cc.staple.player.PlayerManager;
 import net.cc.staple.player.TpaManager;
 import net.cc.staple.storage.DatabaseManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
+@Getter
 @SuppressWarnings("UnstableApiUsage")
-
 public final class StaplePlugin extends JavaPlugin {
 
     private ConfigManager configManager;
@@ -63,25 +63,5 @@ public final class StaplePlugin extends JavaPlugin {
         if (databaseManager != null) {
             databaseManager.close();
         }
-    }
-
-    @NotNull
-    public ConfigManager getConfigManager() {
-        return configManager;
-    }
-
-    @NotNull
-    public DatabaseManager getDatabaseManager() {
-        return databaseManager;
-    }
-
-    @NotNull
-    public PlayerManager getPlayerManager() {
-        return playerManager;
-    }
-
-    @NotNull
-    public TpaManager getTpaManager() {
-        return tpaManager;
     }
 }

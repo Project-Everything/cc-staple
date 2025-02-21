@@ -5,7 +5,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.jetbrains.annotations.NotNull;
 
-public final class StapleUtil {
+public final class StapleUtils {
 
     /* Permission Constants */
     public static final String PERMISSION_COMMAND_BROADCAST = "cc.command.broadcast";
@@ -28,7 +28,6 @@ public final class StapleUtil {
     public static final String PERMISSION_COMMAND_TOP = "cc.command.top";
     public static final String PERMISSION_COMMAND_TPA = "cc.command.tpa";
     public static final String PERMISSION_COMMAND_TPTOGGLE = "cc.command.tptoggle";
-    public static final String PERMISSION_COMMAND_VOTE = "cc.command.vote";
 
     /* Common Components */
     public static final Component MESSAGE_PERMISSION_MISSING = Component.text()

@@ -5,7 +5,7 @@ import com.mojang.brigadier.arguments.LongArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
-import net.cc.staple.util.StapleUtil;
+import net.cc.staple.util.StapleUtils;
 import net.cc.staple.command.argument.CustomTime;
 import net.cc.staple.command.argument.CustomTimeArgumentType;
 import net.kyori.adventure.text.Component;
@@ -22,7 +22,7 @@ public final class PlayerTimeCommand {
 
     public PlayerTimeCommand(Commands commands) {
         commands.register(Commands.literal("playertime")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_PLAYERTIME))
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_PLAYERTIME))
                         .executes(this::execute0)
                         .then(Commands.argument("preset", new CustomTimeArgumentType())
                                 .executes(this::execute1))
@@ -41,7 +41,7 @@ public final class PlayerTimeCommand {
                     .color(NamedTextColor.GOLD)
                     .build());
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }
@@ -68,7 +68,7 @@ public final class PlayerTimeCommand {
 
             player.sendMessage(Component.text("Time set to " + StringUtils.capitalize(customTime.name()), NamedTextColor.GOLD));
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }
@@ -86,7 +86,7 @@ public final class PlayerTimeCommand {
 
             player.sendMessage(Component.text("Time set to " + longTime, NamedTextColor.GOLD));
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }

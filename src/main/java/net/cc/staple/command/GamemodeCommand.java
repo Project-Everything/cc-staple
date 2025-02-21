@@ -7,7 +7,7 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
 import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
-import net.cc.staple.util.StapleUtil;
+import net.cc.staple.util.StapleUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.GameMode;
@@ -23,19 +23,19 @@ public final class GamemodeCommand {
 
     public GamemodeCommand(Commands commands) {
         commands.register(Commands.literal("gamemode")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_GAMEMODE))
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_GAMEMODE))
                         .executes(this::execute0)
                         .then(Commands.argument("gamemode", ArgumentTypes.gameMode())
                                 .executes(this::execute1)
                                 .then(Commands.argument("target", ArgumentTypes.player())
-                                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_GAMEMODE_OTHER))
+                                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_GAMEMODE_OTHER))
                                         .executes(this::execute2)))
                         .build(),
                 "Set your gamemode",
                 List.of("ec")
         );
         commands.register(Commands.literal("gms")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_GAMEMODE))
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_GAMEMODE))
                         .executes(context -> execute3(context, GameMode.SURVIVAL))
                         .then(Commands.argument("target", ArgumentTypes.player())
                                 .executes(context -> execute4(context, GameMode.SURVIVAL)))
@@ -43,7 +43,7 @@ public final class GamemodeCommand {
                 "Set your gamemode to Survival");
 
         commands.register(Commands.literal("gmc")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_GAMEMODE))
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_GAMEMODE))
                         .executes(context -> execute3(context, GameMode.CREATIVE))
                         .then(Commands.argument("target", ArgumentTypes.player())
                                 .executes(context -> execute4(context, GameMode.CREATIVE)))
@@ -51,7 +51,7 @@ public final class GamemodeCommand {
                 "Set your gamemode to Creative");
 
         commands.register(Commands.literal("gma")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_GAMEMODE))
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_GAMEMODE))
                         .executes(context -> execute3(context, GameMode.ADVENTURE))
                         .then(Commands.argument("target", ArgumentTypes.player())
                                 .executes(context -> execute4(context, GameMode.ADVENTURE)))
@@ -59,7 +59,7 @@ public final class GamemodeCommand {
                 "Set your gamemode to Adventure");
 
         commands.register(Commands.literal("gmsp")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_GAMEMODE))
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_GAMEMODE))
                         .executes(context -> execute3(context, GameMode.SPECTATOR))
                         .then(Commands.argument("target", ArgumentTypes.player())
                                 .executes(context -> execute4(context, GameMode.SPECTATOR)))
@@ -70,9 +70,9 @@ public final class GamemodeCommand {
     private int execute0(CommandContext<CommandSourceStack> context) {
         CommandSender sender = context.getSource().getSender();
         if (sender instanceof Player player) {
-            player.sendMessage(StapleUtil.getUsageComponent("/" + context.getInput() + " <gamemode> <player>"));
+            player.sendMessage(StapleUtils.getUsageComponent("/" + context.getInput() + " <gamemode> <player>"));
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }
@@ -83,7 +83,7 @@ public final class GamemodeCommand {
             GameMode gameMode = context.getArgument("gamemode", GameMode.class);
             setGamemode(player, gameMode);
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }
@@ -100,7 +100,7 @@ public final class GamemodeCommand {
                 context.getSource().getSender().sendMessage(Component.text(e.getMessage()).color(NamedTextColor.RED));
             }
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }
@@ -110,7 +110,7 @@ public final class GamemodeCommand {
         if (sender instanceof Player player) {
             setGamemode(player, gameMode);
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }
@@ -126,7 +126,7 @@ public final class GamemodeCommand {
                 context.getSource().getSender().sendMessage(Component.text(e.getMessage()).color(NamedTextColor.RED));
             }
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }

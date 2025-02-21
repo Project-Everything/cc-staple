@@ -6,7 +6,7 @@ import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.command.brigadier.argument.ArgumentTypes;
-import net.cc.staple.util.StapleUtil;
+import net.cc.staple.util.StapleUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.CommandSender;
@@ -21,7 +21,7 @@ public final class ItemCommand {
 
     public ItemCommand(Commands commands) {
         commands.register(Commands.literal("item")
-                        .requires(stack -> stack.getSender().hasPermission(StapleUtil.PERMISSION_COMMAND_ITEM))
+                        .requires(stack -> stack.getSender().hasPermission(StapleUtils.PERMISSION_COMMAND_ITEM))
                         .executes(this::execute0)
                         .then(Commands.argument("item", ArgumentTypes.itemStack())
                                 .executes(this::execute1)
@@ -37,7 +37,7 @@ public final class ItemCommand {
         if (sender instanceof Player player) {
             player.sendMessage(Component.text("/" + context.getInput() + " <item> <amount>").color(NamedTextColor.RED));
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }
@@ -54,7 +54,7 @@ public final class ItemCommand {
                             item.displayName().color(NamedTextColor.YELLOW))
                     .build());
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }
@@ -72,7 +72,7 @@ public final class ItemCommand {
                             item.displayName().color(NamedTextColor.YELLOW))
                     .build());
         } else {
-            sender.sendMessage(StapleUtil.MESSAGE_CONSOLE_SENDER);
+            sender.sendMessage(StapleUtils.MESSAGE_CONSOLE_SENDER);
         }
         return Command.SINGLE_SUCCESS;
     }
