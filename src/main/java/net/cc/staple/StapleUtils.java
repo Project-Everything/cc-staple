@@ -29,12 +29,6 @@ public final class StapleUtils {
     public static final String PERMISSION_COMMAND_TPA = "cc.command.tpa";
     public static final String PERMISSION_COMMAND_TPTOGGLE = "cc.command.tptoggle";
 
-    /* Common Components */
-    public static final Component MESSAGE_PERMISSION_MISSING = Component.text()
-            .append(Component.text("! ").color(NamedTextColor.RED).decorate(TextDecoration.BOLD),
-                    Component.text("You do not have permission to use that command!", NamedTextColor.RED)
-            ).build();
-
     public static final Component MESSAGE_CONSOLE_SENDER = Component.text("Only players can use that command.",
             NamedTextColor.RED);
 
