@@ -25,9 +25,6 @@ public class DatabaseManager {
     public DatabaseManager(final StaplePlugin plugin) {
         this.config = plugin.getConfigManager();
         this.logger = plugin.getLogger();
-
-        init();
-        createTables();
     }
 
     // Method to create the HikariCP data source (connection to SQL database)
@@ -46,7 +43,7 @@ public class DatabaseManager {
         dataSource = new HikariDataSource(hikariConfig);
     }
 
-    protected void createTables() {
+    public void createTables() {
         try (Connection connection = getConnection()) {
             Statement statement = connection.createStatement();
             statement.addBatch("CREATE TABLE IF NOT EXISTS " + STAPLE_PLAYERS + " (id VARCHAR(36) PRIMARY KEY, tp_disabled BOOLEAN, old_location_x DOUBLE, old_location_y DOUBLE, old_location_z DOUBLE);");
