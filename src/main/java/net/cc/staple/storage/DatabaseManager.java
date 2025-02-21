@@ -6,23 +6,21 @@ import net.cc.staple.StaplePlugin;
 import net.cc.staple.config.ConfigManager;
 import net.cc.staple.config.DatabaseSettings;
 import net.cc.staple.player.StaplePlayer;
-import net.cc.staple.storage.query.StaplePlayerQuery;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.sql.*;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 
 public class DatabaseManager {
 
+    public static final String STAPLE_PLAYERS = "staple_players";
     private final ConfigManager config;
     private final Logger logger;
     private HikariDataSource dataSource;
-
-    public static final String STAPLE_PLAYERS = "staple_players";
 
     public DatabaseManager(final StaplePlugin plugin) {
         this.config = plugin.getConfigManager();
@@ -62,10 +60,9 @@ public class DatabaseManager {
      * savePlayer - saves a player to the database
      *
      * @param staplePlayer instance of StaplePlayer
-     * @return CompletableFuture
      */
-    public CompletableFuture<Void> savePlayer(StaplePlayer staplePlayer) {
-        return CompletableFuture.runAsync(() -> {
+    public void savePlayer(StaplePlayer staplePlayer) {
+        CompletableFuture.runAsync(() -> {
             try (Connection connection = getConnection()) {
                 String sql = "INSERT INTO " + STAPLE_PLAYERS + " (id, tp_disabled, old_location_x, old_location_y, old_location_z) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE tp_disabled = ?, old_location_x = ?, old_location_y = ?, old_location_z = ?;";
                 PreparedStatement statement = connection.prepareStatement(sql);
@@ -89,68 +86,47 @@ public class DatabaseManager {
      * queryPlayer - queries a player from the database
      *
      * @param mojangId player unique id
-     * @return CompletableFuture
+     * @return CompletableFuture for StaplePlayer
      */
-    public CompletableFuture<StaplePlayerQuery> queryPlayer(UUID mojangId) {
+    public CompletableFuture<StaplePlayer> queryPlayer(UUID mojangId) {
         return CompletableFuture.supplyAsync(() -> {
-            StaplePlayerQuery query = new StaplePlayerQuery();
             try (Connection connection = getConnection()) {
                 String sql = "SELECT * FROM " + STAPLE_PLAYERS + " WHERE id = ?";
                 PreparedStatement statement = connection.prepareStatement(sql);
                 statement.setString(1, mojangId.toString());
                 ResultSet resultSet = statement.executeQuery();
 
-                while (resultSet.next()) {
-                    boolean isTpDisabled = resultSet.getBoolean("tp_disabled");
-                    double prevPositionX = resultSet.getDouble("old_location_x");
-                    double prevPositionY = resultSet.getDouble("old_location_y");
-                    double prevPositionZ = resultSet.getDouble("old_location_z");
-
-                    Player player = Bukkit.getPlayer(mojangId);
-                    if (player != null) {
-                        Location location = new Location(player.getWorld(), prevPositionX, prevPositionY, prevPositionZ, player.getPitch(), player.getYaw());
-                        StaplePlayer staplePlayer = new StaplePlayer(mojangId, isTpDisabled, location);
-                        query.addResult(staplePlayer);
-                    }
+                if (resultSet.next()) {
+                    return getStaplePlayerResult(resultSet);
                 }
             } catch (SQLException e) {
                 logger.severe("SQL Exception while querying instance of StaplePlayer: " + e.getMessage());
             }
-            return query;
+            return null;
         });
     }
 
     /**
      * queryPlayers - queries a player from the database
      *
-     * @return CompletableFuture
+     * @return CompletableFuture for Set of StaplePlayer
      */
-    public CompletableFuture<StaplePlayerQuery> queryPlayers() {
+    public CompletableFuture<Set<StaplePlayer>> queryPlayers() {
         return CompletableFuture.supplyAsync(() -> {
-            StaplePlayerQuery query = new StaplePlayerQuery();
+            Set<StaplePlayer> staplePlayers = new HashSet<>();
             try (Connection connection = getConnection()) {
                 String sql = "SELECT * FROM " + STAPLE_PLAYERS + ";";
                 PreparedStatement statement = connection.prepareStatement(sql);
                 ResultSet resultSet = statement.executeQuery();
 
                 while (resultSet.next()) {
-                    UUID mojangId = UUID.fromString(resultSet.getString("id"));
-                    boolean isTpDisabled = resultSet.getBoolean("tp_disabled");
-                    double prevPositionX = resultSet.getDouble("old_location_x");
-                    double prevPositionY = resultSet.getDouble("old_location_y");
-                    double prevPositionZ = resultSet.getDouble("old_location_z");
-
-                    Player player = Bukkit.getPlayer(mojangId);
-                    if (player != null) {
-                        Location location = new Location(player.getWorld(), prevPositionX, prevPositionY, prevPositionZ, player.getPitch(), player.getYaw());
-                        StaplePlayer staplePlayer = new StaplePlayer(mojangId, isTpDisabled, location);
-                        query.addResult(staplePlayer);
-                    }
+                    staplePlayers.add(getStaplePlayerResult(resultSet));
                 }
+                return staplePlayers;
             } catch (SQLException e) {
                 logger.severe("SQL Exception while querying all instances of StaplePlayer: " + e.getMessage());
             }
-            return query;
+            return Collections.emptySet();
         });
     }
 
@@ -162,5 +138,20 @@ public class DatabaseManager {
 
     private Connection getConnection() throws SQLException {
         return dataSource.getConnection();
+    }
+
+    private StaplePlayer getStaplePlayerResult(ResultSet resultSet) throws SQLException {
+        UUID mojangId = UUID.fromString(resultSet.getString("id"));
+        boolean isTpDisabled = resultSet.getBoolean("tp_disabled");
+        double prevPositionX = resultSet.getDouble("old_location_x");
+        double prevPositionY = resultSet.getDouble("old_location_y");
+        double prevPositionZ = resultSet.getDouble("old_location_z");
+
+        Player player = Bukkit.getPlayer(mojangId);
+        if (player != null) {
+            Location location = new Location(player.getWorld(), prevPositionX, prevPositionY, prevPositionZ, player.getPitch(), player.getYaw());
+            return new StaplePlayer(mojangId, isTpDisabled, location);
+        }
+        return null;
     }
 }

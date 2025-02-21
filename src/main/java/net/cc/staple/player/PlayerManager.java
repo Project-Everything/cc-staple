@@ -28,11 +28,10 @@ public final class PlayerManager {
 
         StaplePlayer staplePlayer = new StaplePlayer(mojangId, false, player.getLocation());
 
-        plugin.getDatabaseManager().queryPlayer(mojangId).thenAccept(staplePlayerQuery -> {
-            if (staplePlayerQuery.hasResults()) {
-                StaplePlayer found = staplePlayerQuery.getFirst();
-                staplePlayer.setTpDisabled(found.isTpDisabled());
-                staplePlayer.setOldLocation(found.getOldLocation());
+        plugin.getDatabaseManager().queryPlayer(mojangId).thenAccept(dbPlayer -> {
+            if (dbPlayer != null) {
+                staplePlayer.setTpDisabled(dbPlayer.isTpDisabled());
+                staplePlayer.setOldLocation(dbPlayer.getOldLocation());
             } else {
                 plugin.getDatabaseManager().savePlayer(staplePlayer);
             }
@@ -51,9 +50,9 @@ public final class PlayerManager {
     }
 
     private void loadAll() {
-        plugin.getDatabaseManager().queryPlayers().thenAccept(staplePlayerQuery -> {
-            if (staplePlayerQuery.hasResults()) {
-                for (StaplePlayer staplePlayer : staplePlayerQuery.getResults()) {
+        plugin.getDatabaseManager().queryPlayers().thenAccept(staplePlayers -> {
+            if (!staplePlayers.isEmpty()) {
+                for (StaplePlayer staplePlayer : staplePlayers) {
                     cache.put(staplePlayer.getMojangId(), staplePlayer);
                 }
             }
