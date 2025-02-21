@@ -10,7 +10,7 @@ import io.papermc.paper.command.brigadier.argument.resolvers.FinePositionResolve
 import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
 import io.papermc.paper.math.FinePosition;
 import net.cc.staple.StaplePlugin;
-import net.cc.staple.util.StapleUtils;
+import net.cc.staple.StapleUtils;
 import net.cc.staple.player.StaplePlayer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;

@@ -22,6 +22,7 @@ public class DatabaseManager {
     private final Logger logger;
     private HikariDataSource dataSource;
 
+    // Constructor
     public DatabaseManager(final StaplePlugin plugin) {
         this.config = plugin.getConfigManager();
         this.logger = plugin.getLogger();
@@ -43,6 +44,7 @@ public class DatabaseManager {
         dataSource = new HikariDataSource(hikariConfig);
     }
 
+    // Creates the necessary database tables if they do not exist
     public void createTables() {
         try (Connection connection = getConnection()) {
             Statement statement = connection.createStatement();
@@ -53,11 +55,7 @@ public class DatabaseManager {
         }
     }
 
-    /**
-     * savePlayer - saves a player to the database
-     *
-     * @param staplePlayer instance of StaplePlayer
-     */
+    // Asynchronous method to save a StaplePlayer to the database
     public void savePlayer(StaplePlayer staplePlayer) {
         CompletableFuture.runAsync(() -> {
             try (Connection connection = getConnection()) {
@@ -79,12 +77,7 @@ public class DatabaseManager {
         });
     }
 
-    /**
-     * queryPlayer - queries a player from the database
-     *
-     * @param mojangId player unique id
-     * @return CompletableFuture for StaplePlayer
-     */
+    // Asynchronous method to get a CorePlayer from the database
     public CompletableFuture<StaplePlayer> queryPlayer(UUID mojangId) {
         return CompletableFuture.supplyAsync(() -> {
             try (Connection connection = getConnection()) {
@@ -103,11 +96,7 @@ public class DatabaseManager {
         });
     }
 
-    /**
-     * queryPlayers - queries a player from the database
-     *
-     * @return CompletableFuture for Set of StaplePlayer
-     */
+    // Asynchronous method to get all CorePlayers from the database
     public CompletableFuture<Set<StaplePlayer>> queryPlayers() {
         return CompletableFuture.supplyAsync(() -> {
             Set<StaplePlayer> staplePlayers = new HashSet<>();
@@ -127,16 +116,19 @@ public class DatabaseManager {
         });
     }
 
+    // Close the data source
     public void close() {
         if (dataSource != null) {
             dataSource.close();
         }
     }
 
+    // Retrieves a database connection from the data source
     private Connection getConnection() throws SQLException {
         return dataSource.getConnection();
     }
 
+    // Get a StaplePlayer from a SQL result set
     private StaplePlayer getStaplePlayerResult(ResultSet resultSet) throws SQLException {
         UUID mojangId = UUID.fromString(resultSet.getString("id"));
         boolean isTpDisabled = resultSet.getBoolean("tp_disabled");

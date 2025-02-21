@@ -1,7 +1,7 @@
 package net.cc.staple.player;
 
 import net.cc.staple.StaplePlugin;
-import net.cc.staple.util.StapleUtils;
+import net.cc.staple.StapleUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;

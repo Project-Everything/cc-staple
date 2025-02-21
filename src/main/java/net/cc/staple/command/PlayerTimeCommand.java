@@ -5,7 +5,7 @@ import com.mojang.brigadier.arguments.LongArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
-import net.cc.staple.util.StapleUtils;
+import net.cc.staple.StapleUtils;
 import net.cc.staple.command.argument.CustomTime;
 import net.cc.staple.command.argument.CustomTimeArgumentType;
 import net.kyori.adventure.text.Component;

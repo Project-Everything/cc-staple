@@ -22,12 +22,14 @@ public final class StaplePlugin extends JavaPlugin {
 
     @Override
     public void onLoad() {
+        // Plugin load logic
         configManager = new ConfigManager(this);
         configManager.init();
     }
 
     @Override
     public void onEnable() {
+        // Plugin startup logic
         databaseManager = new DatabaseManager(this);
         databaseManager.init();
         databaseManager.createTables();

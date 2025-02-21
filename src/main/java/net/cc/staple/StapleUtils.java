@@ -1,4 +1,4 @@
-package net.cc.staple.util;
+package net.cc.staple;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
