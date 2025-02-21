@@ -35,10 +35,8 @@ public final class StapleUtils {
                     Component.text("You do not have permission to use that command!", NamedTextColor.RED)
             ).build();
 
-    public static final Component MESSAGE_CONSOLE_SENDER = Component.text()
-            .append(Component.text("! ").color(NamedTextColor.RED).decorate(TextDecoration.BOLD),
-                    Component.text("Only players can use that command.", NamedTextColor.RED)
-            ).build();
+    public static final Component MESSAGE_CONSOLE_SENDER = Component.text("Only players can use that command.",
+            NamedTextColor.RED);
 
     public static final Component COMMAND_HEADER = Component.text()
             .content(" ".repeat(50))
@@ -47,16 +45,10 @@ public final class StapleUtils {
             .build();
 
     public static @NotNull Component getUsageComponent(String input) {
-        return Component.text()
-                .append(Component.text("! ").color(NamedTextColor.RED).decorate(TextDecoration.BOLD),
-                        Component.text("Usage: " + input, NamedTextColor.RED)
-                ).build();
+        return Component.text("Usage: " + input, NamedTextColor.RED);
     }
 
     public static @NotNull Component getErrorComponent(String input) {
-        return Component.text()
-                .append(Component.text("! ").color(NamedTextColor.RED).decorate(TextDecoration.BOLD),
-                        Component.text(input, NamedTextColor.RED)
-                ).build();
+        return Component.text(input, NamedTextColor.RED);
     }
 }
